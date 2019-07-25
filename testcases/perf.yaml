@@ -1,0 +1,18 @@
+{% extends device_type %}
+
+{% set job_timeout = 30 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}lkft-perf-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/perf/perf.yaml
+      name: perf
+      parameters:
+        SKIP_INSTALL: 'true'
+{% endblock test_target %}

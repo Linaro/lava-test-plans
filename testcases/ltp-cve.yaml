@@ -1,0 +1,17 @@
+{% extends "testcases/master/template-ltp.yaml.jinja2" %}
+
+{% set testnames = ['cve'] %}
+{% set job_timeout = 60 %}
+
+{% block metadata %}
+  {{ super() }}
+  spectre_meltdown_checker_test__url: "https://github.com/speed47/spectre-meltdown-checker.git"
+{% endblock metadata %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/spectre-meltdown-checker-test/spectre-meltdown-checker-test.yaml
+      name: spectre-meltdown-checker-test
+{% endblock test_target %}

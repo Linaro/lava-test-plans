@@ -1,0 +1,24 @@
+{% extends device_type %}
+
+{% set job_timeout = 75 %}
+{% block metadata %}
+  {{ super() }}
+  ssuite__url: "{{SSUITE_URL | default('unknown')}}"
+  ssuite__version: "{{SSUITE_VERSION | default('unknown')}}"
+  ssuite__revision: "{{SSUITE_REVISION | default('unknown')}}"
+{% endblock metadata %}
+
+{% block job_name %}lkft-ssuite-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/ssuite/ssuite-bench.yaml
+      name: ssuite
+      parameters:
+        SKIP_INSTALL: "true"
+        TESTS: '{{testnames}}'
+        TEST_DEV: "'{{testdevnames}}'"
+        S_PATH: '{{s_path}}'
+{% endblock test_target %}

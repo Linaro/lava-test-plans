@@ -1,0 +1,21 @@
+{% extends device_type %}
+
+{% set job_timeout = 150 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-gst-validate-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/gst-validate/gst-validate.yaml
+      params:
+        GST_IGNORE_TESTS_REPO: {{GST_IGNORE_TESTS_REPO}}
+        GST_IGNORE_TESTS_FILE: {{GST_IGNORE_TESTS_FILE}}
+      name: linux-gst-validate
+      timeout:
+        minutes: 120
+{% endblock test_target %}

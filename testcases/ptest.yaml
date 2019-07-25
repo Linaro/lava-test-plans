@@ -1,0 +1,20 @@
+{% extends device_type %}
+
+{% set job_timeout = 160 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-ptest-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/ptest/ptest.yaml
+      name: linux-ptest
+      params:
+        EXCLUDE: {{PTEST_EXCLUDE}}
+      timeout:
+        minutes: 160
+{% endblock test_target %}

@@ -1,0 +1,4 @@
+{% extends "testcases/master/template-ltp.yaml.jinja2" %}
+
+{% set testnames = ['cap_bounds', 'cpuhotplug', 'fcntl-locktests', 'filecaps', 'fs_bind', 'fs_perms_simple', 'fsx', 'nptl', 'pty', 'securebits'] %}
+{% set job_timeout = 30 %}

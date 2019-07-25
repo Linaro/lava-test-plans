@@ -1,0 +1,19 @@
+{% extends device_type %}
+
+{% set job_timeout = 25 %}
+{% block metadata %}
+  {{ super() }}
+  libgpiod__url: "{{LIBGPIOD_URL | default('unknown')}}"
+  libgpiod__version: "{{LIBGPIOD_VERSION | default('unknown')}}"
+  libgpiod__revision: "{{LIBGPIOD_REVISION | default('unknown')}}"
+{% endblock metadata %}
+
+{% block job_name %}lkft-libgpiod-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/gpiod/gpiod.yaml
+      name: libgpiod
+{% endblock test_target %}

@@ -1,0 +1,149 @@
+{% extends "lkft-fastboot.jinja2" %}
+
+{% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
+{% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
+{% if pre_power_command is undefined %}{% set pre_power_command = true %}{% endif %}
+{% if pre_os_command is undefined %}{% set pre_os_command = true %}{% endif %}
+{% if auto_login is undefined %}{% set auto_login = true %}{% endif %}
+{% if apply_overlay_bootimg is undefined %}{% set apply_overlay_bootimg = false %}{% endif %}
+
+{% block deploy_target %}
+- deploy:
+    timeout:
+      minutes: 40
+    to: download
+    namespace: target
+    images:
+      boot:
+        url: {{BOOT_URL}}
+        compression: {{BOOT_URL_COMP}}
+{% if apply_overlay_bootimg == true %}
+        apply-overlay: true
+{% endif %}
+{% if rootfs == true %}
+      {{ rootfs_label }}:
+        url: {{ROOTFS_URL}}
+        compression: {{ROOTFS_URL_COMP}}
+{% endif %}
+    os: {{DEPLOY_OS}}
+
+{% if rootfs == true %}
+- test:
+    namespace: tlxc
+    timeout:
+      minutes: 30
+    definitions:
+    - from: inline
+      name: resize-rootfs
+      path: inline/resize-rootfs.yaml
+      repository:
+        metadata:
+          description: resize rootfs image for test overlay
+          format: Lava-Test Test Definition 1.0
+          name: resize-rootfs
+        run:
+          steps:
+          - cd /lava-lxc
+          - overlay_file=/lava-lxc/overlays/target/overlay.tar.gz
+          - overlay_size=$(gzip -l $overlay_file | tail -1 | awk '{print $2}')
+          - overlay_size=$(( $overlay_size / 1024 ))
+          - simg2img {{LXC_ROOTFS_FILE}} {{LXC_ROOTFS_FILE}}.ext4
+          - free_blocks=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Free blocks" | awk '{print $3}')
+          - block_size=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Block size" | awk '{print $3}')
+          - free_size=$(( $block_size * $free_blocks / 1024 ))
+          - if [ "$free_size" -lt "$overlay_size" ]; then
+          -    block_count=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Block count" | awk '{print $3}')
+          -    current_size=$(( $block_size * $block_count / 1024 ))
+          -    extra_size=32768
+          -    final_size=$(( $current_size + $overlay_size + $extra_size ))
+          -    fsck_code=$(e2fsck -y -f {{LXC_ROOTFS_FILE}}.ext4)
+          -    resize2fs {{LXC_ROOTFS_FILE}}.ext4 "$final_size"K
+          -    img2simg {{LXC_ROOTFS_FILE}}.ext4 {{LXC_ROOTFS_FILE}}
+          -    echo "resize_rootfs:" "pass"
+          - else
+          -    echo "resize_rootfs:" "skip"
+          - fi
+{% endif %}
+
+{% if apply_overlay_bootimg == true %}
+- test:
+    namespace: tlxc
+    timeout:
+      minutes: 30
+    definitions:
+    - from: inline
+      name: apply-test-overlay-bootimg
+      path: inline/apply-test-overlay-bootimg.yaml
+      repository:
+        metadata:
+          description: Apply test overlay to Andoid boot image ramdisk
+          format: Lava-Test Test Definition 1.0
+          name: apply-test-overlay-bootimg
+        run:
+          steps:
+          - overlay_file=/lava-lxc/overlays/target/overlay.tar.gz
+          - if [ -f $overlay_file ]
+          - then
+          -     configs_dir=$(mktemp -d /tmp/configs.XXXX)
+          -     git clone --depth 1 http://git.linaro.org/ci/job/configs.git $configs_dir 
+          -     $configs_dir/lt-qcom-linux-test/copy_test_overlay.sh /lava-lxc/{{LXC_BOOT_FILE}} $overlay_file
+          -     echo "apply_test_overlay_bootimg:" "pass"
+          - else
+          -     echo "apply_test_overlay_bootimg:" "skip"
+          - fi
+{% endif %}
+
+- deploy:
+    timeout:
+      minutes: 40
+    to: fastboot
+    namespace: target
+    images:
+      boot:
+        url: lxc:///{{LXC_BOOT_FILE}}
+{% if rootfs == true %}
+      {{ rootfs_label }}:
+        url: lxc:///{{LXC_ROOTFS_FILE}}
+        apply-overlay: true
+{% endif %}
+    os: {{DEPLOY_OS}}
+{% if pre_power_command == true %}
+    protocols:
+        lava-lxc:
+        - action: fastboot-deploy
+          request: pre-power-command
+          timeout:
+              minutes: 2
+{% endif %}
+{% endblock deploy_target %}
+
+{% block boot_target %}
+- boot:
+    namespace: target
+{% if auto_login == true %}
+    auto_login:
+      login_prompt: 'login:'
+      username: 'root'
+{% endif %}
+    prompts:
+    - 'root@(.*):[/~]#'
+    - {{BOOT_OS_PROMPT}}
+    timeout:
+      minutes: 15
+    method: fastboot
+{% if pre_os_command == true %}
+    protocols:
+      lava-lxc:
+      - action: auto-login-action
+        request: pre-os-command
+        timeout:
+          minutes: 2
+{% endif %}
+{% endblock boot_target %}
+
+{% endblock actions %}
+
+{% block metadata %}
+  source: https://git.linaro.org/ci/job/configs.git
+  path: lt-qcom/lava-job-definitions/
+{% endblock metadata %}

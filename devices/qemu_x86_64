@@ -1,0 +1,57 @@
+{% extends "lkft-nfs.jinja2" %}
+
+{% block global_settings %}
+{{ super() }}
+context:
+  arch: amd64
+  guestfs_interface: virtio
+{% endblock global_settings %}
+
+{% block device_type %}qemu{% endblock %}
+
+{% block deploy_target %}
+- deploy:
+    namespace: target
+    timeout:
+      minutes: 15
+    to: tmpfs
+    images:
+      rootfs:
+        image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp 4 -nographic
+        url: {{HDD_URL}}
+        compression: xz
+    os: oe
+{% endblock deploy_target %}
+
+{% block boot_target %}
+- boot:
+    namespace: target
+    timeout:
+      minutes: 10
+    method: qemu
+    media: tmpfs
+    auto_login:
+      login_prompt: 'login:'
+      username: root
+      login_commands:
+        - su
+    prompts:
+    - 'root@intel-core2-32:'
+    - 'root@intel-corei7-64:'
+{% endblock boot_target %}
+
+{% block test_target %}
+  {{ super() }}
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: prep-tmp-disk
+          description: "Link /scratch to /tmp"
+        run:
+          steps:
+            - df -h
+            - ln -s /tmp /scratch
+      name: prep-tmp-disk
+      path: inline/prep.yaml
+{% endblock test_target %}

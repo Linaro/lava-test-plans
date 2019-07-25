@@ -1,0 +1,63 @@
+{% extends "lkft-nfs.jinja2" %}
+
+{% block global_settings %}
+{{ super() }}
+context:
+  bootloader_prompt: juno#
+{% endblock global_settings %}
+
+{% block device_type %}juno-r2{% endblock %}
+
+{% block deploy_target %}
+- deploy:
+    namespace: target
+    timeout:
+      minutes: 10
+    to: tftp
+    os: oe
+    kernel:
+      url: {{KERNEL_URL}}
+      type: image
+    dtb:
+      url: {{DTB_URL}}
+    nfsrootfs:
+      url: {{NFSROOTFS_URL}}
+      compression: xz
+
+{% endblock deploy_target %}
+
+{% block boot_target %}
+- boot:
+    namespace: target
+    timeout:
+      minutes: 10
+    connection-namespace: recovery
+    method: u-boot
+    commands: nfs
+    auto_login:
+      login_prompt: 'login:'
+      username: root
+    prompts:
+    - root@(.*):~#
+{% endblock boot_target %}
+
+{% block test_target %}
+  {{ super() }}
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: prep-tests
+          description: "Device preparation"
+        run:
+          steps:
+          - export STORAGE_DEV=$(lava-target-storage SATA || lava-target-storage USB)
+          - test -n "${STORAGE_DEV}" || lava-test-raise "STORAGE_DEV not found; job exit"
+          - echo "y" | mkfs -t ext4 ${STORAGE_DEV} || lava-test-raise "mkfs -t ext4 ${STORAGE_DEV} failed; job exit"
+          - mkdir -p /scratch
+          - mount ${STORAGE_DEV} /scratch && echo "mounted" || lava-test-raise "mount ${STORAGE_DEV} failed; job exit"
+          - df -h
+          - mount
+      name: prep-inline
+      path: inline/prep.yaml
+{% endblock test_target %}

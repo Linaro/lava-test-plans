@@ -1,0 +1,82 @@
+{% extends device_type %}
+
+{% set job_timeout = 90 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-pmwg-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: ssh-enable-target-login
+          description: "Enable SSH Root login on Target"
+        run:
+          steps:
+          - echo -ne "linaro123\nlinaro123\n" | passwd root
+          - echo PermitRootLogin yes >> /etc/ssh/sshd_config
+          - systemctl restart ssh.service
+      name: ssh-enable-target-login-inline
+      path: inline/ssh-enable-target-login.yaml
+      timeout:
+        minutes: 5
+{% endblock test_target %}
+
+{% block test_lxc %}
+- test:
+    namespace: tlxc
+    timeout:
+      minutes: {% if job_timeout is defined %}{{ job_timeout }}{% else %}60{% endif %}
+    definitions:
+    - repository: https://git.linaro.org/lava-team/refactoring.git
+      from: git
+      path: testdefs/arm-probe.yaml
+      name: arm-probe
+      timeout:
+        minutes: 10
+
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: prep-tests
+          description: "Download energy-probe-ext instrumentation"
+        run:
+          steps:
+          - apt-get update
+          - apt-get -y install trace-cmd git
+          - cd /root
+          - git clone https://git.linaro.org/power/energy-probe-ext.git /energy-probe-ext
+          - export TARGET_IP=$$(lava-target-ip)
+          - echo $$TARGET_IP lava-target-ip >> /etc/hosts
+      name: prep-inline
+      path: inline/prep.yaml
+      timeout:
+        minutes: 10
+
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/workload-automation/workload-automation.yaml
+      params:
+        CONFIG: config/generic-linux-remote.py
+        AGENDA: agenda/qcomlt/linux-workloads-db410c.yaml
+        WA_EXTENSION_PATHS: /energy-probe-ext
+        ARTIFACTORIAL_URL: https://archive.validation.linaro.org/artifacts/team/qcomlt/
+      name: linux-pmwg
+      timeout:
+        minutes: 60
+{% endblock test_lxc %}
+
+{% block visibility %}
+  group:
+    - linaro
+{% endblock visibility %}
+
+{% block settings %}
+secrets:
+  ARTIFACTORIAL_TOKEN: "{{ARTIFACTORIAL_TOKEN}}"
+{% endblock settings %}

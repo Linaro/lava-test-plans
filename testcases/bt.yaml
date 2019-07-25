@@ -1,0 +1,20 @@
+{% extends device_type %}
+
+{% set job_timeout = 90 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-bt-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/hci-smoke/hci-smoke.yaml
+      params:
+              BOOT: auto
+      name: linux-hci-smoke
+      timeout:
+        minutes: 5
+{% endblock test_target %}

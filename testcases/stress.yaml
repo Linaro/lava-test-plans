@@ -1,0 +1,38 @@
+{% extends device_type %}
+
+{% set job_timeout = 320 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-stress-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/24h-stress-test/24h-stress-test.yaml
+      params:
+        TEST: "stress_ng"
+        DURATION: "5400"
+      name: linux-stress-cpu
+
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/24h-stress-test/24h-stress-test.yaml
+      params:
+        TEST: "stress_oom"
+        DURATION: "5400"
+      name: linux-stress-oom
+
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/24h-stress-test/24h-stress-test.yaml
+      params:
+        TEST: "stress_network"
+        DURATION: "5400"
+        INTERFACE: {{ETH_DEVICE}}
+        LINK: "http://testdata.validation.linaro.org/stress/stress-network.img"
+        MD5: "e5c834fbdaa6bfd8eac5eb9404eefdd4"
+      name: linux-stress-network
+{% endblock test_target %}

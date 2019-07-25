@@ -1,0 +1,21 @@
+{% extends device_type %}
+
+{% set job_timeout = 45 %}
+{% block metadata %}
+  {{ super() }}
+  libhugetlbfs__url: "{{LIBHUGETLBFS_URL | default('unknown')}}"
+  libhugetlbfs__version: "{{LIBHUGETLBFS_VERSION | default('unknown')}}"
+  libhugetlbfs__revision: "{{LIBHUGETLBFS_REVISION | default('unknown')}}"
+{% endblock metadata %}
+
+{% block job_name %}lkft-libhugetlbfs-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/libhugetlbfs/libhugetlbfs.yaml
+      name: libhugetlbfs
+      parameters:
+        WORD_SIZE: {% if libhuggetlbfs_word_size is defined %}{{libhuggetlbfs_word_size|int|abs}}{% else %}64{% endif %}
+{% endblock test_target %}

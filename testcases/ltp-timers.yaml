@@ -1,0 +1,18 @@
+{% extends "testcases/master/template-ltp.yaml.jinja2" %}
+
+{% set testnames = ['timers'] %}
+{% set job_timeout = 20 %}
+
+{% block test_target_prep %}
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: timesync-off
+          description: "Disable systemd time sync services"
+        run:
+          steps:
+          - systemctl stop systemd-timesyncd || true
+      name: timesync-off
+      path: inline/timesync-off.yaml
+{% endblock test_target_prep %}

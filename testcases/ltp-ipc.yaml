@@ -1,0 +1,4 @@
+{% extends "testcases/master/template-ltp.yaml.jinja2" %}
+
+{% set testnames = ['ipc'] %}
+{% set job_timeout = 20 %}

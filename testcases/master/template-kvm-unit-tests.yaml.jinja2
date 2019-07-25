@@ -1,0 +1,25 @@
+{% extends device_type %}
+
+{% block global_settings %}
+{{ super() }}
+  extra_kernel_args: 'kvm.enable_vmware_backdoor=1 kvm.force_emulation_prefix=1'
+{% endblock global_settings %}
+
+{% set job_timeout = 25 %}
+{% block metadata %}
+  {{ super() }}
+  kvm-unit-tests__url: 'https://git.kernel.org/pub/scm/virt/kvm/kvm-unit-tests.git'
+{% endblock metadata %}
+
+{% block job_name %}lkft-kvm-unit-tests-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/kvm-unit-tests/kvm-unit-tests.yaml
+      name: kvm-unit-tests
+      parameters:
+        SKIP_INSTALL: 'true'
+        SMP: {% if DEVICE_TYPE == "juno-r2" %}'false'{% else %}'true'{% endif %}
+{% endblock test_target %}

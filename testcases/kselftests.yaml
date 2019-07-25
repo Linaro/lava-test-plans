@@ -1,0 +1,2 @@
+{% extends "testcases/master/template-kselftest.yaml.jinja2" %}
+

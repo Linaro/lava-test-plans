@@ -1,0 +1,29 @@
+{% extends device_type %}
+
+{% set job_timeout = 190 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-desktop-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/glmark2/glmark2.yaml
+      name: linux-glmark2
+      timeout:
+        minutes: 10
+
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/piglit/piglit.yaml
+      name: linux-piglit
+      params:
+        OPTIONS: "-l dummy -x streaming-texture-leak -x glx -x tex3d-maxsize -x max-texture-size -1"
+        IGNORE_TESTS_REPO: {{PIGLIT_IGNORE_TESTS_REPO}}
+        IGNORE_TESTS_FILE: {{PIGLIT_IGNORE_TESTS_FILE}}
+      timeout:
+        minues: 145
+{% endblock test_target %}

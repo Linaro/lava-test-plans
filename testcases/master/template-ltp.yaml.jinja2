@@ -1,0 +1,33 @@
+{% extends device_type %}
+
+{% block metadata %}
+  {{ super() }}
+{% for testname in testnames %}
+  ltp-{{testname}}-tests__url: "{{LTP_URL | default('unknown')}}"
+  ltp-{{testname}}-tests__version: "{{LTP_VERSION | default('unknown')}}"
+  ltp-{{testname}}-tests__revision: "{{LTP_REVISION | default('unknown')}}"
+{% endfor %}
+{% endblock metadata %}
+
+{% block job_name %}lkft-ltp-{{testnames|join('-')}}-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+{% block test_target_prep %}
+{% endblock test_target_prep %}
+{% for testname in testnames %}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/ltp/ltp.yaml
+      parameters:
+        SKIP_INSTALL: 'true'
+        TST_CMDFILES: '{{testname}}'
+        SKIPFILE: skipfile-lkft.yaml
+        BOARD: '{{ DEVICE_TYPE }}'
+        BRANCH: '{{ KERNEL_VERSION_OVERRIDE|default(KERNEL_VERSION) }}'
+        ENVIRONMENT: '{{ ENVIRONMENT|default('production') }}'
+        TIMEOUT_MULTIPLIER: 3
+        LTP_TMPDIR: '/scratch'
+      name: ltp-{{testname}}-tests
+{% endfor %}
+{% endblock test_target %}

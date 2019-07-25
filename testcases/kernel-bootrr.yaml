@@ -1,0 +1,51 @@
+{% extends device_type %}
+
+{% set job_timeout = 90 %}
+{% set rootfs = false %}
+{% set apply_overlay_bootimg = true %}
+{% set auto_login = false %}
+{% set BOOT_OS_PROMPT = 'root@qemuarm64:~#' %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{QA_SERVER_PROJECT}}-bootrr-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - from: inline
+      name: qcomlt-kernel-smoke
+      path: inline/qcomlt-kernel-smoke.yaml
+      repository:
+        metadata:
+          description: QCOM LT Linux kernel smoke
+          format: Lava-Test Test Definition 1.0
+          name: kernel-smoke
+        run:
+          steps:
+          - uname -a
+          - df
+          - free
+          - ls -l /dev
+          - ls -l /sys
+          - ls -l /proc
+          - echo "linux_kernel_smoke:" "pass"
+    - from: inline
+      name: qcomlt-kernel-bootrr
+      path: inline/qcomlt-kernel-bootrr.yaml
+      repository:
+        metadata:
+          description: QCOM LT Linux kernel bootrr
+          format: Lava-Test Test Definition 1.0
+          name: kernel-bootrr
+        install:
+          git-repos:
+          - https://github.com/andersson/bootrr.git
+        run:
+          steps:
+          - cd bootrr
+          - export PATH=$PWD/helpers:$PATH
+          - for TEST in $(tr "\0" "\n" < /proc/device-tree/compatible); do
+          -     if [ -x "./boards/${TEST}" ]; then
+          -         ./boards/${TEST}
+          -     fi
+          - done
+          - echo ~~~~~~~~~~~~~~~~~~~~~
+{% endblock test_target %}

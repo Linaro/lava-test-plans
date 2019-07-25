@@ -1,0 +1,69 @@
+{% extends device_type %}
+
+{% set job_timeout = 150 %}
+{% set BOOT_OS_PROMPT = 'root@qemuarm64:~#' %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{QA_SERVER_PROJECT}}-functional-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/smoke/smoke.yaml
+      params:
+              TESTS: {{SMOKE_TESTS}}
+      name: linux-smoke
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/usb-smoke/usb-smoke-test.yaml
+      name: linux-usb-smoke
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/hci-smoke/hci-smoke.yaml
+      params:
+              BOOT: auto
+      name: linux-hci-smoke
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/wlan-smoke/wlan-smoke.yaml
+      params:
+        DEVICE: {{WLAN_DEVICE}}
+      name: linux-wlan-smoke
+
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/wlan-download/wlan-download.yaml
+      params:
+        DEVICE: {{WLAN_DEVICE}}
+        ETHERNET_DEVICE: {{ETH_DEVICE}}
+        SSID_NAME: LAVATESTX
+        SSID_PASSWORD: NepjqGbq
+        FILE_URL: http://testdata.validation.linaro.org/stress/stress-network.img
+        FILE_CHECKSUM: e5c834fbdaa6bfd8eac5eb9404eefdd4
+        TIME_DELAY: {{WLAN_TIME_DELAY}}
+      name: linux-wlan-download
+
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/dd-wr-speed/dd-wr-speed.yaml
+      name: linux-dd-wr-speed
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/device-read-perf/device-read-perf.yaml
+      name: linux-device-read-perf
+
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/pm-qa/pm-qa.yaml
+      name: linux-pm-qa
+      params:
+        TESTS: {{PM_QA_TESTS}}
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/lmbench/lmbench-memory.yaml
+      name: linux-lmbench-memory
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/sysbench/sysbench.yaml
+      name: linux-sysbench
+{% endblock test_target %}

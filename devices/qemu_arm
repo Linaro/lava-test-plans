@@ -1,0 +1,67 @@
+{% extends "lkft-nfs.jinja2" %}
+
+{# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
+{% set libhuggetlbfs_word_size = 32 %}
+{% block global_settings %}
+{{ super() }}
+context:
+  arch: arm64
+  netdevice: tap
+  machine: virt-2.10,accel=kvm
+  cpu: host,aarch64=off
+  guestfs_interface: virtio
+{% endblock global_settings %}
+
+{% block device_type %}qemu-arm{% endblock %}
+
+{% block deploy_target %}
+- deploy:
+    namespace: target
+    timeout:
+      minutes: 15
+    to: tmpfs
+    images:
+      rootfs:
+        image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp 2 -nographic
+        url: {{EXT4_IMAGE_URL}}
+        compression: gz
+        apply-overlay: true
+        sparse: false
+      kernel:
+        image_arg: -kernel {kernel} --append "console=ttyAMA0 root=/dev/vda rw"
+        url: {{KERNEL_URL}}
+        type: image
+    os: oe
+{% endblock deploy_target %}
+
+{% block boot_target %}
+- boot:
+    namespace: target
+    timeout:
+      minutes: 15
+    method: qemu
+    media: tmpfs
+    auto_login:
+      login_prompt: 'am57xx-evm login:'
+      username: root
+      login_commands:
+        - su
+    prompts:
+    - 'root@am57xx-evm:'
+{% endblock boot_target %}
+
+{% block test_target %}
+  {{ super() }}
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: prep-tmp-disk
+          description: "Link /scratch to /tmp"
+        run:
+          steps:
+            - df -h
+            - ln -s /tmp /scratch
+      name: prep-tmp-disk
+      path: inline/prep.yaml
+{% endblock test_target %}

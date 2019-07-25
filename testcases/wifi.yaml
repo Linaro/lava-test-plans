@@ -1,0 +1,35 @@
+{% extends device_type %}
+
+{% set job_timeout = 90 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-wifi-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/wlan-smoke/wlan-smoke.yaml
+      params:
+        DEVICE: {{WLAN_DEVICE}}
+      name: linux-wlan-smoke
+      timeout:
+        minutes: 5
+
+    - repository: https://git.linaro.org/qa/test-definitions.git
+      from: git
+      path: automated/linux/wlan-download/wlan-download.yaml
+      params:
+        DEVICE: {{WLAN_DEVICE}}
+        ETHERNET_DEVICE: {{ETH_DEVICE}}
+        SSID_NAME: {{WIFI_SSID_NAME}}
+        SSID_PASSWORD: {{WIFI_SSID_PASSWORD}}
+        FILE_URL: http://testdata.validation.linaro.org/stress/stress-network.img
+        FILE_CHECKSUM: e5c834fbdaa6bfd8eac5eb9404eefdd4
+        TIME_DELAY: {{WLAN_TIME_DELAY}}
+      name: linux-wlan-download
+      timeout:
+        minutes: 20
+{% endblock test_target %}

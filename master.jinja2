@@ -1,0 +1,18 @@
+{% block global_settings %}
+{% endblock global_settings %}
+
+device_type: {% block device_type %}{% endblock %}
+job_name: {% block job_name %}{% endblock %}
+priority: {% block priority %}{% endblock %}
+visibility: {% block visibility %}{% endblock %}
+
+metadata:
+{% block metadata %}
+{% endblock metadata %}
+
+{% block protocols %}
+{% endblock protocols %}
+
+actions:
+{% block actions %}
+{% endblock actions %}

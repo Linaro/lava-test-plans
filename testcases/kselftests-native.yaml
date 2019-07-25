@@ -1,0 +1,3 @@
+{% extends "testcases/master/template-kselftest.yaml.jinja2" %}
+
+{% set vsyscall_mode = 'native' %}

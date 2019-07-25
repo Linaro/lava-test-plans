@@ -1,0 +1,19 @@
+{% extends "lkft.jinja2" %}
+
+{% block actions %}
+
+{% block deploy_target %}
+{% endblock deploy_target %}
+
+{% block boot_target %}
+{% endblock boot_target %}
+
+{% block test_target %}
+- test:
+    namespace: target
+    timeout:
+      minutes: {% if job_timeout is defined %}{{ job_timeout }}{% else %}60{% endif %}
+    definitions:
+{% endblock test_target %}
+
+{% endblock actions %}

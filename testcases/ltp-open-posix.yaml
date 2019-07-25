@@ -1,0 +1,23 @@
+{% extends device_type %}
+
+{% set job_timeout = 75 %}
+{% block metadata %}
+  {{ super() }}
+  ltp-open-posix-tests__url: "{{LTP_URL | default('unknown')}}"
+  ltp-open-posix-tests__version: "{{LTP_VERSION | default('unknown')}}"
+  ltp-open-posix-tests__revision: "{{LTP_REVISION | default('unknown')}}"
+{% endblock metadata %}
+
+{% block job_name %}lkft-ltp-open-posix-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+{% block test_target_prep %}
+{% endblock test_target_prep %}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/ltp-open-posix/ltp-open-posix.yaml
+      name: ltp-open-posix-tests
+      parameters:
+        SKIP_INSTALL: 'true'
+{% endblock test_target %}

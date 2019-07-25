@@ -1,0 +1,82 @@
+{% extends "lkft-fastboot.jinja2" %}
+
+{% block device_type %}hi6220-hikey-r2{% endblock %}
+
+{% block deploy_target %}
+- deploy:
+    timeout:
+      minutes: 15
+    to: fastboot
+    namespace: target
+    connection: lxc
+    images:
+      ptable:
+        url: http://images.validation.linaro.org/snapshots.linaro.org/96boards/reference-platform/components/uefi-staging/69/hikey/release/ptable-linux-8g.img
+        reboot: hard-reset
+      boot:
+        url: {{BOOT_URL}}
+        reboot: hard-reset
+      system:
+        url: {{SYSTEM_URL}}
+        compression: gz
+        apply-overlay: true
+    os: oe
+    protocols:
+      lava-lxc:
+      - action: fastboot-deploy
+        request: pre-power-command
+        timeout:
+          minutes: 2
+{% endblock deploy_target %}
+
+{% block boot_target %}
+- boot:
+    namespace: target
+    auto_login:
+      login_prompt: 'login:'
+      username: linaro
+      login_commands:
+        # Become super user to run tests
+        - su
+    prompts:
+    - 'hikey:~'
+    - 'hikey:/home/linaro#'
+    - 'root@(.*):/#'
+    timeout:
+      minutes: 5
+    method: grub
+    commands: installed
+    protocols:
+      lava-lxc:
+      # other action could be boot-fastboot
+      - action: grub-sequence-action
+        request: pre-os-command
+        timeout:
+          minutes: 2
+{% endblock boot_target %}
+
+{% block test_target %}
+  {{ super() }}
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: prep-tests
+          description: "Device preparation"
+        run:
+          steps:
+          # the image does not raise the interface itself
+          # force a DHCP request to avoid avahi using a zero conf address.
+          # - udhcpc
+          # - netstat
+          # - ip a
+          # - ifconfig
+          - df
+          - cat /sys/class/thermal/thermal_zone0/policy || true
+          - echo "power_allocator" > /sys/class/thermal/thermal_zone0/policy || true
+          - cat /sys/class/thermal/thermal_zone0/policy || true
+          - cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies  | awk '{ print $(NF-1) }'  > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
+          - cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq || true
+      name: prep-inline
+      path: inline/prep.yaml
+{% endblock test_target %}
