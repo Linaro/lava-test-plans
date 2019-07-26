@@ -248,13 +248,24 @@ def main():
         client = docker.from_env()
         logger.debug("Checking for LAVA validity")
         for test in args.test_plan:
-            test = args.testplan_path + test
+            testpath = os.path.join(os.getcwd(), output_path, args.device_type, args.testplan_path)
+            logger.debug(testpath)
             logger.debug(test)
-            client.containers.run(
+            stdout_log = StringIO()
+            stderr_log = StringIO()
+            container = client.containers.run(
                 image="lavasoftware/amd64-lava-server:2019.05",
                 command="/usr/share/lava-common/lava-schema.py job /data/%s" % test,
-                volumes={"%s" % os.path.join(output_path, args.device_type): {"bind": "/data", "mode": "rw"}}
+                volumes={"%s" % testpath: {"bind": "/data", "mode": "rw"}},
+                stdout=stdout_log,
+                stderr=stderr_log,
+                detach=True
             )
+            logger.debug(container.logs())
+            stdout_log.seek(0)
+            logger.debug(stdout_log.read())
+            stderr_log.seek(0)
+            logger.debug(stderr_log.read())
 
     if not args.dryrun:
         qa_server_base = args.qa_server
