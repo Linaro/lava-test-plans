@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import fnmatch
 import os
 import re
 import requests
@@ -14,7 +15,7 @@ from ruamel.yaml import YAML
 import logging
 
 
-FORMAT = "[%(funcName)20s() ] %(message)s"
+FORMAT = "[%(funcName)16s() ] %(message)s"
 logging.basicConfig(level=logging.INFO, format=FORMAT)
 logger = logging.getLogger(__name__)
 
@@ -73,6 +74,20 @@ def _load_template(template_name, template_path, device_type):
             sys.exit(1)
 
     return template, template_file_name
+
+
+def _get_test_plan_list(test_plan_path):
+    """
+    Returns list of all .yaml files in the directory
+    specified as parameter
+    """
+    logger.debug("Checking for files in %s" % test_plan_path)
+    ret_list = []
+    for filename in os.listdir(test_plan_path):
+        if fnmatch.fnmatch(filename, '*.yaml'):
+            ret_list.append(filename)
+    logger.debug(ret_list)
+    return ret_list
 
 
 def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_token):
@@ -163,7 +178,7 @@ def main():
                         dest="template_path",
                         default=template_base_path)
     parser.add_argument("--testplan-path",
-                        help="Path to Jinja2 LAVA job templates",
+                        help="Path to directory containing all test plans",
                         dest="testplan_path",
                         default=testplan_base_path)
     parser.add_argument("--testplan-device-path",
@@ -171,13 +186,12 @@ def main():
                         dest="testplan_device_path",
                         default=testplan_device_path)
     parser.add_argument("--test-plan",
-                        help="""list of the Jinja2 templates to submit for testing.
+                        help="""Directory containing Jinja2 templates to submit for testing.
                         It is assumed that the templates produce valid LAVA job
                         definitions. All varaibles are substituted using Jinja2
-                        engine. This includes environment variables.""",
+                        engine""",
                         dest="test_plan",
-                        nargs="+",
-                        default=[])
+                        required=True)
     parser.add_argument("--dry-run",
                         help="""Prepare and write templates to tmp/.
                         Don't submit to actual servers.""",
@@ -222,20 +236,22 @@ def main():
     context = {}
     with open(args.variables, "r") as vars_file:
         for line in vars_file:
-            key, value = line.strip().split("=")
-            context.update({key: value})
+            if not line.startswith("#"):  # ignore lines starting with comment
+                key, value = line.strip().split("=")
+                context.update({key: value})
     for variable in args.overwrite_variables:
         key, value = variable.split("=")
         context.update({key: value})
     context.update({"device_type": os.path.join(args.testplan_device_path, args.device_type)})
-    for test in args.test_plan:
+    test_plan_path = os.path.join(args.testplan_path, args.test_plan)
+    for test in _get_test_plan_list(test_plan_path):
         ''' Prepare lava jobs '''
-        test = args.testplan_path + test
+        test = os.path.join(test_plan_path, test)
         lava_job = j2_env.get_template(test).render(context)
         lava_job = parse_template(lava_job)
         lava_jobs.append(lava_job)
 
-        logger.info(lava_job)
+        logger.debug(lava_job)
         if args.dryrun:
             testpath = os.path.join(output_path, args.device_type, test)
             if not os.path.exists(os.path.dirname(testpath)):
@@ -247,25 +263,21 @@ def main():
         import docker
         client = docker.from_env()
         logger.debug("Checking for LAVA validity")
-        for test in args.test_plan:
-            testpath = os.path.join(os.getcwd(), output_path, args.device_type, args.testplan_path)
+        for test in _get_test_plan_list(test_plan_path):
+            testpath = os.path.join(os.getcwd(), output_path, args.device_type, args.testplan_path, args.test_plan)
             logger.debug(testpath)
             logger.debug(test)
-            stdout_log = StringIO()
-            stderr_log = StringIO()
             container = client.containers.run(
                 image="lavasoftware/amd64-lava-server:2019.05",
                 command="/usr/share/lava-common/lava-schema.py job /data/%s" % test,
                 volumes={"%s" % testpath: {"bind": "/data", "mode": "rw"}},
-                stdout=stdout_log,
-                stderr=stderr_log,
                 detach=True
             )
-            logger.debug(container.logs())
-            stdout_log.seek(0)
-            logger.debug(stdout_log.read())
-            stderr_log.seek(0)
-            logger.debug(stderr_log.read())
+            exit_code = container.wait()
+            logger.debug(exit_code)
+            if exit_code['StatusCode'] != 0:
+                logger.error("LAVA validation of %s/%s failed" % (testpath,test))
+                logger.error(container.logs())
 
     if not args.dryrun:
         qa_server_base = args.qa_server
