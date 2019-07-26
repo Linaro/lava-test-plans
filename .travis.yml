@@ -1,0 +1,30 @@
+dist: xenial
+language: python
+python:
+  - "3.6"
+
+# Pre-installed packages.
+# shellcheck v0.5.0
+# Refer to the following link to install specific version shellcheck binary.
+# https://github.com/koalaman/shellcheck#installing-the-shellcheck-binary
+# php 7.2
+install:
+  - pip install -r requirements.txt
+  - pip install black
+
+script:
+  - ./submit_for_testing.py --variables variables.ini --device-type x15 --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type x86 --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type qemu_x86_64 --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type qemu_i386 --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type qemu_arm64 --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type qemu_arm --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type juno-r2 --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type hi6220-hikey --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type dragonboard-410c --dry-run --test-plan lkft-full --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/dragonboard-410c --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/dragonboard-820c --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/qcs404-evb-1k --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/qcs404-evb-4k --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/sdm845-mtp --dry-run --test-plan lt-qcom --test-lava-validity
+  - black --check submit_for_testing.py
