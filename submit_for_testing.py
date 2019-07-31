@@ -17,6 +17,12 @@ from jinja2 import (
 )
 from jinja2.exceptions import UndefinedError
 from ruamel.yaml import YAML
+from ruamel.yaml.constructor import (
+    DuplicateKeyError,
+    ConstructorError,
+    DuplicateKeyFutureWarning,
+)
+
 
 import logging
 
@@ -286,13 +292,21 @@ def main():
     test_plan_path = os.path.join(args.testplan_path, args.test_plan)
     for test in _get_test_plan_list(test_plan_path):
         """ Prepare lava jobs """
-        test = os.path.join(test_plan_path, test)
-        lava_job = j2_env.get_template(test).render(context)
-        lava_job = parse_template(lava_job)
-        lava_jobs.append(lava_job)
+        lava_job = None
+        try:
+            test = os.path.join(test_plan_path, test)
+            lava_job = j2_env.get_template(test).render(context)
+            lava_job = parse_template(lava_job)
+            lava_jobs.append(lava_job)
 
-        logger.debug(lava_job)
-        if args.dryrun:
+            logger.debug(lava_job)
+        except DuplicateKeyError as e:
+            logger.error(e)
+        except ConstructorError as e:
+            logger.error(e)
+        except DuplicateKeyFutureWarning as e:
+            logger.error(e)
+        if args.dryrun and lava_job is not None:
             testpath = os.path.join(output_path, args.device_type, test)
             if not os.path.exists(os.path.dirname(testpath)):
                 os.makedirs(os.path.dirname(testpath))
