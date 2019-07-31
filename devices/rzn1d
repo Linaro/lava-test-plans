@@ -1,0 +1,52 @@
+{% extends "lkft-nfs.jinja2" %}
+
+{% set run_nand_commands = true %}
+
+{% block device_type %}rzn1d{% endblock %}
+
+{% block deploy_target %}
+- deploy:
+    timeout:
+      minutes: 5
+    to: tftp
+    optee:
+      url: {{OPTEE_ITB_URL}}
+    uboot:
+      url: {{UBOOT_ITB_URL}}
+    kernel:
+      url: {{KERNEL_FIT_URL}}
+      type: uimage
+{% endblock deploy_target %}
+
+{% block boot_target %}
+{% if boot_bootloader %}
+- boot:
+    timeout:
+      minutes: 1
+    method: bootloader
+    bootloader: u-boot
+    commands: []
+    prompts: ['=>']
+{% else %}
+- boot:
+    timeout:
+      minutes: 10
+    method: u-boot
+    commands:
+      - setenv autoload no
+      - dhcp
+      - dhcp
+      - env print
+      - setenv serverip {SERVER_IP}
+      - tftp {KERNEL_ADDR} {KERNEL}
+      - run LINUX_BOOTARGS
+      - bootm {KERNEL_ADDR}#conf@1 
+    auto_login:
+      login_prompt: 'login:'
+      username: root
+      password_prompt: "Password:"
+      password: "P@ssword-1"
+    prompts:
+    - "root@rzn1-snarc:"
+{% endif %}
+{% endblock boot_target %}

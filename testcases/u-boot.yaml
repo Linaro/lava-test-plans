@@ -1,0 +1,115 @@
+{% extends device_type %}
+
+{% set job_timeout = 90 %}
+{% set boot_bootloader = true %}
+{% if run_fpga_command is undefined %}{% set run_fpga_command = false %}{% endif %}
+{% if run_nand_commands is undefined %}{% set run_nand_commands = false %}{% endif %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% block job_name %}{{PROJECT_NAME}}-u-boot-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block test_target %}
+  {{ super() }}
+    interactive:
+    - name: basic-cmds
+      prompts: ["=> ", "/ # "]
+      script:
+      - command: echo "u-boot echo test"
+        name: echo
+        successes:
+        - message: "u-boot echo test"
+      - command: version
+        name: version
+        successes:
+        - message: "U-Boot"
+      - command: help test
+        name: help
+        successes:
+        - message: "test - minimal test like /bin/sh"
+      # saveenv and printenv
+      - command: setenv test_var test123printenv
+      - command: printenv
+        name: setenv-and-printenv
+        successes:
+        - message: "test_var=test123"
+    - name: memory-test
+      prompts: ["=> ", "/ # "]
+      script:
+      # memory test
+      # base - print or set address offset
+      - command:
+      - command: base
+        name: print-default-base-address-offset
+        successes:
+        - message: "Base Address: 0x"
+      - command: base 80000000
+        name: set-address-offset-0x80000000
+        successes:
+        - message: "Base Address: 0x80000000"
+      - command: base
+        name: check-address-offset-0x80000000
+        successes:
+        - message: "Base Address: 0x80000000"
+      # crc32 - checksum calculation
+      - command: mw.b 00000000 aa 400
+      - command: crc 80000000 400
+        name: compute-CRC32-checksum
+        successes:
+        - message: "crc32 for 80000000 ... 800003ff ==> 3c6f327d"
+      # mw - memory write
+      # md - memory display
+      - command: mw 100000 aabbccdd 10
+      - command: md 100000 10
+        name: mw-md-100000
+        successes:
+        - message: "aabbccdd"
+      # md - memory display
+      # cp - memory copy
+      - command: cp 100000 200000 10
+      - command: md 200000 10
+        name: cp-md-200000
+        successes:
+        - message: "aabbccdd"
+      # cmp - memory compare
+      - command: cmp 100000 200000 10
+        name: cmp-100000-200000-10
+        successes:
+        - message: "Total of 16 word\\(s\\) were the same"
+    - name: dhcp-cmds
+      prompts: ["=> ", "/ # "]
+      script:
+      # dhcp
+      - command:
+    {% if run_fpga_command %}
+      - command: run FPGA_INIT
+        successes:
+        - message: "FPGA updated to correct revision."
+        name: fpga_init
+    {% endif %}
+      - command: setenv autoload no ; dhcp
+        name: dhcp
+        successes:
+        - message: "DHCP client bound to address"
+    - name: tftp-cmds
+      prompts: ["=> ", "/ # "]
+      script:
+      # TFTP
+      - command:
+      - command: setenv serverip {SERVER_IP} ; tftp {KERNEL_ADDR} {KERNEL}
+        name: tftp
+        successes:
+        - message: "Bytes transferred ="
+    {% if run_nand_commands %}
+    - name: nand-commands
+      prompts: ["=> ", "/ # "]
+      script:
+      # nand
+      - command:
+      - command: nand info
+        name: nand-info
+        successes:
+        - message: "nand0, sector size 128 KiB"
+    {% endif %}
+{% endblock test_target %}

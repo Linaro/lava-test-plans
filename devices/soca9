@@ -1,0 +1,73 @@
+{% extends "lkft-nfs.jinja2" %}
+
+{% set run_fpga_command = false %}
+
+{% block device_type %}soca9{% endblock %}
+
+{% block deploy_target %}
+- deploy:
+    timeout:
+      minutes: 10
+    to: flasher
+    images:
+      image:
+        url: https://images.validation.linaro.org/people.linaro.org/~remi.duraffort/soca9-disk.img.bz2
+        compression: bz2
+
+- deploy:
+    timeout:
+      minutes: 5
+    to: tftp
+    kernel:
+      url: {{KERNEL_ZIMAGE_URL}}
+      type: zimage
+    dtb:
+      url: {{DTB_URL}}
+    nfsrootfs:
+      url: {{NFSROOTFS_DEV_URL}}
+      compression: bz2
+{% endblock deploy_target %}
+
+{% block boot_target %}
+{% if boot_bootloader %}
+- boot:
+    timeout:
+      minutes: 1
+    method: bootloader
+    bootloader: u-boot
+    commands: []
+    prompts: ['=>']
+{% else %}
+- boot:
+    timeout:
+      minutes: 10
+    method: u-boot
+    commands:
+      - run FPGA_INIT
+      - setenv autoload no
+      - dhcp
+      - dhcp
+      - env print
+      - setenv serverip {SERVER_IP}
+      - tftp 0x01000000 {KERNEL}
+      - tftp 0x00000100 {DTB}
+      - "setenv bootargs 'console=ttyS0,115200n8 root=/dev/nfs rw nfsroot={NFS_SERVER_IP}:{NFSROOTFS},tcp,hard,intr,vers=3 rootwait coherent_pool=2M ip=dhcp'"
+      - '{BOOTX}'
+    auto_login:
+      login_prompt: 'login:'
+      username: root
+      password_prompt: "Password:"
+      password: "P@ssword-1"
+      login_commands:
+      - P@ssword-1
+      - azertAZERT12345
+      - azertAZERT12345
+      - azertAZERT12345
+    prompts:
+    - "Current password: "
+    - "New password: "
+    - "Retype new password: "
+    - "root@snarc-soca9:"
+{% endif %}
+{% endblock boot_target %}
+

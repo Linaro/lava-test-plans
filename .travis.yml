@@ -27,4 +27,6 @@ script:
   - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/qcs404-evb-1k --dry-run --test-plan lt-qcom --test-lava-validity
   - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/qcs404-evb-4k --dry-run --test-plan lt-qcom --test-lava-validity
   - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/sdm845-mtp --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type rzn1d --dry-run --test-plan schneider --test-lava-validity
+  - ./submit_for_testing.py --variables variables.ini --device-type soca9 --dry-run --test-plan schneider --test-lava-validity
   - black --check submit_for_testing.py
