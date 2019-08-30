@@ -282,7 +282,7 @@ def main():
     with open(args.variables, "r") as vars_file:
         for line in vars_file:
             if not line.startswith("#"):  # ignore lines starting with comment
-                key, value = line.strip().split("=")
+                key, value = line.strip().split("=", maxsplit=1)
                 context.update({key: value})
     for variable in args.overwrite_variables:
         key, value = variable.split("=")
