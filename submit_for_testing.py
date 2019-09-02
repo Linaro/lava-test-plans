@@ -41,6 +41,7 @@ except ImportError:
 # Templates base path
 template_base_path = "./"
 testplan_base_path = "testplans/"
+testcase_base_path = "testcases/"
 testplan_device_path = "devices/"
 
 
@@ -212,19 +213,36 @@ def main():
         default=testplan_base_path,
     )
     parser.add_argument(
+        "--testcase-path",
+        help="Path to directory containing all test cases",
+        dest="testcase_path",
+        default=testcase_base_path,
+    )
+    parser.add_argument(
         "--testplan-device-path",
         help="Relative path to Jinja2 device deployment fragments",
         dest="testplan_device_path",
         default=testplan_device_path,
     )
-    parser.add_argument(
+    g = parser.add_mutually_exclusive_group(required=True)
+    g.add_argument(
         "--test-plan",
         help="""Directory containing Jinja2 templates to submit for testing.
                         It is assumed that the templates produce valid LAVA job
                         definitions. All variables are substituted using Jinja2
                         engine""",
         dest="test_plan",
-        required=True,
+        required=False,
+    )
+    g.add_argument(
+        "--test-case",
+        help="""Specific test cases (as Jinja2 templates) to submit.
+                        It is assumed that the templates produce valid LAVA job
+                        definitions. All variables are substituted using Jinja2
+                        engine""",
+        dest="test_case",
+        nargs="*",
+        required=False,
     )
     parser.add_argument(
         "--dry-run",
@@ -290,12 +308,25 @@ def main():
     context.update(
         {"device_type": os.path.join(args.testplan_device_path, args.device_type)}
     )
-    test_plan_path = os.path.join(args.testplan_path, args.test_plan)
-    for test in _get_test_plan_list(test_plan_path):
+    test_list = []
+    if args.test_plan:
+        test_plan_path = os.path.join(args.testplan_path, args.test_plan)
+        for test in _get_test_plan_list(test_plan_path):
+            test_list.append(os.path.join(test_plan_path, test))
+
+    if args.test_case:
+        for test in args.test_case:
+            test_case_path = os.path.join(args.testcase_path, test)
+            test_list.append(test_case_path)
+
+    if len(test_list) == 0:
+        logger.error("No tests matched the given criteria.")
+        sys.exit(1)
+
+    for test in test_list:
         """ Prepare lava jobs """
         lava_job = None
         try:
-            test = os.path.join(test_plan_path, test)
             lava_job = j2_env.get_template(test).render(context)
             lava_job = parse_template(lava_job)
             lava_jobs.append(lava_job)
@@ -321,7 +352,9 @@ def main():
             logger.error("\tissue: %s" % e.message)
             exit_code = 1
         if args.dryrun and lava_job is not None:
-            testpath = os.path.join(output_path, args.device_type, test)
+            testpath = os.path.join(
+                output_path, args.device_type, os.path.basename(test)
+            )
             logger.info(testpath)
             if not os.path.exists(os.path.dirname(testpath)):
                 os.makedirs(os.path.dirname(testpath))
