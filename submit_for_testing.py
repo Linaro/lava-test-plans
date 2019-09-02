@@ -22,7 +22,7 @@ from ruamel.yaml.constructor import (
     ConstructorError,
     DuplicateKeyFutureWarning,
 )
-
+from ruamel.yaml.scanner import ScannerError
 
 import logging
 
@@ -306,8 +306,11 @@ def main():
             logger.error(e)
         except DuplicateKeyFutureWarning as e:
             logger.error(e)
+        except ScannerError as e:
+            logger.error(e)
         if args.dryrun and lava_job is not None:
             testpath = os.path.join(output_path, args.device_type, test)
+            logger.info(testpath)
             if not os.path.exists(os.path.dirname(testpath)):
                 os.makedirs(os.path.dirname(testpath))
             with open(os.path.join(testpath), "w") as f:
@@ -329,7 +332,7 @@ def main():
             logger.debug(testpath)
             logger.debug(test)
             container = client.containers.run(
-                image="lavasoftware/amd64-lava-server:2019.05",
+                image="lavasoftware/amd64-lava-server:2019.07",
                 command="/usr/share/lava-common/lava-schema.py job /data/%s" % test,
                 volumes={"%s" % testpath: {"bind": "/data", "mode": "rw"}},
                 detach=True,
