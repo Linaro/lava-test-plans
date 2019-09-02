@@ -1,59 +1,30 @@
 {% extends "lkft-fastboot.jinja2" %}
 
+{% set rootfs = true %}
+{% set rootfs_label = 'system' %}
+{% set ptable = true %}
+{% set PTABLE_URL = "http://images.validation.linaro.org/snapshots.linaro.org/96boards/reference-platform/components/uefi-staging/69/hikey/release/ptable-linux-8g.img" %}
+{% set BOOT_OS_PROMPT = "hikey:~" %}
 {% block device_type %}hi6220-hikey-r2{% endblock %}
+{% set auto_login_prompt = "login:" %}
+{% set auto_login_username = "linaro" %}
+{% set boot_method = "grub" %}
+{% set DEPLOY_OS = "oe" %}
 
-{% block deploy_target %}
-- deploy:
-    timeout:
-      minutes: 15
-    to: fastboot
-    namespace: target
-    connection: lxc
-    images:
-      ptable:
-        url: http://images.validation.linaro.org/snapshots.linaro.org/96boards/reference-platform/components/uefi-staging/69/hikey/release/ptable-linux-8g.img
-        reboot: hard-reset
-      boot:
-        url: {{BOOT_URL}}
-        reboot: hard-reset
-      system:
-        url: {{SYSTEM_URL}}
-        compression: gz
-        apply-overlay: true
-    os: oe
-    protocols:
-      lava-lxc:
-      - action: fastboot-deploy
-        request: pre-power-command
-        timeout:
-          minutes: 2
-{% endblock deploy_target %}
-
-{% block boot_target %}
-- boot:
-    namespace: target
-    auto_login:
-      login_prompt: 'login:'
-      username: linaro
+{% block auto_login_commands %}
       login_commands:
         # Become super user to run tests
         - su
-    prompts:
-    - 'hikey:~'
-    - 'hikey:/home/linaro#'
-    - 'root@(.*):/#'
-    timeout:
-      minutes: 5
-    method: grub
+{% endblock auto_login_commands %}
+
+{% block boot_commands %}
     commands: installed
-    protocols:
-      lava-lxc:
-      # other action could be boot-fastboot
-      - action: grub-sequence-action
-        request: pre-os-command
-        timeout:
-          minutes: 2
-{% endblock boot_target %}
+{% endblock boot_commands %}
+
+{% block deploy_target %}
+{{ super() }}
+{% include "pre-power-command.jinja2" %}
+{% endblock deploy_target %}
 
 {% block test_target %}
   {{ super() }}

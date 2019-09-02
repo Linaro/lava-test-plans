@@ -15,7 +15,7 @@ from jinja2 import (
     Undefined,
     make_logging_undefined,
 )
-from jinja2.exceptions import UndefinedError
+from jinja2.exceptions import UndefinedError, TemplateSyntaxError
 from ruamel.yaml import YAML
 from ruamel.yaml.constructor import (
     DuplicateKeyError,
@@ -307,6 +307,10 @@ def main():
         except DuplicateKeyFutureWarning as e:
             logger.error(e)
         except ScannerError as e:
+            logger.error(e)
+        except TemplateSyntaxError as e:
+            testpath = os.path.join(output_path, args.device_type, test)
+            logger.error(testpath)
             logger.error(e)
         if args.dryrun and lava_job is not None:
             testpath = os.path.join(output_path, args.device_type, test)

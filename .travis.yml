@@ -22,11 +22,11 @@ script:
   - ./submit_for_testing.py --variables variables.ini --device-type juno-r2 --dry-run --test-plan lkft-full --test-lava-validity
   - ./submit_for_testing.py --variables variables.ini --device-type hi6220-hikey --dry-run --test-plan lkft-full --test-lava-validity
   - ./submit_for_testing.py --variables variables.ini --device-type dragonboard-410c --dry-run --test-plan lkft-full --test-lava-validity
-  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/dragonboard-410c --dry-run --test-plan lt-qcom --test-lava-validity
-  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/dragonboard-820c --dry-run --test-plan lt-qcom --test-lava-validity
-  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/qcs404-evb-1k --dry-run --test-plan lt-qcom --test-lava-validity
-  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/qcs404-evb-4k --dry-run --test-plan lt-qcom --test-lava-validity
-  - ./submit_for_testing.py --variables variables.ini --device-type lt-qcom/sdm845-mtp --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables_qcom.ini --device-type lt-qcom/dragonboard-410c --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables_qcom.ini --device-type lt-qcom/dragonboard-820c --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables_qcom.ini --device-type lt-qcom/qcs404-evb-1k --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables_qcom.ini --device-type lt-qcom/qcs404-evb-4k --dry-run --test-plan lt-qcom --test-lava-validity
+  - ./submit_for_testing.py --variables variables_qcom.ini --device-type lt-qcom/sdm845-mtp --dry-run --test-plan lt-qcom --test-lava-validity
   - ./submit_for_testing.py --variables variables.ini --device-type rzn1d --dry-run --test-plan schneider --test-lava-validity
   - ./submit_for_testing.py --variables variables.ini --device-type soca9 --dry-run --test-plan schneider --test-lava-validity
   - black --check submit_for_testing.py

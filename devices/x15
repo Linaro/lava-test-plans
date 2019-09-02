@@ -2,41 +2,22 @@
 
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
+{% set boot = false %}
+{% set rootfs_label = "userdata" %}
+{% set pre_os_command = false %}
+{% set boot_method = "u-boot" %}
+{% set auto_login_prompt = "am57xx-evm login:" %}
+{% set auto_login_username = "root" %}
 {% block device_type %}x15{% endblock %}
 
-{% block deploy_target %}
-- deploy:
-    timeout:
-      minutes: 25
-    to: fastboot
-    namespace: target
-    connection: lxc
-    images:
-      userdata:
-        url: {{SYSTEM_URL}}
-        compression: gz
-        apply-overlay: true
-    os: oe
-{% endblock deploy_target %}
-
-{% block boot_target %}
-- boot:
-    namespace: target
-    auto_login:
-      login_prompt: 'am57xx-evm login:'
-      username: root
-    prompts:
-    - 'root@am57xx-evm:'
+{% block boot_commands %}
     commands:
     - setenv fdtfile am57xx-beagle-x15.dtb
     - setenv console ttyS2,115200n8
     - setenv mmcdev 1
     - "setenv bootpart 1:9"
     - run mmcboot
-    timeout:
-      minutes: 15
-    method: u-boot
-{% endblock boot_target %}
+{% endblock boot_commands %}
 
 {% block test_target %}
   {{ super() }}

@@ -1,45 +1,22 @@
 {% extends "lkft-fastboot.jinja2" %}
 
+{% set rootfs = true %}
+{% set rootfs_label = 'rootfs' %}
+{% set DEPLOY_OS = "oe" %}
+{% set ROOTFS_URL_COMP = "gz" %}
+{% set BOOT_OS_PROMPT = "dragonboard-410c:" %}
+{% set auto_login_prompt = "login:" %}
+{% set auto_login_username = "linaro" %}
+
 {% block device_type %}dragonboard-410c{% endblock %}
 
-{% block deploy_target %}
-- deploy:
-    timeout:
-      minutes: 25
-    to: fastboot
-    namespace: target
-    connection: lxc
-    images:
-      boot:
-        url: {{BOOT_URL}}
-      rootfs:
-        url: {{SYSTEM_URL}}
-        compression: gz
-        apply-overlay: true
-    os: oe
-    protocols:
-      lava-lxc:
-      - action: fastboot-deploy
-        request: pre-power-command
-        timeout:
-          minutes: 2
-{% endblock deploy_target %}
-
-{% block boot_target %}
-- boot:
-    namespace: target
-    auto_login:
-      login_prompt: 'login:'
-      username: linaro
+{% block auto_login_commands %}
       login_commands:
         # Become super user to run tests
         - su
-    prompts:
-    - 'root@(.*):/#'
-    - 'root@dragonboard-410c:~#'
-    - 'dragonboard-410c:/home/linaro#'
-    - 'dragonboard-410c:~\$'
-    timeout:
-      minutes: 5
-    method: fastboot
-{% endblock boot_target %}
+{% endblock auto_login_commands %}
+
+{% block deploy_target %}
+{{ super() }}
+{% include "pre-power-command.jinja2" %}
+{% endblock deploy_target %}

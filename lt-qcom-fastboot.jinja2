@@ -1,32 +1,10 @@
 {% extends "lkft-fastboot.jinja2" %}
 
-{% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
-{% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
-{% if pre_power_command is undefined %}{% set pre_power_command = true %}{% endif %}
-{% if pre_os_command is undefined %}{% set pre_os_command = true %}{% endif %}
-{% if auto_login is undefined %}{% set auto_login = true %}{% endif %}
-{% if apply_overlay_bootimg is undefined %}{% set apply_overlay_bootimg = false %}{% endif %}
+{% set auto_login_prompt = 'login:' %}
+{% set auto_login_username = 'root' %}
 
 {% block deploy_target %}
-- deploy:
-    timeout:
-      minutes: 40
-    to: download
-    namespace: target
-    images:
-      boot:
-        url: {{BOOT_URL}}
-        compression: {{BOOT_URL_COMP}}
-{% if apply_overlay_bootimg == true %}
-        apply-overlay: true
-{% endif %}
-{% if rootfs == true %}
-      {{ rootfs_label }}:
-        url: {{ROOTFS_URL}}
-        compression: {{ROOTFS_URL_COMP}}
-{% endif %}
-    os: {{DEPLOY_OS}}
-
+{{ super() }}
 {% if rootfs == true %}
 - test:
     namespace: tlxc
@@ -85,7 +63,7 @@
           - if [ -f $overlay_file ]
           - then
           -     configs_dir=$(mktemp -d /tmp/configs.XXXX)
-          -     git clone --depth 1 http://git.linaro.org/ci/job/configs.git $configs_dir 
+          -     git clone --depth 1 http://git.linaro.org/ci/job/configs.git $configs_dir
           -     $configs_dir/lt-qcom-linux-test/copy_test_overlay.sh /lava-lxc/{{LXC_BOOT_FILE}} $overlay_file
           -     echo "apply_test_overlay_bootimg:" "pass"
           - else
@@ -108,38 +86,9 @@
 {% endif %}
     os: {{DEPLOY_OS}}
 {% if pre_power_command == true %}
-    protocols:
-        lava-lxc:
-        - action: fastboot-deploy
-          request: pre-power-command
-          timeout:
-              minutes: 2
+{% include "pre-power-command.jinja2" %}
 {% endif %}
 {% endblock deploy_target %}
-
-{% block boot_target %}
-- boot:
-    namespace: target
-{% if auto_login == true %}
-    auto_login:
-      login_prompt: 'login:'
-      username: 'root'
-{% endif %}
-    prompts:
-    - 'root@(.*):[/~]#'
-    - {{BOOT_OS_PROMPT}}
-    timeout:
-      minutes: 15
-    method: fastboot
-{% if pre_os_command == true %}
-    protocols:
-      lava-lxc:
-      - action: auto-login-action
-        request: pre-os-command
-        timeout:
-          minutes: 2
-{% endif %}
-{% endblock boot_target %}
 
 {% block metadata %}
   source: https://git.linaro.org/ci/job/configs.git

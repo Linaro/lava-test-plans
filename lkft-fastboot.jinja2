@@ -2,6 +2,16 @@
 
 {% if install_packages is undefined %}{% set install_packages = true %}{% endif %}
 {% if install_fastboot is undefined %}{% set install_fastboot = true %}{% endif %}
+{% if ptable is undefined %}{% set prable = false %}{% endif %}
+{% if boot is undefined %}{% set boot = true %}{% endif %}
+{% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
+{% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
+{% if apply_overlay is undefined %}{% set apply_overlay = "rootfs" %}{% endif %}
+{% if deploy_target is undefined %}{% set deploy_target = "fastboot" %}{% endif %}
+{% if pre_power_command is undefined %}{% set pre_power_command = true %}{% endif %}
+{% if pre_os_command is undefined %}{% set pre_os_command = true %}{% endif %}
+{% if auto_login is undefined %}{% set auto_login = true %}{% endif %}
+{% if boot_method is undefined %}{% set boot_method = "fastboot" %}{% endif %}
 
 {% block global_settings %}
 {{ super() }}
@@ -64,9 +74,68 @@ protocols:
 {% endif %}
 
 {% block deploy_target %}
+- deploy:
+    timeout:
+      minutes: 40
+    to: {{ deploy_target }}
+    namespace: target
+    images:
+{% if ptable == true %}
+      ptable:
+        url: {{PTABLE_URL}}
+{% if PTABLE_URL_COMP is defined %}
+        compression: {{PTABLE_URL_COMP}}
+{% endif %}
+{% endif %}
+{% if boot == true %}
+      boot:
+        url: {{BOOT_URL}}
+{% if BOOT_URL_COMP is defined %}
+        compression: {{BOOT_URL_COMP}}
+{% endif %}
+{% if apply_overlay == "bootimg" %}
+        apply-overlay: true
+{% endif %}
+{% endif %}
+{% if rootfs == true %}
+      {{ rootfs_label }}:
+        url: {{ROOTFS_URL}}
+{% if ROOTFS_URL_COMP is defined %}
+        compression: {{ROOTFS_URL_COMP}}
+{% endif %}
+{% if apply_overlay == "rootfs" %}
+        apply-overlay: true
+{% endif %}
+{% endif %}
+    os: {{DEPLOY_OS}}
 {% endblock deploy_target %}
 
 {% block boot_target %}
+- boot:
+    namespace: target
+{% if auto_login == true %}
+    auto_login:
+      login_prompt: "{{ auto_login_prompt }}"
+      username: "{{ auto_login_username }}"
+{% block auto_login_commands %}
+{% endblock auto_login_commands %}
+{% endif %}
+    prompts:
+    - 'root@(.*):[/~]#'
+    - {{BOOT_OS_PROMPT}}
+    timeout:
+      minutes: 15
+    method: {{ boot_method }}
+{% block boot_commands %}
+{% endblock boot_commands %}
+{% if pre_os_command == true %}
+    protocols:
+      lava-lxc:
+      - action: auto-login-action
+        request: pre-os-command
+        timeout:
+          minutes: 2
+{% endif %}
 {% endblock boot_target %}
 
 {% block test_lxc %}
