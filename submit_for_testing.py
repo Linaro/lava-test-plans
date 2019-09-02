@@ -83,7 +83,7 @@ def _load_template(template_name, template_path, device_type):
                 template = f.read()
         else:
             logger.error(
-                "template (%s) was specified but does not existi" % template_file_name
+                "template (%s) was specified but does not exist" % template_file_name
             )
             sys.exit(1)
 
@@ -221,7 +221,7 @@ def main():
         "--test-plan",
         help="""Directory containing Jinja2 templates to submit for testing.
                         It is assumed that the templates produce valid LAVA job
-                        definitions. All varaibles are substituted using Jinja2
+                        definitions. All variables are substituted using Jinja2
                         engine""",
         dest="test_plan",
         required=True,
