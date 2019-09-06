@@ -8,7 +8,7 @@
   ssuite__revision: "{{SSUITE_REVISION | default('unknown')}}"
 {% endblock metadata %}
 
-{% test_name = "ssuite" %}
+{% set test_name = "ssuite" %}
 
 {% block test_target %}
   {{ super() }}
