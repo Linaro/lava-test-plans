@@ -255,6 +255,7 @@ def main():
 
     args, _ = parser.parse_known_args()
     logger.setLevel(args.verbose)
+    exit_code = 0
 
     output_path = "tmp"
     if args.dryrun:
@@ -302,18 +303,23 @@ def main():
             logger.debug(lava_job)
         except DuplicateKeyError as e:
             logger.error(e)
+            exit_code = 1
         except ConstructorError as e:
             logger.error(e)
+            exit_code = 1
         except DuplicateKeyFutureWarning as e:
             logger.error(e)
+            exit_code = 1
         except ScannerError as e:
             logger.error(e)
+            exit_code = 1
         except TemplateSyntaxError as e:
             testpath = os.path.join(output_path, args.device_type, test)
             logger.error("Trying to render: %s" % testpath)
             logger.error("Error in file: %s" % e.name)
             logger.error("\tline: %s" % e.lineno)
             logger.error("\tissue: %s" % e.message)
+            exit_code = 1
         if args.dryrun and lava_job is not None:
             testpath = os.path.join(output_path, args.device_type, test)
             logger.info(testpath)
@@ -343,11 +349,12 @@ def main():
                 volumes={"%s" % testpath: {"bind": "/data", "mode": "rw"}},
                 detach=True,
             )
-            exit_code = container.wait()
+            container_exit_code = container.wait()
             logger.debug(exit_code)
-            if exit_code["StatusCode"] != 0:
+            if container_exit_code["StatusCode"] != 0:
                 logger.error("LAVA validation of %s/%s failed" % (testpath, test))
                 logger.error(container.logs())
+                exit_code = 1
 
     if not args.dryrun:
         qa_server_base = args.qa_server
@@ -398,6 +405,8 @@ def main():
                 )
             if args.lava_token:
                 _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token)
+    else:
+        exit(exit_code)
 
 
 if __name__ == "__main__":
