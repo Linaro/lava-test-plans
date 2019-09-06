@@ -1,4 +1,4 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% block global_settings %}
 {{ super() }}
@@ -11,7 +11,7 @@
   kvm-unit-tests__url: 'https://git.kernel.org/pub/scm/virt/kvm/kvm-unit-tests.git'
 {% endblock metadata %}
 
-{% block job_name %}lkft-kvm-unit-tests-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+{% set test_name = "kvm-unit-tests" %}
 
 {% block test_target %}
   {{ super() }}

@@ -1,4 +1,4 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% set job_timeout = 45 %}
 {% block metadata %}
@@ -8,7 +8,7 @@
   libhugetlbfs__revision: "{{LIBHUGETLBFS_REVISION | default('unknown')}}"
 {% endblock metadata %}
 
-{% block job_name %}lkft-libhugetlbfs-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+{% set test_name = "libhugetlbfs" %}
 
 {% block test_target %}
   {{ super() }}

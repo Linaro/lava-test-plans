@@ -1,9 +1,9 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% set job_timeout = 150 %}
 {% set BOOT_OS_PROMPT = 'root@qemuarm64:~#' %}
 
-{% block job_name %}{{PROJECT_NAME}}-{{QA_SERVER_PROJECT}}-functional-{{BUILD_NUMBER}}{% endblock job_name %}
+{% set test_name = "functional" %}
 
 {% block test_target %}
   {{ super() }}

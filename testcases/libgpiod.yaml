@@ -1,4 +1,4 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% set job_timeout = 25 %}
 {% block metadata %}
@@ -8,7 +8,7 @@
   libgpiod__revision: "{{LIBGPIOD_REVISION | default('unknown')}}"
 {% endblock metadata %}
 
-{% block job_name %}lkft-libgpiod-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+{% set test_name = "libgpiod" %}
 
 {% block test_target %}
   {{ super() }}

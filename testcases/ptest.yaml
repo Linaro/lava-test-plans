@@ -1,11 +1,11 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% set job_timeout = 160 %}
 {% block metadata %}
   {{ super() }}
 {% endblock metadata %}
 
-{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-ptest-{{BUILD_NUMBER}}{% endblock job_name %}
+{% set test_name = "ptest" %}
 
 {% block test_target %}
   {{ super() }}
@@ -16,5 +16,5 @@
       params:
         EXCLUDE: {{PTEST_EXCLUDE}}
       timeout:
-        minutes: 160
+        minutes: {{ job_timeout }}
 {% endblock test_target %}

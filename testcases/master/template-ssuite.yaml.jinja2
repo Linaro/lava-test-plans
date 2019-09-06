@@ -1,4 +1,4 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% set job_timeout = 75 %}
 {% block metadata %}
@@ -8,7 +8,7 @@
   ssuite__revision: "{{SSUITE_REVISION | default('unknown')}}"
 {% endblock metadata %}
 
-{% block job_name %}lkft-ssuite-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+{% test_name = "ssuite" %}
 
 {% block test_target %}
   {{ super() }}

@@ -4,8 +4,9 @@
 {%- if vsyscall_mode is defined %}
   {%- set vsyscall_suffix = "-vsyscall-mode-"+vsyscall_mode %}
 {%- endif -%}
+{% set test_name = "kselftests" + vsyscall_suffix %}
 
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% block global_settings %}
 {{ super() }}
@@ -23,8 +24,6 @@
   kselftest__version: "{{KSELFTESTS_VERSION | default('unknown')}}"
   kselftest__revision: "{{KSELFTESTS_REVISION | default('unknown')}}"
 {% endblock metadata %}
-
-{% block job_name %}lkft-kselftests{{vsyscall_suffix}}-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
 
 {% block test_target %}
   {{ super() }}

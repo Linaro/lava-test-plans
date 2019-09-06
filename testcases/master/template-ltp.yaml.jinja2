@@ -1,4 +1,9 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% if KERNEL_BRANCH is undefined %}{% set KERNEL_BRANCH = "" %}{% endif %}
+{% if OS_INFO is undefined %}{% set OS_INFO = "" %}{% endif %}
+
+{% set test_name = "ltp-" + testnames|join('-') %}
 
 {% block metadata %}
   {{ super() }}
@@ -8,8 +13,6 @@
   ltp-{{testname}}-tests__revision: "{{LTP_REVISION | default('unknown')}}"
 {% endfor %}
 {% endblock metadata %}
-
-{% block job_name %}lkft-ltp-{{testnames|join('-')}}-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
 
 {% block test_target %}
   {{ super() }}

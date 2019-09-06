@@ -1,11 +1,11 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% set job_timeout = 90 %}
 {% block metadata %}
   {{ super() }}
 {% endblock metadata %}
 
-{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-pmwg-{{BUILD_NUMBER}}{% endblock job_name %}
+{% set test_name = "pmwg" %}
 
 {% block test_target %}
   {{ super() }}
