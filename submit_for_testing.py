@@ -310,8 +310,10 @@ def main():
             logger.error(e)
         except TemplateSyntaxError as e:
             testpath = os.path.join(output_path, args.device_type, test)
-            logger.error(testpath)
-            logger.error(e)
+            logger.error("Trying to render: %s" % testpath)
+            logger.error("Error in file: %s" % e.name)
+            logger.error("\tline: %s" % e.lineno)
+            logger.error("\tissue: %s" % e.message)
         if args.dryrun and lava_job is not None:
             testpath = os.path.join(output_path, args.device_type, test)
             logger.info(testpath)
