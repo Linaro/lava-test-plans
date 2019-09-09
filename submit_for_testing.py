@@ -395,7 +395,7 @@ def main():
 
         for lava_job in lava_jobs:
             """ Submit lava jobs """
-            if args.qa_reports_token:
+            if args.qa_token:
                 _submit_to_squad(
                     lava_job,
                     lava_url_base,
