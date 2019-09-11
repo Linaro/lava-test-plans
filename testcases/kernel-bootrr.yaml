@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set job_timeout = 90 %}
+{% set test_timeout = 90 %}
 {% set rootfs = false %}
 {% set apply_overlay_bootimg = true %}
 {% set auto_login = false %}

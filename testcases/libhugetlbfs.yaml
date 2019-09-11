@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set job_timeout = 45 %}
+{% set test_timeout = 45 %}
 {% block metadata %}
   {{ super() }}
   libhugetlbfs__url: "{{LIBHUGETLBFS_URL | default('unknown')}}"

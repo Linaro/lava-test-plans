@@ -1,7 +1,7 @@
 {% extends "testcases/master/template-ltp.yaml.jinja2" %}
 
 {% set testnames = ['cve'] %}
-{% set job_timeout = 60 %}
+{% set test_timeout = 60 %}
 
 {% block metadata %}
   {{ super() }}

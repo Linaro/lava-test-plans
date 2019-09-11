@@ -1,6 +1,6 @@
 {% extends device_type %}
 
-{% set job_timeout = 75 %}
+{% set test_timeout = 75 %}
 {% block metadata %}
   {{ super() }}
   ltp-open-posix-tests__url: "{{LTP_URL | default('unknown')}}"

@@ -5,7 +5,7 @@
   extra_kernel_args: 'kvm.enable_vmware_backdoor=1 kvm.force_emulation_prefix=1'
 {% endblock global_settings %}
 
-{% set job_timeout = 25 %}
+{% set test_timeout = 25 %}
 {% block metadata %}
   {{ super() }}
   kvm-unit-tests__url: 'https://git.kernel.org/pub/scm/virt/kvm/kvm-unit-tests.git'

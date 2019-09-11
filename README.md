@@ -18,3 +18,15 @@ variables:
  * *OS_INFO*: used in test job name
  * *LAVA_JOB_PRIORITY*: priority of the LAVA job, used by LAVA scheduler
  * *LAVA_JOB_VISIBILITY*: defaults to *public*. This block can be used to restrict job visibility to user or group.
+
+## Timeouts
+
+Overall job timeout is a sum of action timeouts. There are 6 components:
+ * *lxc_deploy_timeout*
+ * *lxc_boot_timeout*
+ * *lxc_install_fastboot_timeout*
+ * *target_deploy_timeout*
+ * *target_boot_timeout*
+ * *test_timeout*
+
+When LXC is not in use all *lxc_* timeouts are set to 0. *test_timeout* is defined for each test template. *target_* timeouts can be set separately for each device.

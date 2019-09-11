@@ -1,9 +1,18 @@
 {% extends "master.jinja2" %}
 
+{# timeouts #}
+{% if lxc_deploy_timeout is undefined %}{% set lxc_deploy_timeout = 15 %}{% endif %}
+{% if lxc_boot_timeout is undefined %}{% set lxc_boot_timeout = 5 %}{% endif %}
+{% if lxc_install_fastboot_timeout is undefined %}{% set lxc_install_fastboot_timeout = 10 %}{% endif %}
+{% if target_deploy_timeout is undefined %}{% set target_deploy_timeout = 40 %}{% endif %}
+{% if target_boot_timeout is undefined %}{% set target_boot_timeout = 15 %}{% endif %}
+{% if test_timeout is undefined %}{% set test_timeout = 60 %}{% endif %}
+{% set job_timeout = lxc_deploy_timeout + lxc_boot_timeout + lxc_install_fastboot_timeout + target_deploy_timeout + target_boot_timeout + test_timeout %}
+
 {% block global_settings %}
 timeouts:
   job:
-    minutes: {% if job_timeout is defined %}{{ job_timeout + 10 }}{% else %}20{% endif %}
+    minutes: {% if job_timeout is defined %}{{ job_timeout }}{% else %}20{% endif %}
   connection:
     minutes: 2
 

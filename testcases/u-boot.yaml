@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set job_timeout = 90 %}
+{% set test_timeout = 90 %}
 {% set boot_bootloader = true %}
 {% if run_fpga_command is undefined %}{% set run_fpga_command = false %}{% endif %}
 {% if run_nand_commands is undefined %}{% set run_nand_commands = false %}{% endif %}

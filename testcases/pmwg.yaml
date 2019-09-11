@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set job_timeout = 90 %}
+{% set test_timeout = 90 %}
 {% block metadata %}
   {{ super() }}
 {% endblock metadata %}
@@ -23,7 +23,7 @@
       name: ssh-enable-target-login-inline
       path: inline/ssh-enable-target-login.yaml
       timeout:
-        minutes: 5
+        minutes: {{ test_timeout / 18 }}
 {% endblock test_target %}
 
 {% block test_lxc %}
@@ -37,7 +37,7 @@
       path: testdefs/arm-probe.yaml
       name: arm-probe
       timeout:
-        minutes: 10
+        minutes: {{ test_timeout / 9 }}
 
     - from: inline
       repository:
@@ -56,7 +56,7 @@
       name: prep-inline
       path: inline/prep.yaml
       timeout:
-        minutes: 10
+        minutes: {{ test_timeout / 9 }}
 
     - repository: https://git.linaro.org/qa/test-definitions.git
       from: git
@@ -68,7 +68,7 @@
         ARTIFACTORIAL_URL: https://archive.validation.linaro.org/artifacts/team/qcomlt/
       name: linux-pmwg
       timeout:
-        minutes: 60
+        minutes: {{ test_timeout / 1.5 }}
 {% endblock test_lxc %}
 
 {% block visibility %}

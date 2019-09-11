@@ -1,4 +1,4 @@
 {% extends "testcases/master/template-ltp.yaml.jinja2" %}
 
 {% set testnames = ['io', 'dio'] %}
-{% set job_timeout = 20 %}
+{% set test_timeout = 20 %}

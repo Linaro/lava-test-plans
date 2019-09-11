@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set job_timeout = 160 %}
+{% set test_timeout = 160 %}
 {% block metadata %}
   {{ super() }}
 {% endblock metadata %}
@@ -16,5 +16,5 @@
       params:
         EXCLUDE: {{PTEST_EXCLUDE}}
       timeout:
-        minutes: {{ job_timeout }}
+        minutes: {{ test_timeout }}
 {% endblock test_target %}

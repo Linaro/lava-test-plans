@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set job_timeout = 150 %}
+{% set test_timeout = 150 %}
 {% set BOOT_OS_PROMPT = 'root@qemuarm64:~#' %}
 
 {% set test_name = "functional" %}

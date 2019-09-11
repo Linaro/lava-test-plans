@@ -17,7 +17,7 @@
   {%- endif %}
 {% endblock global_settings %}
 
-{% set job_timeout = 55 %}
+{% set test_timeout = 55 %}
 {% block metadata %}
   {{ super() }}
   kselftest__url: "{{KSELFTESTS_URL | default('unknown')}}"
