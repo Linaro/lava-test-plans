@@ -1,37 +1,23 @@
 {% extends "lkft-nfs.jinja2" %}
 
 {% set run_nand_commands = true %}
+{% set target_deploy_timeout = 5 %}
+{% set boot_method = "u-boot" %}
+{% set target_boot_timeout = 10 %}
+{% set auto_login = true %}
+{% set auto_login_prompt = "login:" %}
+{% set auto_login_username = "root" %}
+{% set auto_login_password_prompt = "Password:" %}
+{% set auto_login_password = "P@ssword-1" %}
+{% set BOOT_OS_PROMTP = "root@rzn1-snarc:" %}
 
 {% block device_type %}rzn1d{% endblock %}
 
-{% block deploy_target %}
-- deploy:
-    timeout:
-      minutes: 5
-    to: tftp
-    optee:
-      url: {{OPTEE_ITB_URL}}
-    uboot:
-      url: {{UBOOT_ITB_URL}}
-    kernel:
-      url: {{KERNEL_FIT_URL}}
+{% block kernel_extra_args %}
       type: uimage
-{% endblock deploy_target %}
+{% endblock kernel_extra_args %}
 
-{% block boot_target %}
-{% if boot_bootloader %}
-- boot:
-    timeout:
-      minutes: 1
-    method: bootloader
-    bootloader: u-boot
-    commands: []
-    prompts: ['=>']
-{% else %}
-- boot:
-    timeout:
-      minutes: 10
-    method: u-boot
+{% block boot_commands %}
     commands:
       - setenv autoload no
       - dhcp
@@ -41,12 +27,4 @@
       - tftp {KERNEL_ADDR} {KERNEL}
       - run LINUX_BOOTARGS
       - bootm {KERNEL_ADDR}#conf@1 
-    auto_login:
-      login_prompt: 'login:'
-      username: root
-      password_prompt: "Password:"
-      password: "P@ssword-1"
-    prompts:
-    - "root@rzn1-snarc:"
-{% endif %}
-{% endblock boot_target %}
+{% endblock boot_commands %}
