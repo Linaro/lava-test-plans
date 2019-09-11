@@ -16,6 +16,4 @@
         GST_IGNORE_TESTS_REPO: {{GST_IGNORE_TESTS_REPO}}
         GST_IGNORE_TESTS_FILE: {{GST_IGNORE_TESTS_FILE}}
       name: linux-gst-validate
-      timeout:
-        minutes: 120
 {% endblock test_target %}

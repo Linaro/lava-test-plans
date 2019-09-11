@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set test_timeout = 90 %}
+{% set test_timeout = 5 %}
 {% block metadata %}
   {{ super() }}
 {% endblock metadata %}
@@ -15,6 +15,4 @@
       params:
               BOOT: auto
       name: linux-hci-smoke
-      timeout:
-        minutes: 5
 {% endblock test_target %}

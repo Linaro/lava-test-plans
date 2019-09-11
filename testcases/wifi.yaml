@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set test_timeout = 90 %}
+{% set test_timeout = 25 %}
 {% block metadata %}
   {{ super() }}
 {% endblock metadata %}
@@ -15,8 +15,6 @@
       params:
         DEVICE: {{WLAN_DEVICE}}
       name: linux-wlan-smoke
-      timeout:
-        minutes: {{ test_timeout / 18 }}
 
     - repository: https://git.linaro.org/qa/test-definitions.git
       from: git
@@ -30,6 +28,4 @@
         FILE_CHECKSUM: e5c834fbdaa6bfd8eac5eb9404eefdd4
         TIME_DELAY: {{WLAN_TIME_DELAY}}
       name: linux-wlan-download
-      timeout:
-        minutes: {{ test_timeout / 4.5 }}
 {% endblock test_target %}
