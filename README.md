@@ -16,3 +16,5 @@ variables:
  * *BUILD_NUMBER*: used as last part in the test job name.
  * *KERNEL_BRANCH*: used in test job name
  * *OS_INFO*: used in test job name
+ * *LAVA_JOB_PRIORITY*: priority of the LAVA job, used by LAVA scheduler
+ * *LAVA_JOB_VISIBILITY*: defaults to *public*. This block can be used to restrict job visibility to user or group.

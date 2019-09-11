@@ -1,5 +1,12 @@
 {% extends "lkft-nfs.jinja2" %}
 
+{% set DEPLOY_OS="oe" %}
+{% set rootfs_label="nfsrootfs" %}
+{% set auto_login = true %}
+{% set auto_login_prompt = "login:" %}
+{% set auto_login_username = "root" %}
+{% set boot_method = "u-boot" %}
+
 {% block global_settings %}
 {{ super() }}
 context:
@@ -8,38 +15,14 @@ context:
 
 {% block device_type %}juno-r2{% endblock %}
 
-{% block deploy_target %}
-- deploy:
-    namespace: target
-    timeout:
-      minutes: 10
-    to: tftp
-    os: oe
-    kernel:
-      url: {{KERNEL_URL}}
-      type: image
-    dtb:
-      url: {{DTB_URL}}
-    nfsrootfs:
-      url: {{NFSROOTFS_URL}}
-      compression: xz
-
-{% endblock deploy_target %}
-
 {% block boot_target %}
-- boot:
-    namespace: target
-    timeout:
-      minutes: 10
+{{ super() }}
     connection-namespace: recovery
-    method: u-boot
-    commands: nfs
-    auto_login:
-      login_prompt: 'login:'
-      username: root
-    prompts:
-    - root@(.*):~#
 {% endblock boot_target %}
+
+{% block boot_commands %}
+    commands: nfs
+{% endblock boot_commands %}
 
 {% block test_target %}
   {{ super() }}

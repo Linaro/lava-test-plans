@@ -1,30 +1,28 @@
-{% extends "lkft-nfs.jinja2" %}
+{% extends "lkft-fastboot.jinja2" %}
 
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
+{% set rootfs_label = "rootfs" %}
+{% set deploy_target = "tmpfs" %}
+{% set boot = false %}
+{% set apply_overlay = None %}
 
 {% block global_settings %}
 {{ super() }}
-context:
   arch: i386
   guestfs_interface: virtio
 {% endblock global_settings %}
 
 {% block device_type %}qemu{% endblock %}
 
-{% block deploy_target %}
-- deploy:
-    namespace: target
-    timeout:
-      minutes: 15
-    to: tmpfs
-    images:
-      rootfs:
+{% block lxc %}
+{% endblock lxc %}
+{% block protocols %}
+{% endblock protocols %}
+
+{% block rootfs_extra_args %}
         image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp 4 -nographic
-        url: {{HDD_URL}}
-        compression: xz
-    os: oe
-{% endblock deploy_target %}
+{% endblock rootfs_extra_args %}
 
 {% block boot_target %}
 - boot:

@@ -1,8 +1,13 @@
-{% extends "lkft-nfs.jinja2" %}
+{% extends "lkft-fastboot.jinja2" %}
+
+{% set apply_overlay = "rootfs" %}
+{% set boot_label = "kernel" %}
+{% set rootfs_label = "rootfs" %}
+{% set boot_image_arg = "-kernel {kernel} --append \"console=ttyAMA0 root=/dev/vda rw\"" %}
+{% set deploy_target = "tmpfs" %}
 
 {% block global_settings %}
 {{ super() }}
-context:
   arch: arm64
   netdevice: tap
   machine: virt-2.10,accel=kvm
@@ -12,25 +17,20 @@ context:
 
 {% block device_type %}qemu-arm{% endblock %}
 
-{% block deploy_target %}
-- deploy:
-    namespace: target
-    timeout:
-      minutes: 15
-    to: tmpfs
-    images:
-      rootfs:
+{% block lxc %}
+{% endblock lxc %}
+{% block protocols %}
+{% endblock protocols %}
+
+{% block rootfs_extra_args %}
         image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp 4 -nographic
-        url: {{EXT4_IMAGE_URL}}
-        compression: gz
-        apply-overlay: true
         sparse: false
-      kernel:
+{% endblock rootfs_extra_args %}
+
+{% block boot_extra_args %}
         image_arg: -kernel {kernel} --append "console=ttyAMA0 root=/dev/vda rw"
-        url: {{KERNEL_URL}}
         type: image
-    os: oe
-{% endblock deploy_target %}
+{% endblock boot_extra_args %}
 
 {% block boot_target %}
 - boot:

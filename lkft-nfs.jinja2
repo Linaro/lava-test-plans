@@ -3,9 +3,50 @@
 {% block actions %}
 
 {% block deploy_target %}
+- deploy:
+    namespace: target
+    timeout:
+      minutes: 15
+    to: tftp
+    kernel:
+      url: {{KERNEL_URL}}
+{% if KERNEL_URL_COMP is defined %}
+      compression: {{KERNEL_URL_COMP}}
+{% endif %}
+{% if DTB_URL is defined %}
+    dtb:
+      url: {{DTB_URL}}
+{% endif %}
+{% if rootfs == true %}
+    {{ rootfs_label }}:
+      url: {{ROOTFS_URL}}
+{% if ROOTFS_URL_COMP is defined %}
+      compression: {{ROOTFS_URL_COMP}}
+{% endif %}
+{% endif %}
+    os: {{DEPLOY_OS}}
 {% endblock deploy_target %}
 
 {% block boot_target %}
+- boot:
+    namespace: target
+{% if auto_login == true %}
+    auto_login:
+      login_prompt: "{{ auto_login_prompt }}"
+      username: "{{ auto_login_username }}"
+{% block auto_login_commands %}
+{% endblock auto_login_commands %}
+{% endif %}
+    prompts:
+    - 'root@(.*):[/~]#'
+{% if BOOT_OS_PROMPT is defined %}
+    - "{{BOOT_OS_PROMPT}}"
+{% endif %}
+    timeout:
+      minutes: 15
+    method: {{ boot_method }}
+{% block boot_commands %}
+{% endblock boot_commands %}
 {% endblock boot_target %}
 
 {% block test_target %}

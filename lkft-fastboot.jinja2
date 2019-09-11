@@ -4,6 +4,7 @@
 {% if install_fastboot is undefined %}{% set install_fastboot = true %}{% endif %}
 {% if ptable is undefined %}{% set prable = false %}{% endif %}
 {% if boot is undefined %}{% set boot = true %}{% endif %}
+{% if boot_label is undefined %}{% set boot_label = "boot" %}{% endif %}
 {% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
 {% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
 {% if apply_overlay is undefined %}{% set apply_overlay = "rootfs" %}{% endif %}
@@ -31,6 +32,7 @@ protocols:
 {% endblock protocols %}
 
 {% block actions %}
+{% block lxc %}
 - deploy:
     namespace: tlxc
     timeout:
@@ -72,6 +74,7 @@ protocols:
       parameters:
         LINK: 'https://dl.google.com/android/repository/platform-tools_r26.0.0-linux.zip'
 {% endif %}
+{% endblock lxc %}
 
 {% block deploy_target %}
 - deploy:
@@ -88,7 +91,7 @@ protocols:
 {% endif %}
 {% endif %}
 {% if boot == true %}
-      boot:
+      {{ boot_label }}:
         url: {{BOOT_URL}}
 {% if BOOT_URL_COMP is defined %}
         compression: {{BOOT_URL_COMP}}
@@ -96,6 +99,8 @@ protocols:
 {% if apply_overlay == "bootimg" %}
         apply-overlay: true
 {% endif %}
+{% block boot_extra_args %}
+{% endblock boot_extra_args %}
 {% endif %}
 {% if rootfs == true %}
       {{ rootfs_label }}:
@@ -106,6 +111,8 @@ protocols:
 {% if apply_overlay == "rootfs" %}
         apply-overlay: true
 {% endif %}
+{% block rootfs_extra_args %}
+{% endblock rootfs_extra_args %}
 {% endif %}
     os: {{DEPLOY_OS}}
 {% endblock deploy_target %}

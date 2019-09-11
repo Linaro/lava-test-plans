@@ -12,7 +12,7 @@ timeouts:
 {% endblock global_settings %}
 
 {% block priority %}{{LAVA_JOB_PRIORITY}}{% endblock priority %}
-{% block visibility %}public{% endblock visibility %}
+{% block visibility %}{% if LAVA_JOB_VISIBILITY is undefined %}public{% else %}{{LAVA_JOB_VISIBILITY}}{% endif %}{% endblock visibility %}
 
 {% block metadata %}
   git branch: {{KERNEL_BRANCH}}

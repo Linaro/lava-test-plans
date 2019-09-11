@@ -1,5 +1,13 @@
 {% extends "lkft-nfs.jinja2" %}
 
+{% set DEPLOY_OS="oe" %}
+{% set rootfs_label="nfsrootfs" %}
+{% set auto_login = true %}
+{% set auto_login_prompt = "login:" %}
+{% set auto_login_username = "root" %}
+{% set boot_method = "ipxe" %}
+{% set BOOT_OS_PROMPT = "root@intel-corei7-64:" %}
+
 {% block global_settings %}
 {{ super() }}
 context:
@@ -8,38 +16,16 @@ context:
 
 {% block device_type %}x86{% endblock %}
 
-{% block deploy_target %}
-- deploy:
-    namespace: target
-    timeout:
-      minutes: 15
-    to: tftp
-    kernel:
-      url: {{KERNEL_URL}}
-    nfsrootfs:
-      url: {{NFSROOTFS_URL}}
-      compression: xz
-    os: oe
-{% endblock deploy_target %}
-
-{% block boot_target %}
-- boot:
-    namespace: target
-    timeout:
-      minutes: 10
-    method: ipxe
+{% block boot_commands %}
     commands: nfs
     parameters:
       shutdown-message: "reboot: Restarting system"
-    auto_login:
-      login_prompt: 'login:'
-      username: root
+{% endblock boot_commands %}
+
+{% block auto_login_commands %}
       login_commands:
         - su
-    prompts:
-    - 'root@intel-core2-32:'
-    - 'root@intel-corei7-64:'
-{% endblock boot_target %}
+{% endblock auto_login_commands %}
 
 {% block test_target %}
   {{ super() }}
