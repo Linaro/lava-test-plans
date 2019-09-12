@@ -83,7 +83,7 @@ def _load_template(template_name, template_path, device_type):
                 template = f.read()
         else:
             logger.error(
-                "template (%s) was specified but does not existi" % template_file_name
+                "template (%s) was specified but does not exist" % template_file_name
             )
             sys.exit(1)
 
@@ -221,7 +221,7 @@ def main():
         "--test-plan",
         help="""Directory containing Jinja2 templates to submit for testing.
                         It is assumed that the templates produce valid LAVA job
-                        definitions. All varaibles are substituted using Jinja2
+                        definitions. All variables are substituted using Jinja2
                         engine""",
         dest="test_plan",
         required=True,
@@ -282,7 +282,7 @@ def main():
     with open(args.variables, "r") as vars_file:
         for line in vars_file:
             if not line.startswith("#"):  # ignore lines starting with comment
-                key, value = line.strip().split("=")
+                key, value = line.strip().split("=", maxsplit=1)
                 context.update({key: value})
     for variable in args.overwrite_variables:
         key, value = variable.split("=")
@@ -395,7 +395,7 @@ def main():
 
         for lava_job in lava_jobs:
             """ Submit lava jobs """
-            if args.qa_reports_token:
+            if args.qa_token:
                 _submit_to_squad(
                     lava_job,
                     lava_url_base,
