@@ -9,6 +9,10 @@
 {% if test_timeout is undefined %}{% set test_timeout = 60 %}{% endif %}
 {% set job_timeout = lxc_deploy_timeout + lxc_boot_timeout + lxc_install_fastboot_timeout + target_deploy_timeout + target_boot_timeout + test_timeout %}
 
+{# variables #}
+{% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
+{% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
+
 {% block global_settings %}
 timeouts:
   job:
