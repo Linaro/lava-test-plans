@@ -1,5 +1,20 @@
 [![Build Status](https://travis-ci.org/mwasilew/lava-test-plans.svg?branch=master)](https://travis-ci.org/mwasilew/lava-test-plans)
 
+# Installation
+
+To install the latest development version:
+
+    git clone https://github.com/Linaro/lava-test-plans.git
+    cd ./lava-test-plans
+
+You need to install Python dependencies:
+
+    pip3 install -r requirements.txt
+
+If the above commands succeed, you can run to check that the program starts correctly
+
+    ./submit_for_testing.py -h
+
 # External variables
 
 External variables are set in the *variables.ini* file. Each line in this file
