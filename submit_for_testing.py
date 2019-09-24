@@ -399,6 +399,16 @@ def main():
                 exit_code = 1
 
     if not args.dryrun:
+        if not args.qa_server:
+            logger.error("QA-reports server not specified")
+            exit_code = 1
+        if not args.lava_server:
+            logger.error("Lava server not specified")
+            exit_code = 1
+
+        if exit_code != 0:
+            exit(exit_code)
+
         qa_server_base = args.qa_server
         if not (
             qa_server_base.startswith("http://")
