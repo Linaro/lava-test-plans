@@ -359,6 +359,11 @@ def main():
             logger.error("\tline: %s" % e.lineno)
             logger.error("\tissue: %s" % e.message)
             exit_code = 1
+        except UndefinedError as e:
+            testpath = os.path.join(output_path, args.device_type, test)
+            logger.error("Trying to render: %s" % testpath)
+            logger.error("\tissue: %s" % e.message)
+            exit_code = 1
         if args.dryrun and lava_job is not None:
             testpath = os.path.join(
                 output_path, args.device_type, os.path.basename(test)
