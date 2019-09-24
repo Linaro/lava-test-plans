@@ -24,6 +24,10 @@ context:
     commands: nfs
 {% endblock boot_commands %}
 
+{% block kernel_extra_args %}
+      type: image
+{% endblock kernel_extra_args %}
+
 {% block test_target %}
   {{ super() }}
     - from: inline
