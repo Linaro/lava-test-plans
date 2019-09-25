@@ -185,9 +185,10 @@ def main():
     # rendering parameters (test plan)
     parser.add_argument(
         "--variables",
-        help="Path to file with variable values",
+        help="Path to file(s) with variable values",
         dest="variables",
         required=True,
+        nargs="+",
     )
     parser.add_argument(
         "--overwrite-variables",
@@ -279,11 +280,12 @@ def main():
             undefined=LoggingUndefined,
         )
     context = {}
-    with open(args.variables, "r") as vars_file:
-        for line in vars_file:
-            if not line.startswith("#"):  # ignore lines starting with comment
-                key, value = line.strip().split("=", maxsplit=1)
-                context.update({key: value})
+    for variables in args.variables:
+        with open(variables, "r") as vars_file:
+            for line in vars_file:
+                if not line.startswith("#"):  # ignore lines starting with comment
+                    key, value = line.strip().split("=", maxsplit=1)
+                    context.update({key: value})
     for variable in args.overwrite_variables:
         key, value = variable.split("=")
         context.update({key: value})
