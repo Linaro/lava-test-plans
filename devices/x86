@@ -28,7 +28,11 @@ context:
 {% endblock auto_login_commands %}
 
 {% block test_target %}
-  {{ super() }}
+- test:
+    namespace: target
+    timeout:
+      minutes: 5
+    definitions:
     - from: inline
       repository:
         metadata:
@@ -46,5 +50,6 @@ context:
           - mount
       name: prep-tmp-disk
       path: inline/prep.yaml
+  {{ super() }}
 {% endblock test_target %}
 

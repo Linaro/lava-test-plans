@@ -29,7 +29,11 @@ context:
 {% endblock kernel_extra_args %}
 
 {% block test_target %}
-  {{ super() }}
+- test:
+    namespace: target
+    timeout:
+      minutes: 5
+    definitions:
     - from: inline
       repository:
         metadata:
@@ -47,4 +51,5 @@ context:
           - mount
       name: prep-inline
       path: inline/prep.yaml
+  {{ super() }}
 {% endblock test_target %}
