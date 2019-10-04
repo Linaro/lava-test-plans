@@ -13,6 +13,9 @@ install:
   - pip install black
 
 script:
+  # check if all tests work with all devices
+  - ./selftests.sh
+  # check if all tests plans work properly
   - ./submit_for_testing.py --variables variables.ini --device-type x15 --dry-run --test-plan lkft-full --test-lava-validity
   - ./submit_for_testing.py --variables variables.ini --device-type x86 --dry-run --test-plan lkft-full --test-lava-validity
   - ./submit_for_testing.py --variables variables.ini --device-type qemu_x86_64 --dry-run --test-plan lkft-full --test-lava-validity
