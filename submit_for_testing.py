@@ -23,6 +23,7 @@ from ruamel.yaml.constructor import (
     DuplicateKeyFutureWarning,
 )
 from ruamel.yaml.scanner import ScannerError
+from ruamel.yaml.parser import ParserError
 
 import logging
 
@@ -342,6 +343,11 @@ def main():
             logger.error(e)
             exit_code = 1
         except ScannerError as e:
+            logger.error(e)
+            exit_code = 1
+        except ParserError as e:
+            testpath = os.path.join(output_path, args.device_type, test)
+            logger.error("Failed to parse: %s" % testpath)
             logger.error(e)
             exit_code = 1
         except TemplateSyntaxError as e:
