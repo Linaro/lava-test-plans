@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: lava-test-plans
+Upstream-Contact: Linaro validation mailing list <linaro-validation@lists.linaro.org>
+Source: https://github.com/Linaro/lava-test-plans
+
+Files: *
+Copyright: 2019 Linaro Limited
+License: MIT
