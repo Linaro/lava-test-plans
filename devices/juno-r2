@@ -17,7 +17,6 @@ context:
 
 {% block boot_target %}
 {{ super() }}
-    connection-namespace: recovery
 {% endblock boot_target %}
 
 {% block boot_commands %}
