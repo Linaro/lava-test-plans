@@ -2,9 +2,9 @@
 
 {% set run_nand_commands = true %}
 {% set target_deploy_timeout = 5 %}
-{% set boot_method = "u-boot" %}
+{% set boot_method = boot_method|default("u-boot") %}
 {% set target_boot_timeout = 10 %}
-{% set auto_login = true %}
+{% set auto_login = auto_login|default(true) %}
 {% set auto_login_prompt = "login:" %}
 {% set auto_login_username = "root" %}
 {% set auto_login_password_prompt = "Password:" %}
@@ -18,6 +18,7 @@
 {% endblock kernel_extra_args %}
 
 {% block boot_commands %}
+{% if boot_method == "u-boot" %}
     commands:
       - setenv autoload no
       - dhcp
@@ -26,5 +27,9 @@
       - setenv serverip {SERVER_IP}
       - tftp {KERNEL_ADDR} {KERNEL}
       - run LINUX_BOOTARGS
-      - bootm {KERNEL_ADDR}#conf@1 
+      - bootm {KERNEL_ADDR}#conf@1
+{% elif boot_method == "bootloader" %}
+    bootloader: u-boot
+    commands: []
+{% endif %}
 {% endblock boot_commands %}
