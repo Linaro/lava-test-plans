@@ -3,8 +3,8 @@
 {% set run_fpga_command = false %}
 {% set target_deploy_timeout = 5 %}
 {% set rootfs_label = "nfsrootfs" %}
-{% set boot_method = "u-boot" %}
-{% set auto_login = true %}
+{% set boot_method = boot_method|default("u-boot") %}
+{% set auto_login = auto_login|default(true) %}
 {% set auto_login_prompt = "login:" %}
 {% set auto_login_username = "root" %}
 {% set auto_login_password_prompt = "Password:" %}
@@ -31,6 +31,7 @@
 {% endblock kernel_extra_args %}
 
 {% block boot_commands %}
+{% if boot_method == "u-boot" %}
     commands:
       - run FPGA_INIT
       - setenv autoload no
@@ -42,6 +43,10 @@
       - tftp 0x00000100 {DTB}
       - "setenv bootargs 'console=ttyS0,115200n8 root=/dev/nfs rw nfsroot={NFS_SERVER_IP}:{NFSROOTFS},tcp,hard,intr,vers=3 rootwait coherent_pool=2M ip=dhcp'"
       - '{BOOTX}'
+{% elif boot_method == "bootloader" %}
+    bootloader: u-boot
+    commands: []
+{% endif %}
 {% endblock boot_commands %}
 
 {% block auto_login_commands %}
