@@ -380,14 +380,13 @@ def main():
         client = docker.from_env()
         logger.debug("Checking for LAVA validity")
         for test in test_list:
-            testpath = os.path.join(
-                os.getcwd(), output_path, args.device_type, os.path.basename(test)
-            )
+            testpath = os.path.join(os.getcwd(), output_path, args.device_type)
             logger.debug(testpath)
             logger.debug(test)
             container = client.containers.run(
                 image="lavasoftware/amd64-lava-server:2019.07",
-                command="/usr/share/lava-common/lava-schema.py job /data/%s" % test,
+                command="/usr/share/lava-common/lava-schema.py job /data/%s"
+                % test.rsplit("/", maxsplit=1)[1],
                 volumes={"%s" % testpath: {"bind": "/data", "mode": "rw"}},
                 detach=True,
             )
