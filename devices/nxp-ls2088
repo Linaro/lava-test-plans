@@ -1,0 +1,32 @@
+{% extends "lkft-nfs.jinja2" %}
+
+{% set DEPLOY_OS="debian" %}
+{% set rootfs_label="nfsrootfs" %}
+{% set auto_login = true %}
+{% set auto_login_prompt = "login:" %}
+{% set auto_login_username = "root" %}
+{% set boot_method = "u-boot" %}
+
+{% block global_settings %}
+{{ super() }}
+context:
+  arch: arm64
+{% endblock global_settings %}
+
+{% block device_type %}nxp-ls2088{% endblock %}
+
+{% block boot_target %}
+{{ super() }}
+{% endblock boot_target %}
+
+{% block boot_commands %}
+    commands: nfs
+{% endblock boot_commands %}
+
+{% block kernel_extra_args %}
+      type: image
+{% endblock kernel_extra_args %}
+
+{% block test_target %}
+  {{ super() }}
+{% endblock test_target %}
