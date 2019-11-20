@@ -23,6 +23,13 @@
     dtb:
       url: {{DTB_URL}}
 {% endif %}
+{% if MODULES_URL is defined %}
+    modules:
+      url: {{MODULES_URL}}
+{% if MODULES_URL_COMP is defined %}
+      compression: {{MODULES_URL_COMP}}
+{% endif %}
+{% endif %}
 {% if OPTEE_URL is defined %}
     optee:
       url: {{OPTEE_URL}}
