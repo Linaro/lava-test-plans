@@ -25,5 +25,5 @@
         IGNORE_TESTS_REPO: {{PIGLIT_IGNORE_TESTS_REPO}}
         IGNORE_TESTS_FILE: {{PIGLIT_IGNORE_TESTS_FILE}}
       timeout:
-        minues: 145
+        minutes: 145
 {% endblock test_target %}
