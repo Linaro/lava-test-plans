@@ -6,12 +6,11 @@
 {% set auto_login_prompt = "login:" %}
 {% set auto_login_username = "root" %}
 {% set boot_method = "u-boot" %}
+{% set use_context = true %}
 
-{% block global_settings %}
-{{ super() }}
-context:
+{% block context %}
   bootloader_prompt: juno#
-{% endblock global_settings %}
+{% endblock context %}
 
 {% block device_type %}juno-r2{% endblock %}
 
