@@ -7,12 +7,11 @@
 {% set auto_login_username = "root" %}
 {% set boot_method = "ipxe" %}
 {% set BOOT_OS_PROMPT = "root@intel-corei7-64:" %}
+{% set use_context = true %}
 
-{% block global_settings %}
-{{ super() }}
-context:
+{% block context %}
   test_character_delay: 10
-{% endblock global_settings %}
+{% endblock context %}
 
 {% block device_type %}x86{% endblock %}
 

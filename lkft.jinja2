@@ -20,6 +20,12 @@ timeouts:
   connection:
     minutes: 2
 
+{% if use_context is defined and use_context == true %}
+context:
+{% block context %}
+{% endblock context %}
+{% endif %}
+
 {% block settings %}
 {% endblock settings %}
 {% endblock global_settings %}

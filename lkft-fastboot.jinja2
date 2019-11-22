@@ -1,5 +1,7 @@
 {% extends "lkft.jinja2" %}
 
+{% set use_context = true %}
+
 {% if install_packages is undefined %}{% set install_packages = true %}{% endif %}
 {% if install_fastboot is undefined %}{% set install_fastboot = true %}{% endif %}
 {% if ptable is undefined %}{% set prable = false %}{% endif %}
@@ -16,11 +18,9 @@
 
 
 
-{% block global_settings %}
-{{ super() }}
-context:
+{% block context %}
   test_character_delay: 10
-{% endblock global_settings %}
+{% endblock context %}
 
 {% block protocols %}
 protocols:

@@ -5,17 +5,18 @@
   {%- set vsyscall_suffix = "-vsyscall-mode-"+vsyscall_mode %}
 {%- endif -%}
 {% set test_name = "kselftests" + vsyscall_suffix %}
+{% set use_context = true %}
 
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% block global_settings %}
+{% block context %}
 {{ super() }}
   {#- If vsyscall_mode is defined, pass it as an extra kernel argument #}
   {#- vsyscall_mode may be emulate (default), native, or none.         #}
   {%- if vsyscall_mode is defined %}
   extra_kernel_args: 'vsyscall={{vsyscall_mode}}'
   {%- endif %}
-{% endblock global_settings %}
+{% endblock context %}
 
 {% set test_timeout = 55 %}
 {% block metadata %}
