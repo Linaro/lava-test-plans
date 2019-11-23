@@ -100,6 +100,8 @@ protocols:
 {% if boot == true %}
       {{ boot_label }}:
         url: {{BOOT_URL}}
+{% block kernel_extra_args %}
+{% endblock kernel_extra_args %}
 {% if BOOT_URL_COMP is defined %}
         compression: {{BOOT_URL_COMP}}
 {% endif %}
@@ -108,6 +110,17 @@ protocols:
 {% endif %}
 {% block boot_extra_args %}
 {% endblock boot_extra_args %}
+{% endif %}
+{% if DTB_URL is defined %}
+      dtb:
+        url: {{DTB_URL}}
+{% endif %}
+{% if MODULES_URL is defined %}
+      modules:
+        url: {{MODULES_URL}}
+{% if MODULES_URL_COMP is defined %}
+        compression: {{MODULES_URL_COMP}}
+{% endif %}
 {% endif %}
 {% if rootfs == true %}
       {{ rootfs_label }}:
