@@ -3,7 +3,7 @@
 
 {% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}
-{% set DEPLOY_OS = "oe" %}
+{% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
 {% set ROOTFS_URL_COMP = "gz" %}
 {% set BOOT_OS_PROMPT = "dragonboard-410c:" %}
 
