@@ -2,6 +2,7 @@
 {% if lxc_deploy_timeout is undefined %}{% set lxc_deploy_timeout = 15 %}{% endif %}
 {% if lxc_boot_timeout is undefined %}{% set lxc_boot_timeout = 5 %}{% endif %}
 {% if lxc_install_fastboot_timeout is undefined %}{% set lxc_install_fastboot_timeout = 10 %}{% endif %}
+{% if lxc_test_timeout is undefined %}{% set lxc_test_timeout = 60 %}{% endif %}
 {% if target_deploy_timeout is undefined %}{% set target_deploy_timeout = 40 %}{% endif %}
 {% if target_boot_timeout is undefined %}{% set target_boot_timeout = 15 %}{% endif %}
 {% if test_timeout is undefined %}{% set test_timeout = 60 %}{% endif %}

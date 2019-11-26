@@ -3,3 +3,41 @@
 {% block metadata %}
 {% include "lkft-metadata.jinja2" %}
 {% endblock metadata %}
+
+{% block deploy_target %}
+{{ super() }}
+- test:
+    namespace: tlxc
+    timeout:
+      minutes: {{ lxc_test_timeout }}
+    definitions:
+    - from: inline
+      name: kir
+      path: inline/kir.yaml
+      repository:
+        metadata:
+          description: Squash kernel, dtb and modules into rootfs
+          format: Lava-Test Test Definition 1.0
+          name: resize-rootfs
+        run:
+          steps:
+          - pwd
+          - cd /lava-lxc
+          - git clone -b 20191120 https://github.com/linaro/kir.git
+          - ./kir/lava/board_setup.sh {{DEVICE_TYPE}}
+
+- deploy:
+    timeout:
+      minutes: {{ target_deploy_timeout }}
+    to: fastboot
+    namespace: target
+    images:
+      boot:
+        url: lxc:///{{LXC_BOOT_FILE}}
+{% if rootfs == true %}
+      {{ rootfs_label }}:
+        url: lxc:///{{LXC_ROOTFS_FILE}}
+        apply-overlay: true
+{% endif %}
+    os: {{DEPLOY_OS}}
+{% endblock deploy_target %}
