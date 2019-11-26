@@ -1,0 +1,12 @@
+  git branch: {{KERNEL_BRANCH}}
+  git repo: {{KERNEL_REPO}}
+  git commit: {{KERNEL_COMMIT}}
+  git describe: {{KERNEL_DESCRIBE}}
+  make_kernelversion: "{{MAKE_KERNELVERSION}}"
+  kernel-config: {{KERNEL_CONFIG_URL}}
+  kernel-defconfig: {{KERNEL_DEFCONFIG_URL}}
+  build-url: {{BUILD_URL}}
+  build-location: {{BASE_URL}}/{{PUB_DEST}}
+  toolchain: {{TOOLCHAIN | default('unknown')}}
+  series: lkft
+  email-notification: {{CI_MAIL_RECIPIENTS | default('""')}}

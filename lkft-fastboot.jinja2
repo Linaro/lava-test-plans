@@ -1,4 +1,8 @@
-{% extends "lkft.jinja2" %}
+{% extends "master.jinja2" %}
+
+{% block metadata %}
+{% include "lkft-metadata.jinja2" %}
+{% endblock metadata %}
 
 {% set use_context = true %}
 

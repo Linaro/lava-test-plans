@@ -1,4 +1,8 @@
-{% extends "lkft.jinja2" %}
+{% extends "master.jinja2" %}
+
+{% block metadata %}
+{% include "lkft-metadata.jinja2" %}
+{% endblock metadata %}
 
 {% set lxc_deploy_timeout = 0 %}
 {% set lxc_boot_timeout = 0 %}
