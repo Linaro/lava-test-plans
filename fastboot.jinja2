@@ -142,7 +142,7 @@ protocols:
     namespace: target
 {% if auto_login == true %}
     auto_login:
-      login_prompt: "{{ auto_login_prompt }}"
+      login_prompt: "{{ AUTO_LOGIN_PROMPT }}"
       username: "{{ auto_login_username }}"
 {% block auto_login_commands %}
 {% endblock auto_login_commands %}

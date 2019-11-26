@@ -7,7 +7,6 @@
 {% set rootfs_label = "userdata" %}
 {% set pre_os_command = false %}
 {% set boot_method = "u-boot" %}
-{% set auto_login_prompt = "am57xx-evm login:" %}
 {% set auto_login_username = "root" %}
 {% block device_type %}x15{% endblock %}
 

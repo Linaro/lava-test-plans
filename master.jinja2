@@ -7,6 +7,9 @@
 {% if test_timeout is undefined %}{% set test_timeout = 60 %}{% endif %}
 {% set job_timeout = lxc_deploy_timeout + lxc_boot_timeout + lxc_install_fastboot_timeout + target_deploy_timeout + target_boot_timeout + test_timeout %}
 
+{# auto_login_* #}
+{% if AUTO_LOGIN_PROMPT is undefined %}{% set AUTO_LOGIN_PROMPT = "login:" %}{% endif %}
+
 {% block global_settings %}
 timeouts:
   job:

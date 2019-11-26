@@ -5,7 +5,6 @@
 {% set rootfs_label = "nfsrootfs" %}
 {% set boot_method = boot_method|default("u-boot") %}
 {% set auto_login = auto_login|default(true) %}
-{% set auto_login_prompt = "login:" %}
 {% set auto_login_username = "root" %}
 {% set auto_login_password_prompt = "Password:" %}
 {% set auto_login_password = "P@ssword-1" %}
