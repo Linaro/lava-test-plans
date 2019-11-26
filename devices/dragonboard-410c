@@ -4,7 +4,7 @@
 {% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}
 {% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
-{% set ROOTFS_URL_COMP = "gz" %}
+{% if ROOTFS_URL_COMP is undefined %}{% set ROOTFS_URL_COMP = "gz" %}{% endif %}
 {% set BOOT_OS_PROMPT = "dragonboard-410c:" %}
 
 {% block device_type %}dragonboard-410c{% endblock %}
