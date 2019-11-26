@@ -44,14 +44,19 @@ protocols:
     - wget
     - unzip
 {% if install_packages == true %}
-    - img2simg
-    - simg2img
-    - e2fsprogs
-    - gzip
-    - cpio
-    - git
-    - mktemp
     - abootimg
+    - cpio
+    - curl
+    - e2fsprogs
+    - file
+    - git
+    - gzip
+    - img2simg
+    - libguestfs-tools
+    - mkbootimg
+    - mktemp
+    - simg2img
+    - xz-utils
 {% endif %}
     os: debian
 
