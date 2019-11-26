@@ -1,4 +1,5 @@
-{% extends "lkft-fastboot.jinja2" %}
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"fastboot.jinja2" %}
 
 {% set rootfs = true %}
 {% set rootfs_label = 'system' %}
