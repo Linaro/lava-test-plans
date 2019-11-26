@@ -3,7 +3,6 @@
 {% set DEPLOY_OS="debian" %}
 {% set rootfs_label="nfsrootfs" %}
 {% set auto_login = true %}
-{% set auto_login_username = "root" %}
 {% set boot_method = "u-boot" %}
 {% set use_context = true %}
 

@@ -7,7 +7,6 @@
 {% set PTABLE_URL = "http://images.validation.linaro.org/snapshots.linaro.org/96boards/reference-platform/components/uefi-staging/69/hikey/release/ptable-linux-8g.img" %}
 {% set BOOT_OS_PROMPT = "hikey:~" %}
 {% block device_type %}hi6220-hikey-r2{% endblock %}
-{% set auto_login_username = "linaro" %}
 {% set boot_method = "grub" %}
 {% set DEPLOY_OS = "oe" %}
 

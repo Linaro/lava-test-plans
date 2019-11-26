@@ -3,7 +3,6 @@
 {% set DEPLOY_OS="oe" %}
 {% set rootfs_label="nfsrootfs" %}
 {% set auto_login = true %}
-{% set auto_login_username = "root" %}
 {% set boot_method = "ipxe" %}
 {% set BOOT_OS_PROMPT = "root@intel-corei7-64:" %}
 {% set use_context = true %}

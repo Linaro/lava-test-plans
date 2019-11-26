@@ -1,7 +1,5 @@
 {% extends "fastboot.jinja2" %}
 
-{% set auto_login_username = 'root' %}
-
 {% block deploy_target %}
 {{ super() }}
 {% if rootfs == true %}
