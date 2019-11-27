@@ -1,6 +1,7 @@
-{% extends "lt-qcom-fastboot.jinja2" %}
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"fastboot.jinja2" %}
 
-{% block device_type %}sdm845-mtp{% endblock %}
+{% block device_type %}qcs404-evb-4k{% endblock %}
 
 {% set rootfs_label = 'userdata' %}
 {% set install_packages = false %}
