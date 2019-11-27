@@ -59,11 +59,11 @@
     auto_login:
       login_prompt: "{{ AUTO_LOGIN_PROMPT }}"
       username: "{{ AUTO_LOGIN_USERNAME }}"
-{% if auto_login_password_prompt is defined %}
-      password_prompt: "{{ auto_login_password_prompt }}"
+{% if AUTO_LOGIN_PASSWORD_PROMPT is defined %}
+      password_prompt: "{{ AUTO_LOGIN_PASSWORD_PROMPT }}"
 {% endif %}
-{% if auto_login_password is defined %}
-      password: "{{ auto_login_password }}"
+{% if AUTO_LOGIN_PASSWORD is defined %}
+      password: "{{ AUTO_LOGIN_PASSWORD }}"
 {% endif %}
 {% block auto_login_commands %}
 {% endblock auto_login_commands %}

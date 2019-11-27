@@ -5,8 +5,8 @@
 {% set rootfs_label = "nfsrootfs" %}
 {% set boot_method = boot_method|default("u-boot") %}
 {% set auto_login = auto_login|default(true) %}
-{% set auto_login_password_prompt = "Password:" %}
-{% set auto_login_password = "P@ssword-1" %}
+{% set AUTO_LOGIN_PASSWORD_PROMPT = "Password:" %}
+{% set AUTO_LOGIN_PASSWORD = "P@ssword-1" %}
 {% set BOOT_OS_PROMPT = ["Current password: ", "New password: ", "Retype new password: ", "root@snarc-soca9:"] %}
 
 {% block device_type %}soca9{% endblock %}

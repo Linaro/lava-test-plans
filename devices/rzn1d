@@ -5,8 +5,8 @@
 {% set boot_method = boot_method|default("u-boot") %}
 {% set target_boot_timeout = 10 %}
 {% set auto_login = auto_login|default(true) %}
-{% set auto_login_password_prompt = "Password:" %}
-{% set auto_login_password = "P@ssword-1" %}
+{% set AUTO_LOGIN_PASSWORD_PROMPT = "Password:" %}
+{% set AUTO_LOGIN_PASSWORD = "P@ssword-1" %}
 {% set BOOT_OS_PROMTP = "root@rzn1-snarc:" %}
 
 {% block device_type %}rzn1d{% endblock %}
