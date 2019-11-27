@@ -82,9 +82,6 @@
         apply-overlay: true
 {% endif %}
     os: {{DEPLOY_OS}}
-{% if pre_power_command == true %}
-{% include "pre-power-command.jinja2" %}
-{% endif %}
 {% endblock deploy_target %}
 
 {% block metadata %}
