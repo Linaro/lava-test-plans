@@ -8,3 +8,14 @@
 {% set install_fastboot = false %}
 {% set pre_power_command = false %}
 {% set pre_os_command = false %}
+
+{% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
+{% if ROOTFS_URL_COMP is undefined %}{% set ROOTFS_URL_COMP = "gz" %}{% endif %}
+
+{% block auto_login_commands %}
+{% if AUTO_LOGIN_USERNAME != 'root' %}
+      login_commands:
+        # Become super user to run tests
+        - su
+{% endif %}
+{% endblock auto_login_commands %}
