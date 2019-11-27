@@ -1,4 +1,5 @@
-{% extends "lkft-nfs.jinja2" %}
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"nfs.jinja2" %}
 
 {% set run_nand_commands = true %}
 {% set target_deploy_timeout = 5 %}
