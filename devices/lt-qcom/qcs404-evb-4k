@@ -1,9 +1,0 @@
-{% extends "lt-qcom-fastboot.jinja2" %}
-
-{% block device_type %}qcs404-evb-4k{% endblock %}
-
-{% set rootfs_label = 'userdata' %}
-{% set install_packages = false %}
-{% set install_fastboot = false %}
-{% set pre_power_command = false %}
-{% set pre_os_command = false %}

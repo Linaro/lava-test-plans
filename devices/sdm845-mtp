@@ -1,13 +1,16 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"fastboot.jinja2" %}
 
-{% set rootfs = true %}
-{% set rootfs_label = 'rootfs' %}
+{% block device_type %}sdm845-mtp{% endblock %}
+
+{% set rootfs_label = 'userdata' %}
+{% set install_packages = false %}
+{% set install_fastboot = false %}
+{% set pre_power_command = false %}
+{% set pre_os_command = false %}
+
 {% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
 {% if ROOTFS_URL_COMP is undefined %}{% set ROOTFS_URL_COMP = "gz" %}{% endif %}
-{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "dragonboard-410c:" %}{% endif %}
-
-{% block device_type %}dragonboard-410c{% endblock %}
 
 {% block auto_login_commands %}
 {% if AUTO_LOGIN_USERNAME != 'root' %}
@@ -16,8 +19,3 @@
         - su
 {% endif %}
 {% endblock auto_login_commands %}
-
-{% block deploy_target %}
-{{ super() }}
-{% include "pre-power-command.jinja2" %}
-{% endblock deploy_target %}

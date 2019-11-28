@@ -1,3 +1,0 @@
-{% extends "lt-qcom-fastboot.jinja2" %}
-
-{% block device_type %}dragonboard-820c{% endblock %}

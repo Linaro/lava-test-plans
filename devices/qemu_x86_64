@@ -1,8 +1,9 @@
-{% extends "lkft-fastboot.jinja2" %}
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"fastboot.jinja2" %}
 
 {% set rootfs_label = "rootfs" %}
 {% set deploy_target = "tmpfs" %}
-{% set boot = false %}
+{% set boot_label = "kernel" %}
 {% set apply_overlay = None %}
 
 {% block global_settings %}

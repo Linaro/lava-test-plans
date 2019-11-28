@@ -1,4 +1,5 @@
-{% extends "lkft-fastboot.jinja2" %}
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"fastboot.jinja2" %}
 
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
@@ -6,8 +7,6 @@
 {% set rootfs_label = "userdata" %}
 {% set pre_os_command = false %}
 {% set boot_method = "u-boot" %}
-{% set auto_login_prompt = "am57xx-evm login:" %}
-{% set auto_login_username = "root" %}
 {% block device_type %}x15{% endblock %}
 
 {% block boot_commands %}
