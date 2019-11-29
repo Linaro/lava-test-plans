@@ -109,6 +109,13 @@ protocols:
 {% endif %}
 {% block boot_extra_args %}
 {% endblock boot_extra_args %}
+{% if boot_label != "kernel" and KERNEL_URL is defined %}
+      kernel:
+        url: {{KERNEL_URL}}
+{% if KERNEL_URL_COMP is defined %}
+        compression: {{KERNEL_URL_COMP}}
+{% endif %}
+{% endif %}
 {% endif %}
 {% if DTB_URL is defined %}
       dtb:
