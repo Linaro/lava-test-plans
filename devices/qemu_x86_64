@@ -3,7 +3,7 @@
 
 {% set rootfs_label = "rootfs" %}
 {% set deploy_target = "tmpfs" %}
-{% set boot_label = "kernel" %}
+{% set BOOT_LABEL = "kernel" %}
 {% set apply_overlay = None %}
 
 {% block global_settings %}

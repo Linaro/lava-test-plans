@@ -34,6 +34,7 @@ variables:
  * *LAVA_JOB_PRIORITY*: priority of the LAVA job, used by LAVA scheduler
  * *LAVA_JOB_VISIBILITY*: defaults to *public*. This block can be used to restrict job visibility to user or group.
  * *AUTO_LOGIN_*: default *PROMPT='login:', *USERNAME='root' and *PASSWORD=''.
+ * *BOOT_LABEL: default BOOT_LABEL='boot'.
 
 ## Timeouts
 
