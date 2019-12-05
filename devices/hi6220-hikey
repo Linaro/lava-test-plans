@@ -5,6 +5,7 @@
 {% set rootfs_label = 'system' %}
 {% set ptable = true %}
 {% set PTABLE_URL = "http://images.validation.linaro.org/snapshots.linaro.org/96boards/reference-platform/components/uefi-staging/69/hikey/release/ptable-linux-8g.img" %}
+{% set reboot_reset = true %}
 {% set BOOT_OS_PROMPT = "hikey:~" %}
 {% block device_type %}hi6220-hikey-r2{% endblock %}
 {% set boot_method = "grub" %}

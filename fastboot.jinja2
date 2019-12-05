@@ -5,6 +5,7 @@
 {% if install_packages is undefined %}{% set install_packages = true %}{% endif %}
 {% if install_fastboot is undefined %}{% set install_fastboot = true %}{% endif %}
 {% if ptable is undefined %}{% set ptable = false %}{% endif %}
+{% if reboot_reset is undefined %}{% set reboot_reset = false %}{% endif %}
 {% if boot is undefined %}{% set boot = true %}{% endif %}
 {% if BOOT_LABEL is undefined %}{% set BOOT_LABEL = "boot" %}{% endif %}
 {% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
@@ -93,6 +94,9 @@ protocols:
 {% if PTABLE_URL_COMP is defined %}
         compression: {{PTABLE_URL_COMP}}
 {% endif %}
+{% if reboot_reset == true and deploy_target == "fastboot" %}
+        reboot: hard-reset
+{% endif %}
 {% endif %}
 {% if boot == true %}
       {{ BOOT_LABEL }}:
@@ -101,6 +105,9 @@ protocols:
 {% endblock kernel_extra_args %}
 {% if BOOT_URL_COMP is defined %}
         compression: {{BOOT_URL_COMP}}
+{% endif %}
+{% if reboot_reset == true and deploy_target == "fastboot" and BOOT_LABEL == "boot" %}
+        reboot: hard-reset
 {% endif %}
 {% if apply_overlay == "bootimg" %}
         apply-overlay: true

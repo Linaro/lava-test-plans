@@ -32,8 +32,18 @@
     to: fastboot
     namespace: target
     images:
+{% if ptable == true %}
+      ptable:
+        url: lxc:///{{LXC_PTABLE_FILE}}
+{% if reboot_reset == true %}
+        reboot: hard-reset
+{% endif %}
+{% endif %}
       boot:
         url: lxc:///{{LXC_BOOT_FILE}}
+{% if reboot_reset == true %}
+        reboot: hard-reset
+{% endif %}
 {% if rootfs == true %}
       {{ rootfs_label }}:
         url: lxc:///{{LXC_ROOTFS_FILE}}
