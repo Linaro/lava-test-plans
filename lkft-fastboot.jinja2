@@ -1,5 +1,4 @@
 {% set deploy_target = "download" %}
-{% if device_type != x15 %}{% set rootfs_label = 'rootfs' %}{% endif %}
 {% extends "fastboot.jinja2" %}
 
 {% block metadata %}
