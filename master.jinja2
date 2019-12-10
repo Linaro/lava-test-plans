@@ -33,6 +33,9 @@ context:
 
 
 device_type: {% block device_type %}{% endblock %}
+{% if TAG_FIRMWARE is defined %}tags:
+{% block tags %}{% endblock %}
+{% endif %}
 job_name: {% block job_name %}{% endblock %}
 priority: {% block priority %}{{LAVA_JOB_PRIORITY}}{% endblock priority %}
 visibility: {% block visibility %}{% if LAVA_JOB_VISIBILITY is undefined %}public{% else %}{{LAVA_JOB_VISIBILITY}}{% endif %}{% endblock visibility %}

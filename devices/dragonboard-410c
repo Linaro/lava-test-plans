@@ -5,8 +5,10 @@
 {% set rootfs_label = 'rootfs' %}
 {% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
 {% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "dragonboard-410c:" %}{% endif %}
+{% if TAG_FIRMWARE is undefined %}{% set TAG_FIRMWARE = "old-firmware" %}{% endif %}
 
 {% block device_type %}dragonboard-410c{% endblock %}
+{% block tags %}- {{ TAG_FIRMWARE }}{% endblock %}
 
 {% block auto_login_commands %}
 {% if AUTO_LOGIN_USERNAME != 'root' %}
