@@ -41,6 +41,17 @@ visibility: {% block visibility %}{% if LAVA_JOB_VISIBILITY is undefined %}publi
 {% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
 {% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
 
+{% block tags %}
+{% if TAGS is defined and TAGS is sequence and TAGS is not string %}
+tags:
+{% for tag in TAGS %}
+{% if tag|length %}
+  - {{ tag }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock tags %}
+
 metadata:
 {% block metadata %}
 {% endblock metadata %}
