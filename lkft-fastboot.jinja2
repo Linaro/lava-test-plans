@@ -40,10 +40,12 @@
         reboot: hard-reset
 {% endif %}
 {% endif %}
+{% if boot == true and BOOT_LABEL != "kernel" %}
       boot:
         url: lxc:///{{LXC_BOOT_FILE}}
 {% if reboot_reset == true %}
         reboot: hard-reset
+{% endif %}
 {% endif %}
 {% if rootfs == true %}
       {{ rootfs_label }}:
