@@ -35,6 +35,8 @@ variables:
  * *LAVA_JOB_VISIBILITY*: defaults to *public*. This block can be used to restrict job visibility to user or group.
  * *AUTO_LOGIN_*: default *PROMPT='login:', *USERNAME='root' and *PASSWORD=''.
  * *BOOT_LABEL: default BOOT_LABEL='boot'.
+ * *TAGS*: variable should contain tags required by job. Formtatting is important and this variable should be
+ formatted as python list. Example [tag1, tag2]
 
 ## Timeouts
 
