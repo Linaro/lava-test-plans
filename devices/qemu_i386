@@ -4,7 +4,7 @@
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
 {% set rootfs_label = "rootfs" %}
-{% set deploy_target = "tmpfs" %}
+{% set DEPLOY_TARGET = "tmpfs" %}
 {% set BOOT_LABEL = "kernel" %}
 {% set apply_overlay = None %}
 

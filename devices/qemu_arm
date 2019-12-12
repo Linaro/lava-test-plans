@@ -6,7 +6,7 @@
 {% set apply_overlay = "rootfs" %}
 {% set BOOT_LABEL = "kernel" %}
 {% set rootfs_label = "rootfs" %}
-{% set deploy_target = "tmpfs" %}
+{% set DEPLOY_TARGET = "tmpfs" %}
 
 {% block global_settings %}
 {{ super() }}

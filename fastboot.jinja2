@@ -11,7 +11,7 @@
 {% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
 {% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
 {% if apply_overlay is undefined %}{% set apply_overlay = "rootfs" %}{% endif %}
-{% if deploy_target is undefined %}{% set deploy_target = "fastboot" %}{% endif %}
+{% if DEPLOY_TARGET is undefined %}{% set DEPLOY_TARGET = "fastboot" %}{% endif %}
 {% if pre_power_command is undefined %}{% set pre_power_command = true %}{% endif %}
 {% if pre_os_command is undefined %}{% set pre_os_command = true %}{% endif %}
 {% if auto_login is undefined %}{% set auto_login = true %}{% endif %}
@@ -85,7 +85,7 @@ protocols:
 - deploy:
     timeout:
       minutes: {{ target_deploy_timeout }}
-    to: {{ deploy_target }}
+    to: {{ DEPLOY_TARGET }}
     namespace: target
     images:
 {% if ptable == true %}
@@ -94,7 +94,7 @@ protocols:
 {% if PTABLE_URL_COMP is defined %}
         compression: {{PTABLE_URL_COMP}}
 {% endif %}
-{% if reboot_reset == true and deploy_target == "fastboot" %}
+{% if reboot_reset == true and DEPLOY_TARGET == "fastboot" %}
         reboot: hard-reset
 {% endif %}
 {% endif %}
@@ -106,7 +106,7 @@ protocols:
 {% if BOOT_URL_COMP is defined %}
         compression: {{BOOT_URL_COMP}}
 {% endif %}
-{% if reboot_reset == true and deploy_target == "fastboot" and BOOT_LABEL == "boot" %}
+{% if reboot_reset == true and DEPLOY_TARGET == "fastboot" and BOOT_LABEL == "boot" %}
         reboot: hard-reset
 {% endif %}
 {% if apply_overlay == "bootimg" %}
