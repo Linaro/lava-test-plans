@@ -273,7 +273,7 @@ def main():
         default=logging.INFO,
     )
 
-    args, _ = parser.parse_known_args()
+    args = parser.parse_args()
     logger.setLevel(args.verbose)
     exit_code = 0
 
