@@ -157,7 +157,9 @@ def main():
         dest="env_suffix",
         default="",
     )
-    parser.add_argument("--build-number", help="Build number", dest="build_number")
+    parser.add_argument(
+        "--build-id", "--build-number", help="ID for the build", dest="build_id"
+    )
     parser.add_argument(
         "--qa-server-team", help="Team in QA Reports service", dest="qa_server_team"
     )
@@ -419,7 +421,7 @@ def main():
             qa_server_base = "https://" + qa_server_base
         qa_server_team = args.qa_server_team
         qa_server_project = args.qa_server_project
-        qa_server_build = args.build_number
+        qa_server_build = args.build_id
 
         if not args.environment:
             # when user not specify value for the environment option,
