@@ -23,6 +23,10 @@
         image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp 4 -nographic
 {% endblock rootfs_extra_args %}
 
+{% block boot_extra_args %}
+        image_arg: -kernel {kernel} --append "root=/dev/sda  rootwait console=ttyS0,115200"
+{% endblock boot_extra_args %}
+
 {% block boot_target %}
 - boot:
     namespace: target
