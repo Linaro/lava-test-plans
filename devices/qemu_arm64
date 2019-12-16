@@ -1,11 +1,5 @@
 {% set PROJECT = PROJECT|default("") %}
-{% extends PROJECT+"fastboot.jinja2" %}
-
-{% set apply_overlay = "rootfs" %}
-{% set BOOT_LABEL = "kernel" %}
-{% set rootfs_label = "rootfs" %}
-{% set boot_image_arg = "-kernel {kernel} --append \"console=ttyAMA0 root=/dev/vda rw\"" %}
-{% set DEPLOY_TARGET = "tmpfs" %}
+{% extends PROJECT+"qemu.jinja2" %}
 
 {% block global_settings %}
 {{ super() }}
@@ -13,18 +7,12 @@
   netdevice: tap
   machine: virt-2.10,accel=kvm
   cpu: host
-  guestfs_interface: virtio
 {% endblock global_settings %}
 
 {% block device_type %}qemu-arm{% endblock %}
 
-{% block lxc %}
-{% endblock lxc %}
-{% block protocols %}
-{% endblock protocols %}
-
 {% block rootfs_extra_args %}
-        image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp 4 -nographic
+        {{ super() }}
         sparse: false
 {% endblock rootfs_extra_args %}
 
@@ -32,35 +20,3 @@
         image_arg: -kernel {kernel} --append "console=ttyAMA0 root=/dev/vda rw"
         type: image
 {% endblock boot_extra_args %}
-
-{% block boot_target %}
-- boot:
-    namespace: target
-    timeout:
-      minutes: 10
-    method: qemu
-    media: tmpfs
-    auto_login:
-      login_prompt: 'login:'
-      username: root
-      login_commands:
-        - su
-    prompts:
-    - root@(.*):~#
-{% endblock boot_target %}
-
-{% block test_target %}
-  {{ super() }}
-    - from: inline
-      repository:
-        metadata:
-          format: Lava-Test Test Definition 1.0
-          name: prep-tmp-disk
-          description: "Link /scratch to /tmp"
-        run:
-          steps:
-            - df -h
-            - ln -s /tmp /scratch
-      name: prep-tmp-disk
-      path: inline/prep.yaml
-{% endblock test_target %}

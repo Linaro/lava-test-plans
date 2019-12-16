@@ -1,62 +1,17 @@
 {% set PROJECT = PROJECT|default("") %}
-{% extends PROJECT+"fastboot.jinja2" %}
+{% extends PROJECT+"qemu.jinja2" %}
 
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
-{% set rootfs_label = "rootfs" %}
-{% set DEPLOY_TARGET = "tmpfs" %}
-{% set BOOT_LABEL = "kernel" %}
-{% set apply_overlay = None %}
+{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "root@intel-core2-32:" %}{% endif %}
 
 {% block global_settings %}
 {{ super() }}
   arch: i386
-  guestfs_interface: virtio
 {% endblock global_settings %}
 
 {% block device_type %}qemu{% endblock %}
 
-{% block lxc %}
-{% endblock lxc %}
-{% block protocols %}
-{% endblock protocols %}
-
-{% block rootfs_extra_args %}
-        image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp 4 -nographic
-{% endblock rootfs_extra_args %}
-
 {% block boot_extra_args %}
         image_arg: -kernel {kernel} --append "root=/dev/sda  rootwait console=ttyS0,115200"
 {% endblock boot_extra_args %}
-
-{% block boot_target %}
-- boot:
-    namespace: target
-    timeout:
-      minutes: 10
-    method: qemu
-    media: tmpfs
-    auto_login:
-      login_prompt: 'login:'
-      username: root
-      login_commands:
-        - su
-    prompts:
-    - 'root@intel-core2-32:'
-{% endblock boot_target %}
-
-{% block test_target %}
-  {{ super() }}
-    - from: inline
-      repository:
-        metadata:
-          format: Lava-Test Test Definition 1.0
-          name: prep-tmp-disk
-          description: "Link /scratch to /tmp"
-        run:
-          steps:
-            - df -h
-            - ln -s /tmp /scratch
-      name: prep-tmp-disk
-      path: inline/prep.yaml
-{% endblock test_target %}
