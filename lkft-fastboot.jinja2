@@ -1,5 +1,3 @@
-{% set deploy_target = "download" %}
-{% if device_type != x15 %}{% set rootfs_label = 'rootfs' %}{% endif %}
 {% extends "fastboot.jinja2" %}
 
 {% block metadata %}
@@ -8,6 +6,7 @@
 
 {% block deploy_target %}
 {{ super() }}
+{% if DEPLOY_TARGET == "download" %}
 - test:
     namespace: tlxc
     timeout:
@@ -41,10 +40,12 @@
         reboot: hard-reset
 {% endif %}
 {% endif %}
+{% if boot == true and BOOT_LABEL != "kernel" %}
       boot:
         url: lxc:///{{LXC_BOOT_FILE}}
 {% if reboot_reset == true %}
         reboot: hard-reset
+{% endif %}
 {% endif %}
 {% if rootfs == true %}
       {{ rootfs_label }}:
@@ -52,4 +53,5 @@
         apply-overlay: true
 {% endif %}
     os: {{DEPLOY_OS}}
+{% endif %}
 {% endblock deploy_target %}

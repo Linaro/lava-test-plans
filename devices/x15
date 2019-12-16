@@ -3,7 +3,6 @@
 
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
-{% set boot = false %}
 {% set rootfs_label = "userdata" %}
 {% set pre_os_command = false %}
 {% set boot_method = "u-boot" %}
