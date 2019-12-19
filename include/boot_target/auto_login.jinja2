@@ -1,0 +1,9 @@
+    auto_login:
+      login_prompt: "{{ AUTO_LOGIN_PROMPT }}"
+      username: "{{ AUTO_LOGIN_USERNAME }}"
+{% if AUTO_LOGIN_PASSWORD_PROMPT is defined %}
+      password_prompt: "{{ AUTO_LOGIN_PASSWORD_PROMPT }}"
+{% endif %}
+{% if AUTO_LOGIN_PASSWORD is defined %}
+      password: "{{ AUTO_LOGIN_PASSWORD }}"
+{% endif %}

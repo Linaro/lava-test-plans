@@ -1,0 +1,5 @@
+{% if AUTO_LOGIN_USERNAME != 'root' %}
+      login_commands:
+        # Become super user to run tests
+        - su
+{% endif %}
