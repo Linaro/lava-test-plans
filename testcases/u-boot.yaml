@@ -4,8 +4,8 @@
 {% set boot_bootloader = true %}
 {% set boot_method = "bootloader" %}
 {% set target_boot_timeout = 1 %}
-{% set auto_login = false %}
 {% set test_target_interactive = true %}
+{% set auto_login = false %}
 {% if run_fpga_command is undefined %}{% set run_fpga_command = false %}{% endif %}
 {% if run_nand_commands is undefined %}{% set run_nand_commands = false %}{% endif %}
 {% set BOOT_OS_PROMPT = ['=>'] %}
@@ -17,7 +17,6 @@
 
 {% block test_target %}
   {{ super() }}
-    interactive:
     - name: basic-cmds
       prompts: ["=> ", "/ # "]
       script:

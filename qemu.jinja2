@@ -103,11 +103,7 @@
 {% endblock boot_target %}
 
 {% block test_target %}
-- test:
-    namespace: target
-    timeout:
-      minutes: {{ test_timeout }}
-    definitions:
+{% include "include/test_target.jinja2" %}
 {% endblock test_target %}
 
 {% endblock actions %}

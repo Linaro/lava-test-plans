@@ -65,13 +65,7 @@
 {% endblock boot_target %}
 
 {% block test_target %}
-- test:
-    namespace: target
-    timeout:
-      minutes: {{ test_timeout }}
-{% if test_target_interactive is undefined %}
-    definitions:
-{% endif %}
+{% include "include/test_target.jinja2" %}
 {% endblock test_target %}
 
 {% endblock actions %}

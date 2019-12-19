@@ -1,0 +1,9 @@
+- test:
+    namespace: target
+    timeout:
+      minutes: {{ test_timeout }}
+{% if test_target_interactive is undefined %}
+    definitions:
+{% else %}
+    interactive:
+{% endif %}
