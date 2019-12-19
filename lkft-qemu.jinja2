@@ -1,0 +1,28 @@
+{% extends "qemu.jinja2" %}
+
+{% block metadata %}
+{% include "lkft-metadata.jinja2" %}
+{% endblock metadata %}
+
+{% if smp_core_count is undefined %}{% set smp_core_count = 4 %}{% endif %}
+
+{% block rootfs_extra_args %}
+        {{ super() }}
+        image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp {{ smp_core_count }} -nographic
+{% endblock rootfs_extra_args %}
+
+{% block test_target %}
+  {{ super() }}
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: prep-tmp-disk
+          description: "Link /scratch to /tmp"
+        run:
+          steps:
+            - df -h
+            - ln -s /tmp /scratch
+      name: prep-tmp-disk
+      path: inline/prep.yaml
+{% endblock test_target %}

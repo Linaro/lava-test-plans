@@ -1,85 +1,23 @@
 {% extends "master.jinja2" %}
 
+{% set rootfs = true %}
 {% set use_context = true %}
-
-{% if install_packages is undefined %}{% set install_packages = true %}{% endif %}
-{% if install_fastboot is undefined %}{% set install_fastboot = true %}{% endif %}
-{% if ptable is undefined %}{% set ptable = false %}{% endif %}
-{% if reboot_reset is undefined %}{% set reboot_reset = false %}{% endif %}
+{% if rootfs_label is undefined %}{% set rootfs_label = "rootfs" %}{% endif %}
+{% if DEPLOY_TARGET is undefined %}{% set DEPLOY_TARGET = "tmpfs" %}{% endif %}
 {% if boot is undefined %}{% set boot = true %}{% endif %}
-{% if BOOT_LABEL is undefined %}{% set BOOT_LABEL = "boot" %}{% endif %}
-{% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
-{% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
+{% if BOOT_LABEL is undefined %}{% set BOOT_LABEL = "kernel" %}{% endif %}
+{% if boot_method is undefined %}{% set boot_method = "qemu" %}{% endif %}
 {% if apply_overlay is undefined %}{% set apply_overlay = "rootfs" %}{% endif %}
-{% if DEPLOY_TARGET is undefined %}{% set DEPLOY_TARGET = "fastboot" %}{% endif %}
-{% if pre_power_command is undefined %}{% set pre_power_command = true %}{% endif %}
-{% if pre_os_command is undefined %}{% set pre_os_command = true %}{% endif %}
+{% if target_boot_timeout is undefined %}{% set target_boot_timeout = 10%}{% endif %}
 {% if auto_login is undefined %}{% set auto_login = true %}{% endif %}
-{% if boot_method is undefined %}{% set boot_method = "fastboot" %}{% endif %}
+{% if AUTO_LOGIN_USERNAME is undefined %}{% set AUTO_LOGIN_USERNAME = "root" %}{% endif %}
 
-
-
-{% block context %}
-  test_character_delay: 10
-{% endblock context %}
-
-{% block protocols %}
-protocols:
-  lava-lxc:
-    name: lxc-target
-    template: debian
-    distribution: debian
-    release: buster
-    arch: amd64
-    mirror: http://deb.debian.org/debian
-{% endblock protocols %}
+{% block global_settings %}
+{{ super() }}
+  guestfs_interface: virtio
+{% endblock global_settings %}
 
 {% block actions %}
-{% block lxc %}
-- deploy:
-    namespace: tlxc
-    timeout:
-      minutes: {{ lxc_deploy_timeout }}
-    to: lxc
-    packages:
-    - wget
-    - unzip
-{% if install_packages == true %}
-    - abootimg
-    - android-tools-fsutils
-    - cpio
-    - curl
-    - e2fsprogs
-    - file
-    - git
-    - libguestfs-tools
-    - mkbootimg
-    - xz-utils
-{% endif %}
-    os: debian
-
-- boot:
-    namespace: tlxc
-    prompts:
-    - 'root@(.*):/#'
-    timeout:
-      minutes: {{ lxc_boot_timeout }}
-    method: lxc
-
-{% if install_fastboot == true %}
-- test:
-    namespace: tlxc
-    timeout:
-      minutes: {{ lxc_install_fastboot_timeout }}
-    definitions:
-    - repository: https://github.com/Linaro/test-definitions.git
-      from: git
-      path: automated/linux/android-platform-tools/install.yaml
-      name: install-android-platform-tools-r2800
-      parameters:
-        LINK: 'https://dl.google.com/android/repository/platform-tools_r28.0.0-linux.zip'
-{% endif %}
-{% endblock lxc %}
 
 {% block deploy_target %}
 - deploy:
@@ -156,6 +94,11 @@ protocols:
       login_prompt: "{{ AUTO_LOGIN_PROMPT }}"
       username: "{{ AUTO_LOGIN_USERNAME }}"
 {% block auto_login_commands %}
+{% if AUTO_LOGIN_USERNAME != 'root' %}
+      login_commands:
+        # Become super user to run tests
+        - su
+{% endif %}
 {% endblock auto_login_commands %}
 {% endif %}
     prompts:
@@ -174,18 +117,7 @@ protocols:
     method: {{ boot_method }}
 {% block boot_commands %}
 {% endblock boot_commands %}
-{% if pre_os_command == true %}
-    protocols:
-      lava-lxc:
-      - action: auto-login-action
-        request: pre-os-command
-        timeout:
-          minutes: 2
-{% endif %}
 {% endblock boot_target %}
-
-{% block test_lxc %}
-{% endblock test_lxc %}
 
 {% block test_target %}
 - test:
