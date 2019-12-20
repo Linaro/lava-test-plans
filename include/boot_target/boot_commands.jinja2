@@ -1,0 +1,8 @@
+{% if pre_os_command == true %}
+    protocols:
+      lava-lxc:
+      - action: auto-login-action
+        request: pre-os-command
+        timeout:
+          minutes: 2
+{% endif %}

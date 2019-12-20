@@ -1,0 +1,11 @@
+    prompts:
+{% if BOOT_OS_PROMPT is defined %}
+{% if BOOT_OS_PROMPT is not string and BOOT_OS_PROMPT is sequence %}
+{% for boot_prompt in BOOT_OS_PROMPT %}
+    - "{{boot_prompt}}"
+{% endfor %}
+{% else %}
+    - "{{BOOT_OS_PROMPT}}"
+{% endif %}
+{% endif %}
+    - 'root@(.*):[/~]#'
