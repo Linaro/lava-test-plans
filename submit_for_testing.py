@@ -12,7 +12,6 @@ from jinja2 import (
     Environment,
     FileSystemLoader,
     StrictUndefined,
-    Undefined,
     make_logging_undefined,
 )
 from jinja2.exceptions import UndefinedError, TemplateSyntaxError
@@ -295,7 +294,7 @@ def main():
         loader=FileSystemLoader(THIS_DIR, followlinks=True), undefined=StrictUndefined
     )
     if args.dryrun:
-        LoggingUndefined = make_logging_undefined(logger=logger, base=Undefined)
+        LoggingUndefined = make_logging_undefined(logger=logger, base=StrictUndefined)
         j2_env = Environment(
             loader=FileSystemLoader(THIS_DIR, followlinks=True),
             undefined=LoggingUndefined,
