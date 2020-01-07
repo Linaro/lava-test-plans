@@ -1,4 +1,4 @@
-{% if pre_os_command == true %}
+{% if pre_os_command is defined and pre_os_command == true %}
     protocols:
       lava-lxc:
       - action: auto-login-action

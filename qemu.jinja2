@@ -26,13 +26,13 @@
     to: {{ DEPLOY_TARGET }}
     namespace: target
     images:
-{% if ptable == true %}
+{% if ptable is defined and ptable == true %}
       ptable:
         url: {{PTABLE_URL}}
 {% if PTABLE_URL_COMP is defined %}
         compression: {{PTABLE_URL_COMP}}
 {% endif %}
-{% if reboot_reset == true and DEPLOY_TARGET == "fastboot" %}
+{% if reboot_reset is defined and reboot_reset == true and DEPLOY_TARGET == "fastboot" %}
         reboot: hard-reset
 {% endif %}
 {% endif %}
@@ -44,7 +44,7 @@
 {% if BOOT_URL_COMP is defined %}
         compression: {{BOOT_URL_COMP}}
 {% endif %}
-{% if reboot_reset == true and DEPLOY_TARGET == "fastboot" and BOOT_LABEL == "boot" %}
+{% if reboot_reset is defined and reboot_reset == true and DEPLOY_TARGET == "fastboot" and BOOT_LABEL == "boot" %}
         reboot: hard-reset
 {% endif %}
 {% if apply_overlay == "bootimg" %}

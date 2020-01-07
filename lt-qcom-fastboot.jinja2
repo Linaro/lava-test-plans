@@ -40,7 +40,7 @@
           - fi
 {% endif %}
 
-{% if apply_overlay_bootimg == true %}
+{% if apply_overlay_bootimg is defined and apply_overlay_bootimg == true %}
 - test:
     namespace: tlxc
     timeout:
