@@ -1,0 +1,38 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"fastboot.jinja2" %}
+
+{# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
+{% set libhuggetlbfs_word_size = 32 %}
+{% set rootfs_label = "userdata" %}
+{% set pre_os_command = false %}
+{% set boot_method = boot_method|default("u-boot") %}
+{% block device_type %}x15-bl{% endblock %}
+
+{% block boot_commands %}
+{% if boot_method == "u-boot" %}
+    commands: {{ BOOT_COMMANDS|default("ramdisk") }}
+{% elif boot_method == "bootloader" %}
+    bootloader: u-boot
+    commands: []
+{% endif %}
+{% endblock boot_commands %}
+
+
+{% if boot_method == "bootloader" %}
+{% block protocols %}
+{% endblock protocols %}
+{% block lxc %}
+{% endblock lxc %}
+{% block deploy_target %}
+- deploy:
+    namespace: target
+    timeout:
+      minutes: 10
+    to: flasher
+    images:
+      image:
+        url: {{ IMAGE_URL }}
+        compression: {{ IMAGE_COMP }}
+{% endblock deploy_target %}
+
+{% endif %}
