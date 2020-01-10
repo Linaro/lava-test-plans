@@ -1,7 +1,8 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"nfs.jinja2" %}
 
-{% set run_fpga_command = false %}
+{% set run_fpga_commands = false %}
+{% set run_tftp_commands = true %}
 {% set target_deploy_timeout = 5 %}
 {% set rootfs_label = "nfsrootfs" %}
 {% set boot_method = boot_method|default("u-boot") %}

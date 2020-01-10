@@ -6,8 +6,9 @@
 {% set target_boot_timeout = 1 %}
 {% set test_target_interactive = true %}
 {% set auto_login = false %}
-{% if run_fpga_command is undefined %}{% set run_fpga_command = false %}{% endif %}
-{% if run_nand_commands is undefined %}{% set run_nand_commands = false %}{% endif %}
+{% set run_fpga_commands = run_fpga_commands|default(false) %}
+{% set run_nand_commands = run_nand_commands|default(false) %}
+{% set run_tftp_commands = run_tftp_commands|default(false) %}
 {% set BOOT_OS_PROMPT = ['=>'] %}
 {% block metadata %}
   {{ super() }}
@@ -27,7 +28,7 @@
       - command: version
         name: version
         successes:
-        - message: "U-Boot"
+        - message: {{ UBOOT_VERSION_STRING|default("U-Boot") }}
       - command: help test
         name: help
         successes:
@@ -43,7 +44,6 @@
       script:
       # memory test
       # base - print or set address offset
-      - command:
       - command: base
         name: print-default-base-address-offset
         successes:
@@ -86,7 +86,7 @@
       script:
       # dhcp
       - command:
-    {% if run_fpga_command %}
+    {% if run_fpga_commands %}
       - command: run FPGA_INIT
         successes:
         - message: "FPGA updated to correct revision."
@@ -96,6 +96,7 @@
         name: dhcp
         successes:
         - message: "DHCP client bound to address"
+    {% if run_tftp_commands %}
     - name: tftp-cmds
       prompts: ["=> ", "/ # "]
       script:
@@ -105,6 +106,7 @@
         name: tftp
         successes:
         - message: "Bytes transferred ="
+    {% endif %}
     {% if run_nand_commands %}
     - name: nand-commands
       prompts: ["=> ", "/ # "]
