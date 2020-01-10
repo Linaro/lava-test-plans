@@ -43,7 +43,6 @@
       script:
       # memory test
       # base - print or set address offset
-      - command:
       - command: base
         name: print-default-base-address-offset
         successes:
