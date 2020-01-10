@@ -6,8 +6,9 @@
 {% set target_boot_timeout = 1 %}
 {% set test_target_interactive = true %}
 {% set auto_login = false %}
-{% if run_fpga_command is undefined %}{% set run_fpga_command = false %}{% endif %}
-{% if run_nand_commands is undefined %}{% set run_nand_commands = false %}{% endif %}
+{% set run_fpga_command = run_fpga_commands|default(false) %}
+{% set run_nand_commands = run_nand_commands|default(false) %}
+{% set run_tftp_commands = run_tftp_commands|default(false) %}
 {% set BOOT_OS_PROMPT = ['=>'] %}
 {% block metadata %}
   {{ super() }}
