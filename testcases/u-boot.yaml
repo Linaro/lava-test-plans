@@ -85,7 +85,6 @@
       prompts: ["=> ", "/ # "]
       script:
       # dhcp
-      - command:
     {% if run_fpga_commands %}
       - command: run FPGA_INIT
         successes:
@@ -101,7 +100,6 @@
       prompts: ["=> ", "/ # "]
       script:
       # TFTP
-      - command:
       - command: setenv serverip {SERVER_IP} ; tftp {KERNEL_ADDR} {KERNEL}
         name: tftp
         successes:
@@ -112,7 +110,6 @@
       prompts: ["=> ", "/ # "]
       script:
       # nand
-      - command:
       - command: nand info
         name: nand-info
         successes:
