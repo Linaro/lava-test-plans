@@ -1,13 +1,6 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"qemu.jinja2" %}
 
-{# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
-{% set libhuggetlbfs_word_size = 32 %}
-{% if AUTO_LOGIN_PROMPT is undefined %}{% set AUTO_LOGIN_PROMPT = "am57xx-evm login:" %}{% endif %}
-{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "root@am57xx-evm:" %}{% endif %}
-{% if target_boot_timeout is undefined %}{% set target_boot_timeout = 15 %}{% endif %}
-{% set smp_core_count = "2" %}
-
 {% block global_settings %}
 {{ super() }}
   arch: arm64
