@@ -227,8 +227,7 @@ def main():
         dest="testplan_device_path",
         default=testplan_device_path,
     )
-    g = parser.add_mutually_exclusive_group(required=True)
-    g.add_argument(
+    parser.add_argument(
         "--test-plan",
         help="""Directory containing Jinja2 templates to submit for testing.
                         It is assumed that the templates produce valid LAVA job
@@ -237,7 +236,7 @@ def main():
         dest="test_plan",
         required=False,
     )
-    g.add_argument(
+    parser.add_argument(
         "--test-case",
         help="""Specific test cases (as Jinja2 templates) to submit.
                         It is assumed that the templates produce valid LAVA job
@@ -330,7 +329,8 @@ def main():
         logger.error("No tests matched the given criteria.")
         sys.exit(1)
 
-    for test in test_list:
+    # convert test_list to set to remove potential duplicates
+    for test in set(test_list):
         """ Prepare lava jobs """
         lava_job = None
         try:
@@ -383,7 +383,7 @@ def main():
 
         client = docker.from_env()
         logger.debug("Checking for LAVA validity")
-        for test in test_list:
+        for test in set(test_list):
             testpath = os.path.join(os.getcwd(), output_path, args.device_type)
             logger.debug(testpath)
             logger.debug(test)
