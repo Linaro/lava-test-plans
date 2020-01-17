@@ -6,7 +6,7 @@
   arch: arm64
   netdevice: tap
   machine: virt-2.10,accel=kvm
-  cpu: host
+  cpu: host{% if DEVICE_TYPE == 'qemu_arm' %},aarch64=off{% endif %}
 {% endblock global_settings %}
 
 {% block device_type %}qemu-arm{% endblock %}
