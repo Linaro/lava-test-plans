@@ -1,0 +1,5 @@
+{% extends "testcases/master/template-ltp.yaml.jinja2" %}
+
+{% set testnames = ['syscalls'] %}
+{% set test_timeout = 120 %}
+{% set ltp_name_suffix = '-kasan' %}
