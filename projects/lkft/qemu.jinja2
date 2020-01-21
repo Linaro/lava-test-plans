@@ -1,7 +1,7 @@
 {% extends "qemu.jinja2" %}
 
 {% block metadata %}
-{% include "include/lkft-metadata.jinja2" %}
+{% include PROJECT+"include/lkft-metadata.jinja2" %}
 {% endblock metadata %}
 
 {% if DEVICE_TYPE == 'qemu_arm' %}
