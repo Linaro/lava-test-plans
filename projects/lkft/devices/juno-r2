@@ -1,0 +1,5 @@
+{% extends "devices/juno-r2" %}
+{% block context %}
+  {{ super() }}
+  booti_dtb_addr: "0x85000000"
+{% endblock context %}
