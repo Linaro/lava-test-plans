@@ -4,7 +4,6 @@
 {% block device_type %}qcs404-evb-1k{% endblock %}
 
 {% set rootfs_label = 'userdata' %}
-{% set install_packages = false %}
 {% set install_fastboot = false %}
 {% set pre_power_command = false %}
 {% set pre_os_command = false %}

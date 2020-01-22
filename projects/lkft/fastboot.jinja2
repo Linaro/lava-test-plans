@@ -4,6 +4,19 @@
 {% include PROJECT+"include/lkft-metadata.jinja2" %}
 {% endblock metadata %}
 
+{% block lxc_extra_packages %}
+    - android-tools-fsutils
+    - curl
+    - cpio
+    - file
+    - git
+    - libguestfs-tools
+    - linux-image-amd64
+    - mkbootimg
+    - xz-utils
+    - --no-install-recommends
+{% endblock lxc_extra_packages %}
+
 {% block deploy_target %}
 {{ super() }}
 {% if DEPLOY_TARGET == "download" %}
