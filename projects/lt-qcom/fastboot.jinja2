@@ -1,5 +1,14 @@
 {% extends "fastboot.jinja2" %}
 
+{% block lxc_extra_packages %}
+    - abootimg
+    - android-tools-fsutils
+    - cpio
+    - e2fsprogs
+    - git
+    - --no-install-recommends
+{% endblock lxc_extra_packages %}
+
 {% block deploy_target %}
 {{ super() }}
 {% if rootfs == true %}

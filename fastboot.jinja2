@@ -2,7 +2,6 @@
 
 {% set use_context = true %}
 
-{% if install_packages is undefined %}{% set install_packages = true %}{% endif %}
 {% if install_fastboot is undefined %}{% set install_fastboot = true %}{% endif %}
 {% if ptable is undefined %}{% set ptable = false %}{% endif %}
 {% if reboot_reset is undefined %}{% set reboot_reset = false %}{% endif %}
@@ -44,18 +43,8 @@ protocols:
     packages:
     - wget
     - unzip
-{% if install_packages == true %}
-    - abootimg
-    - android-tools-fsutils
-    - cpio
-    - curl
-    - e2fsprogs
-    - file
-    - git
-    - libguestfs-tools
-    - mkbootimg
-    - xz-utils
-{% endif %}
+{% block lxc_extra_packages %}
+{% endblock lxc_extra_packages %}
     os: debian
 
 - boot:
