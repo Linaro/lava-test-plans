@@ -2,4 +2,4 @@
 
 {% set testnames = ['syscalls'] %}
 {% set test_timeout = 120 %}
-{% set ltp_name_suffix = '-kasan' %}
+{% set LAVA_TEST_NAME_SUFFIX = '-kasan' %}
