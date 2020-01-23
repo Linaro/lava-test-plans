@@ -2,7 +2,7 @@
 
 {% if KERNEL_BRANCH is undefined %}{% set KERNEL_BRANCH = "" %}{% endif %}
 {% if OS_INFO is undefined %}{% set OS_INFO = "" %}{% endif %}
-{% if ltp_name_suffix is undefined %}{% set ltp_name_suffix = "" %}{% endif %}
+{% if LAVA_TEST_NAME_SUFFIX is undefined %}{% set LAVA_TEST_NAME_SUFFIX = "" %}{% endif %}
 
 {% set test_name = "ltp-" + testnames|join('-') %}
 
@@ -32,6 +32,6 @@
         ENVIRONMENT: '{{ ENVIRONMENT|default('production') }}'
         TIMEOUT_MULTIPLIER: 3
         LTP_TMPDIR: '/scratch'
-      name: ltp-{{testname}}{{ltp_name_suffix}}-tests
+      name: ltp-{{testname}}{{LAVA_TEST_NAME_SUFFIX}}-tests
 {% endfor %}
 {% endblock test_target %}
