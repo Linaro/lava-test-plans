@@ -1,5 +1,0 @@
-{% extends "testcases/master/template-ltp.yaml.jinja2" %}
-
-{% set testnames = ['syscalls'] %}
-{% set test_timeout = 120 %}
-{% set LAVA_TEST_NAME_SUFFIX = '-kasan' %}
