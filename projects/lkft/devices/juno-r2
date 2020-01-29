@@ -1,5 +1,7 @@
 {% extends "devices/juno-r2" %}
 
+{% set extra_kernel_args = 'default_hugepagesz=2M hugepages=256 ' + extra_kernel_args|default("") %}
+
 {% block context %}
   {{ super() }}
   booti_dtb_addr: "0x85000000"
