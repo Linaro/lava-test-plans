@@ -24,4 +24,5 @@
       parameters:
         SKIP_INSTALL: 'true'
         SMP: {% if DEVICE_TYPE == "juno-r2" %}'false'{% else %}'true'{% endif %}
+        GIT_REF: "{{KVM_UNIT_TESTS_REVISION | default('40f559bc572e355cadef513ec41fe114e9a8394e')}}"
 {% endblock test_target %}
