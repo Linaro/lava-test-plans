@@ -135,6 +135,16 @@ def _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token):
     pass
 
 
+def _parse_ini_file(vars_file, context):
+    for line in vars_file:
+        if not line.startswith("#"):  # ignore lines starting with comment
+            key, value = line.strip().split("=", maxsplit=1)
+            if value.startswith("[") and value.endswith("]"):
+                # convert value to list using "," as item delimiter
+                value = value.strip("[]").split(",")
+            context.update({key: value})
+
+
 def main():
     parser = argparse.ArgumentParser()
     # qa-reports parameters
@@ -301,13 +311,7 @@ def main():
     context = {}
     for variables in args.variables:
         with open(variables, "r") as vars_file:
-            for line in vars_file:
-                if not line.startswith("#"):  # ignore lines starting with comment
-                    key, value = line.strip().split("=", maxsplit=1)
-                    if value.startswith("[") and value.endswith("]"):
-                        # convert value to list using "," as item delimiter
-                        value = value.strip("[]").split(",")
-                    context.update({key: value})
+            _parse_ini_file(vars_file, context)
     for variable in args.overwrite_variables:
         key, value = variable.split("=")
         context.update({key: value})
