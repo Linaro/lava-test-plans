@@ -39,6 +39,8 @@ variables:
  formatted as python list. Example [tag1, tag2]
  * *UBOOT_VERSION_STRING*: string that is matched in the u-boot shell from output of command *version*
 
+Variables can also be stored in YAML file. Usual YAML syntax applies.
+
 ## Timeouts
 
 Overall job timeout is a sum of action timeouts. There are 6 components:

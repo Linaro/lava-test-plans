@@ -23,6 +23,7 @@ from ruamel.yaml.constructor import (
 )
 from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.parser import ParserError
+from ruamel.yaml.composer import ComposerError
 
 import logging
 
@@ -311,7 +312,18 @@ def main():
     context = {}
     for variables in args.variables:
         with open(variables, "r") as vars_file:
-            _parse_ini_file(vars_file, context)
+            try:
+                yaml = YAML()
+                context.update(yaml.load(vars_file))
+            except ParserError as e:
+                logger.error(e)
+                vars_file.seek(0)
+                _parse_ini_file(vars_file, context)
+            except ComposerError as e:
+                logger.error(e)
+                vars_file.seek(0)
+                _parse_ini_file(vars_file, context)
+
     for variable in args.overwrite_variables:
         key, value = variable.split("=")
         context.update({key: value})
