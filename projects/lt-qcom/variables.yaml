@@ -14,7 +14,6 @@
 "PM_QA_TESTS": "pm-qa-tests"
 "LXC_BOOT_FILE": "lxc-boot"
 "WLAN_DEVICE": "variable-value"
-"WLAN_DEVICE": "variable-value"
 "ETH_DEVICE": "variable-value"
 "WIFI_SSID_NAME": "variable-value"
 "WIFI_SSID_PASSWORD": "variable-value"

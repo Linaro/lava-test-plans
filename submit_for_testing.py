@@ -6,6 +6,7 @@ import os
 import re
 import requests
 import sys
+from configobj import ConfigObj, ConfigObjError
 from io import StringIO
 from string import Template
 from jinja2 import (
@@ -134,16 +135,6 @@ def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_
 
 def _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token):
     pass
-
-
-def _parse_ini_file(vars_file, context):
-    for line in vars_file:
-        if not line.startswith("#"):  # ignore lines starting with comment
-            key, value = line.strip().split("=", maxsplit=1)
-            if value.startswith("[") and value.endswith("]"):
-                # convert value to list using "," as item delimiter
-                value = value.strip("[]").split(",")
-            context.update({key: value})
 
 
 def main():
@@ -311,18 +302,19 @@ def main():
         )
     context = {}
     for variables in args.variables:
-        with open(variables, "r") as vars_file:
-            try:
-                yaml = YAML()
-                context.update(yaml.load(vars_file))
-            except ParserError as e:
-                logger.error(e)
-                vars_file.seek(0)
-                _parse_ini_file(vars_file, context)
-            except ComposerError as e:
-                logger.error(e)
-                vars_file.seek(0)
-                _parse_ini_file(vars_file, context)
+        try:
+            context.update(ConfigObj(variables).dict())
+        except ConfigObjError:
+            logger.info("Unable to parse .ini file")
+            logger.info("Trying YAML")
+            with open(variables, "r") as vars_file:
+                try:
+                    yaml = YAML()
+                    context.update(yaml.load(vars_file))
+                except ParserError as e:
+                    logger.error(e)
+                except ComposerError as e:
+                    logger.error(e)
 
     for variable in args.overwrite_variables:
         key, value = variable.split("=")

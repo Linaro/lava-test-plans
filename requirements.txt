@@ -2,3 +2,4 @@ requests
 ruamel.yaml
 Jinja2
 docker
+configobj
