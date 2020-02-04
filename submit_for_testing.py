@@ -6,6 +6,7 @@ import os
 import re
 import requests
 import sys
+from configobj import ConfigObj, ConfigObjError
 from io import StringIO
 from string import Template
 from jinja2 import (
@@ -23,6 +24,7 @@ from ruamel.yaml.constructor import (
 )
 from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.parser import ParserError
+from ruamel.yaml.composer import ComposerError
 
 import logging
 
@@ -300,14 +302,20 @@ def main():
         )
     context = {}
     for variables in args.variables:
-        with open(variables, "r") as vars_file:
-            for line in vars_file:
-                if not line.startswith("#"):  # ignore lines starting with comment
-                    key, value = line.strip().split("=", maxsplit=1)
-                    if value.startswith("[") and value.endswith("]"):
-                        # convert value to list using "," as item delimiter
-                        value = value.strip("[]").split(",")
-                    context.update({key: value})
+        try:
+            context.update(ConfigObj(variables).dict())
+        except ConfigObjError:
+            logger.info("Unable to parse .ini file")
+            logger.info("Trying YAML")
+            with open(variables, "r") as vars_file:
+                try:
+                    yaml = YAML()
+                    context.update(yaml.load(vars_file))
+                except ParserError as e:
+                    logger.error(e)
+                except ComposerError as e:
+                    logger.error(e)
+
     for variable in args.overwrite_variables:
         key, value = variable.split("=")
         context.update({key: value})

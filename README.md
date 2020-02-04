@@ -36,8 +36,11 @@ variables:
  * *AUTO_LOGIN_*: default *PROMPT='login:', *USERNAME='root' and *PASSWORD=''.
  * *BOOT_LABEL*: default BOOT_LABEL='boot'.
  * *TAGS*: variable should contain tags required by job. Formtatting is important and this variable should be
- formatted as python list. Example [tag1, tag2]
+ formatted comma separated list. Example: tag1, tag2. In case of using just one tag, end string with comma. Example:
+ tag1,
  * *UBOOT_VERSION_STRING*: string that is matched in the u-boot shell from output of command *version*
+
+Variables can also be stored in YAML file. Usual YAML syntax applies.
 
 ## Timeouts
 
