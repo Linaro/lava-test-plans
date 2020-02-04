@@ -1,11 +1,9 @@
 {% extends "devices/juno-r2" %}
 
-{% if LAVA_TEST_NAME_SUFFIX is undefined %}{% set LAVA_TEST_NAME_SUFFIX = "" %}{% endif %}
+{% set extra_kernel_args = 'default_hugepagesz=2M hugepages=256 ' + extra_kernel_args|default("") %}
 
 {% block context %}
   {{ super() }}
   booti_dtb_addr: "0x85000000"
-{% if LAVA_TEST_NAME_SUFFIX == "-64k-page_size" %}
   extra_nfsroot_args: ',wsize=65536'
-{% endif %}
 {% endblock context %}

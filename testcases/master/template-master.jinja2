@@ -6,3 +6,10 @@
 {% if OS_INFO is undefined %}{% set OS_INFO = "" %}{% endif %}
 
 {% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-{{test_name}}-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+
+{% block context %}
+{{ super() }}
+  {%- if extra_kernel_args is defined %}
+  extra_kernel_args: '{{extra_kernel_args}}'
+  {%- endif %}
+{% endblock context %}

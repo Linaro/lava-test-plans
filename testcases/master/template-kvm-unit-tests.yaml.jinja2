@@ -2,10 +2,7 @@
 
 {% set use_context = true %}
 
-{% block context %}
-{{ super() }}
-  extra_kernel_args: 'kvm.enable_vmware_backdoor=1 kvm.force_emulation_prefix=1'
-{% endblock context %}
+{% set extra_kernel_args = 'kvm.enable_vmware_backdoor=1 kvm.force_emulation_prefix=1' + extra_kernel_args|default("") %}
 
 {% set test_timeout = 25 %}
 {% block metadata %}
