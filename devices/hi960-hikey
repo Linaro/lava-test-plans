@@ -1,0 +1,21 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"fastboot.jinja2" %}
+
+{% set rootfs = true %}
+{% set rootfs_label = 'system' %}
+{% set ptable = false %}
+{% set reboot_reset = true %}
+{% block device_type %}hi960-hikey{% endblock %}
+{% set boot_method = "grub" %}
+{% set pre_os_command_action = "grub-sequence-action" %}
+{% set auto_login = false %}
+
+{% block boot_commands %}
+    commands: installed
+{% endblock boot_commands %}
+
+{% block deploy_target %}
+{{ super() }}
+{% include "include/pre-power-command.jinja2" %}
+{% endblock deploy_target %}
+
