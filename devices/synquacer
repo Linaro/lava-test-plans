@@ -1,0 +1,19 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"nfs.jinja2" %}
+
+{% set rootfs_label="nfsrootfs" %}
+{% set auto_login = true %}
+{% set boot_method = "grub" %}
+{% set use_context = true %}
+
+{% block context %}
+  test_character_delay: 10
+{% endblock context %}
+
+{% block device_type %}synquacer{% endblock %}
+
+{% block boot_commands %}
+    commands: nfs
+    parameters:
+      shutdown-message: "reboot: Restarting system"
+{% endblock boot_commands %}
