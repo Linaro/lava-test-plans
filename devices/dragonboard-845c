@@ -1,0 +1,16 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"fastboot.jinja2" %}
+
+{% set rootfs = true %}
+{% set rootfs_label = 'rootfs' %}
+{% set ptable = true %}
+{% set PTABLE_LABEL = "partition:0" %}
+{% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
+{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "dragonboard-845c:" %}{% endif %}
+
+{% block device_type %}dragonboard-845c{% endblock %}
+
+{% block deploy_target %}
+{{ super() }}
+{% include "include/pre-power-command.jinja2" %}
+{% endblock deploy_target %}

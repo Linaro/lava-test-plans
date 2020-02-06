@@ -19,6 +19,13 @@
 {% endif %}
 {% block kernel_extra_args %}
 {% endblock kernel_extra_args %}
+{% if RAMDISK_URL is defined %}
+    ramdisk:
+      url: {{RAMDISK_URL}}
+{% if RAMDISK_URL_COMP is defined %}
+      compression: {{RAMDISK_URL_COMP}}
+{% endif %}
+{% endif %}
 {% if DTB_URL is defined %}
     dtb:
       url: {{DTB_URL}}
@@ -44,6 +51,8 @@
 {% if ROOTFS_URL_COMP is defined %}
       compression: {{ROOTFS_URL_COMP}}
 {% endif %}
+{% block rootfs_extra_args %}
+{% endblock rootfs_extra_args %}
 {% endif %}
     os: {{DEPLOY_OS}}
 {% endblock deploy_target %}

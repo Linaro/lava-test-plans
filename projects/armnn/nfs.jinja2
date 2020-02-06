@@ -1,0 +1,9 @@
+{% extends "nfs.jinja2" %}
+
+{% block metadata %}
+{% include PROJECT+"include/armnn-metadata.jinja2" %}
+{% endblock metadata %}
+
+{% block rootfs_extra_args %}
+      prefix: binary/
+{% endblock rootfs_extra_args %}

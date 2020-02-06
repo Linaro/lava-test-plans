@@ -35,6 +35,9 @@ script:
   - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type rzn1d --dry-run --test-plan schneider --test-lava-validity
   - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type soca9 --dry-run --test-plan schneider --test-lava-validity
   - ./submit_for_testing.py --variables projects/ti/variables.yaml --device-type x15-bl --dry-run --test-plan ti-uboot --test-lava-validity
+  - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type hi960-hikey --dry-run --test-plan armnn --test-lava-validity
+  - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type dragonboard-845c --dry-run --test-plan armnn --test-lava-validity
+  - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type synquacer --dry-run --test-plan armnn --test-lava-validity
   # check python syntax
   - black --check submit_for_testing.py
   # check GPDX compliance
