@@ -51,6 +51,8 @@
 {% if ROOTFS_URL_COMP is defined %}
       compression: {{ROOTFS_URL_COMP}}
 {% endif %}
+{% block rootfs_extra_args %}
+{% endblock rootfs_extra_args %}
 {% endif %}
     os: {{DEPLOY_OS}}
 {% endblock deploy_target %}
