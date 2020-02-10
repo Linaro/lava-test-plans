@@ -5,7 +5,7 @@
   {{ super() }}
 {% endblock metadata %}
 
-{% set test_name = "bt" %}
+{% set test_name = "armnn" %}
 
 {% block test_target %}
   {{ super() }}
