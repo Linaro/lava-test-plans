@@ -231,11 +231,12 @@ def main():
     )
     parser.add_argument(
         "--test-plan",
-        help="""Directory containing Jinja2 templates to submit for testing.
+        help="""Directories containing Jinja2 templates to submit for testing.
                         It is assumed that the templates produce valid LAVA job
                         definitions. All variables are substituted using Jinja2
                         engine""",
         dest="test_plan",
+        nargs="*",
         required=False,
     )
     parser.add_argument(
@@ -324,9 +325,10 @@ def main():
     )
     test_list = []
     if args.test_plan:
-        test_plan_path = os.path.join(args.testplan_path, args.test_plan)
-        for test in _get_test_plan_list(test_plan_path):
-            test_list.append(os.path.join(test_plan_path, test))
+        for test_plan in args.test_plan:
+            test_plan_path = os.path.join(args.testplan_path, test_plan)
+            for test in _get_test_plan_list(test_plan_path):
+                test_list.append(os.path.join(test_plan_path, test))
 
     if args.test_case:
         for test in args.test_case:
