@@ -4,7 +4,7 @@
 {% if OS_INFO is undefined %}{% set OS_INFO = "" %}{% endif %}
 {% if LAVA_TEST_NAME_SUFFIX is undefined %}{% set LAVA_TEST_NAME_SUFFIX = "" %}{% endif %}
 
-{% set test_name = "ltp-" + testnames|join('-') %}
+{% set test_name = "ltp-" + testnames|join('-') + LAVA_TEST_NAME_SUFFIX %}
 
 {% block metadata %}
   {{ super() }}
