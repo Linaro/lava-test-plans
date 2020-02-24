@@ -22,7 +22,7 @@
           steps:
           - dhclient
           - apt-get install -y ntp
-          - wget {{ ARMNN_TARBALL_URL }}
+          - wget --no-check-certificate {{ ARMNN_TARBALL_URL }}
           - tar xf armnn.tar.xz
           - cd home/buildslave/workspace/armnn-ci-build
           - export BASEDIR=`pwd`
