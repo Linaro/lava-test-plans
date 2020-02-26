@@ -27,7 +27,7 @@
           - cd home/buildslave/workspace/armnn-ci-build
           - export BASEDIR=`pwd`
           - cd $BASEDIR/build
-          - ln -s $BASEDIR/libprotobuf.so.15.0.0 ./libprotobuf.so.15
+          - ln -s $BASEDIR/build/libprotobuf.so.15.0.0 ./libprotobuf.so.15
           - export LD_LIBRARY_PATH=`pwd`
           - chmod a+x UnitTests
           - lava-test-case ArmNN-Unit-Tests --shell ./UnitTests
