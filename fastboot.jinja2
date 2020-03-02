@@ -140,6 +140,18 @@ protocols:
 {% endif %}
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
+{% if OVERLAY_MODULES_URL is defined %}
+      overlays:
+        modules:
+          url: {{OVERLAY_MODULES_URL}}
+          path: /
+{% if OVERLAY_MODULES_URL_FORMAT is defined %}
+          format: {{OVERLAY_MODULES_URL_FORMAT}}
+{% endif %}
+{% if OVERLAY_MODULES_URL_COMP is defined %}
+          compression: {{OVERLAY_MODULES_URL_COMP}}
+{% endif %}
+{% endif %}
 {% endif %}
     os: {{DEPLOY_OS}}
 {% endblock deploy_target %}

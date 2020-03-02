@@ -39,6 +39,7 @@ variables:
  formatted comma separated list. Example: tag1, tag2. In case of using just one tag, end string with comma. Example:
  tag1,
  * *UBOOT_VERSION_STRING*: string that is matched in the u-boot shell from output of command *version*
+ * *OVERLAY_MODULES_* *: overlays modules into the rootfs.
 
 Variables can also be stored in YAML file. Usual YAML syntax applies.
 
