@@ -119,6 +119,9 @@ protocols:
 {% if MODULES_URL is defined %}
       modules:
         url: {{MODULES_URL}}
+{% if MODULES_URL_FORMAT is defined %}
+        format: {{MODULES_URL_FORMAT}}
+{% endif %}
 {% if MODULES_URL_COMP is defined %}
         compression: {{MODULES_URL_COMP}}
 {% endif %}
@@ -126,6 +129,9 @@ protocols:
 {% if rootfs == true %}
       {{ rootfs_label }}:
         url: {{ROOTFS_URL}}
+{% if ROOTFS_URL_FORMAT is defined %}
+        format: {{ROOTFS_URL_FORMAT}}
+{% endif %}
 {% if ROOTFS_URL_COMP is defined %}
         compression: {{ROOTFS_URL_COMP}}
 {% endif %}

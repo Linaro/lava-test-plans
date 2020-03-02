@@ -7,6 +7,7 @@
 "BUILD_NUMBER": "123"
 "LAVA_JOB_PRIORITY": "99"
 "ROOTFS_URL": "variable-value"
+"# ROOTFS_URL_FORMAT": "variable-value"
 "ROOTFS_URL_COMP": "gz"
 "DEPLOY_OS": "debian"
 "LXC_ROOTFS_FILE": "lxc-rootfs-file"

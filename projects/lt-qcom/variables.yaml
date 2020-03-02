@@ -6,6 +6,7 @@
 "OS_INFO": "variable-value"
 "BOOT_URL_COMP": "gz"
 "ROOTFS_URL": "variable-value"
+"# ROOTFS_URL_FORMAT": "variable-value"
 "ROOTFS_URL_COMP": "xz"
 "DEPLOY_OS": "variable-value"
 "LXC_ROOTFS_FILE": "lxc-rootfs-file"
