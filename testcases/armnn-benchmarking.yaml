@@ -13,5 +13,5 @@
     - repository: https://github.com/Linaro/test-definitions.git
       from: git
       path: automated/linux/armnn-benchmarks/armnn-benchmarking.yaml
-      name: armnn-mlperf benchmark
+      name: armnn-mlperf-benchmark
 {% endblock test_target %}
