@@ -1,9 +1,9 @@
 {% extends device_type %}
 
-{% if PROJECT_NAME is undefined %}{% set PROJECT_NAME = "" %}{% endif %}
-{% if BUILD_NUMBER is undefined %}{% set BUILD_NUMBER = "" %}{% endif %}
-{% if KERNEL_BRANCH is undefined %}{% set KERNEL_BRANCH = "" %}{% endif %}
-{% if OS_INFO is undefined %}{% set OS_INFO = "" %}{% endif %}
+{% set PROJECT_NAME = PROJECT_NAME|default("") %}
+{% set BUILD_NUMBER = BUILD_NUMBER|default("") %}
+{% set KERNEL_BRANCH = KERNEL_BRANCH|default("") %}
+{% set OS_INFO = OS_INFO|default("") %}
 
 {% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-{{test_name}}-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
 

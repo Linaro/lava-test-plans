@@ -7,13 +7,13 @@
 {% if DEVICE_TYPE == 'qemu_arm' %}
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
-{% if AUTO_LOGIN_PROMPT is undefined %}{% set AUTO_LOGIN_PROMPT = "am57xx-evm login:" %}{% endif %}
-{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "root@am57xx-evm:" %}{% endif %}
-{% if target_boot_timeout is undefined %}{% set target_boot_timeout = 15 %}{% endif %}
+{% set AUTO_LOGIN_PROMPT = AUTO_LOGIN_PROMPT|default("am57xx-evm login:") %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@am57xx-evm:") %}
+{% set target_boot_timeout = target_boot_timeout|default(15) %}
 {% set smp_core_count = "2" %}
 {% endif %}
 
-{% if smp_core_count is undefined %}{% set smp_core_count = 4 %}{% endif %}
+{% set smp_core_count = smp_core_count|default(4) %}
 
 {% block rootfs_extra_args %}
         {{ super() }}

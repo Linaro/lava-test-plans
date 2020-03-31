@@ -3,9 +3,9 @@
 
 {% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}
-{% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
-{% if ROOTFS_URL_COMP is undefined %}{% set ROOTFS_URL_COMP = "gz" %}{% endif %}
-{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "dragonboard-820c:" %}{% endif %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("dragonboard-820c:") %}
 
 {% block device_type %}dragonboard-820c{% endblock %}
 

@@ -1,18 +1,19 @@
 {# timeouts #}
-{% if lxc_deploy_timeout is undefined %}{% set lxc_deploy_timeout = 15 %}{% endif %}
-{% if lxc_boot_timeout is undefined %}{% set lxc_boot_timeout = 5 %}{% endif %}
-{% if lxc_install_fastboot_timeout is undefined %}{% set lxc_install_fastboot_timeout = 10 %}{% endif %}
-{% if lxc_test_timeout is undefined %}{% set lxc_test_timeout = 60 %}{% endif %}
-{% if target_deploy_timeout is undefined %}{% set target_deploy_timeout = 40 %}{% endif %}
-{% if target_boot_timeout is undefined %}{% set target_boot_timeout = 15 %}{% endif %}
-{% if test_timeout is undefined %}{% set test_timeout = 60 %}{% endif %}
+{% set lxc_deploy_timeout = lxc_deploy_timeout|default(15) %}
+{% set lxc_boot_timeout = lxc_boot_timeout|default(5) %}
+{% set lxc_install_fastboot_timeout = lxc_install_fastboot_timeout|default(10) %}
+{% set lxc_test_timeout = lxc_test_timeout|default(60) %}
+{% set target_deploy_timeout = target_deploy_timeout|default(40) %}
+{% set target_boot_timeout = target_boot_timeout|default(15) %}
+{% set test_timeout = test_timeout|default(60) %}
+
 {% set job_timeout = lxc_deploy_timeout + lxc_boot_timeout + lxc_install_fastboot_timeout + target_deploy_timeout + target_boot_timeout + test_timeout %}
 
 {# auto_login_* #}
-{% if AUTO_LOGIN_PROMPT is undefined %}{% set AUTO_LOGIN_PROMPT = "login:" %}{% endif %}
-{% if AUTO_LOGIN_USERNAME is undefined %}{% set AUTO_LOGIN_USERNAME = "root" %}{% endif %}
-{% if AUTO_LOGIN_PASSWORD_PROMPT is undefined %}{% set AUTO_LOGIN_PASSWORD_PROMPT = "" %}{% endif %}
-{% if AUTO_LOGIN_PASSWORD is undefined %}{% set AUTO_LOGIN_PASSWORD = "" %}{% endif %}
+{% set AUTO_LOGIN_PROMPT = AUTO_LOGIN_PROMPT|default("login:") %}
+{% set AUTO_LOGIN_USERNAME = AUTO_LOGIN_USERNAME|default("root") %}
+{% set AUTO_LOGIN_PASSWORD_PROMPT = AUTO_LOGIN_PASSWORD_PROMPT|default("") %}
+{% set AUTO_LOGIN_PASSWORD = AUTO_LOGIN_PASSWORD|default("") %}
 
 {% block global_settings %}
 timeouts:
@@ -32,14 +33,15 @@ context:
 {% endblock global_settings %}
 
 
+{% set LAVA_JOB_VISIBILITY = LAVA_JOB_VISIBILITY|default("public") %}
 device_type: {% block device_type %}{% endblock %}
 job_name: {% block job_name %}{% endblock %}
 priority: {% block priority %}{{LAVA_JOB_PRIORITY}}{% endblock priority %}
-visibility: {% block visibility %}{% if LAVA_JOB_VISIBILITY is undefined %}public{% else %}{{LAVA_JOB_VISIBILITY}}{% endif %}{% endblock visibility %}
+visibility: {% block visibility %}{{LAVA_JOB_VISIBILITY}}{% endblock visibility %}
 
 {# variables #}
-{% if rootfs is undefined %}{% set rootfs = true %}{% endif %}
-{% if rootfs_label is undefined %}{% set rootfs_label = 'rootfs' %}{% endif %}
+{% set rootfs = rootfs|default(true) %}
+{% set rootfs_label = rootfs_label|default('rootfs') %}
 
 {% block tags %}
 {% if TAGS is defined and TAGS is sequence and TAGS is not string %}

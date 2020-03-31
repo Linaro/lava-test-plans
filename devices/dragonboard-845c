@@ -5,8 +5,8 @@
 {% set rootfs_label = 'rootfs' %}
 {% set ptable = true %}
 {% set PTABLE_LABEL = "partition:0" %}
-{% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
-{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "dragonboard-845c:" %}{% endif %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("dragonboard-845c:") %}
 
 {% block device_type %}dragonboard-845c{% endblock %}
 
