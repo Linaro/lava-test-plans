@@ -1,7 +1,7 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"qemu.jinja2" %}
 
-{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "root@intel-corei7-64:" %}{% endif %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@intel-corei7-64:") %}
 
 {% block global_settings %}
 {{ super() }}
