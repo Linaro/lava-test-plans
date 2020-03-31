@@ -3,8 +3,8 @@
 
 {% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}
-{% if DEPLOY_OS is undefined %}{% set DEPLOY_OS = "oe" %}{% endif %}
-{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "dragonboard-410c:" %}{% endif %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("dragonboard-410c:") %}
 
 {% block device_type %}dragonboard-410c{% endblock %}
 
