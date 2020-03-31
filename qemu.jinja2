@@ -2,15 +2,15 @@
 
 {% set rootfs = true %}
 {% set use_context = true %}
-{% if rootfs_label is undefined %}{% set rootfs_label = "rootfs" %}{% endif %}
-{% if DEPLOY_TARGET is undefined %}{% set DEPLOY_TARGET = "tmpfs" %}{% endif %}
-{% if boot is undefined %}{% set boot = true %}{% endif %}
-{% if BOOT_LABEL is undefined %}{% set BOOT_LABEL = "kernel" %}{% endif %}
-{% if boot_method is undefined %}{% set boot_method = "qemu" %}{% endif %}
-{% if apply_overlay is undefined %}{% set apply_overlay = "rootfs" %}{% endif %}
-{% if target_boot_timeout is undefined %}{% set target_boot_timeout = 10%}{% endif %}
-{% if auto_login is undefined %}{% set auto_login = true %}{% endif %}
-{% if AUTO_LOGIN_USERNAME is undefined %}{% set AUTO_LOGIN_USERNAME = "root" %}{% endif %}
+{% set rootfs_label = rootfs_label|default("rootfs") %}
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("tmpfs") %}
+{% set boot = boot|default(true) %}
+{% set BOOT_LABEL = BOOT_LABEL|default("kernel") %}
+{% set boot_method = boot_method|default("qemu") %}
+{% set apply_overlay = apply_overlay|default("rootfs") %}
+{% set target_boot_timeout = target_deploy_timeout|default(10) %}
+{% set auto_login = auto_login|default(true) %}
+{% set AUTO_LOGIN_USERNAME = AUTO_LOGIN_USERNAME|default("root") %}
 
 {% block global_settings %}
 {{ super() }}
