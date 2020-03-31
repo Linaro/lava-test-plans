@@ -1,0 +1,3 @@
+{% extends "devices/x15" %}
+
+{% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
