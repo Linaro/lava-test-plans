@@ -1,7 +1,7 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"nfs.jinja2" %}
 
-{% set DEPLOY_OS="debian" %}
+{% set DEPLOY_OS = DEPLOY_OS|default("debian") %}
 {% set rootfs_label="nfsrootfs" %}
 {% set auto_login = true %}
 {% set boot_method = "u-boot" %}
