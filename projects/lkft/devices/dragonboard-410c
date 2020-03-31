@@ -1,0 +1,3 @@
+{% extends "devices/dragonboard-410c" %}
+
+{% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
