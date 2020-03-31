@@ -3,7 +3,7 @@
 
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
-{% if BOOT_OS_PROMPT is undefined %}{% set BOOT_OS_PROMPT = "root@intel-core2-32:" %}{% endif %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@intel-core2-32:") %}
 
 {% block global_settings %}
 {{ super() }}
