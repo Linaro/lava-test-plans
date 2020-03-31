@@ -4,6 +4,8 @@
 {% include PROJECT+"include/lkft-metadata.jinja2" %}
 {% endblock metadata %}
 
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("download") %}
+
 {% block lxc_extra_packages %}
     - android-tools-fsutils
     - curl
