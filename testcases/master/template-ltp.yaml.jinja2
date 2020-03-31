@@ -1,8 +1,8 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% if KERNEL_BRANCH is undefined %}{% set KERNEL_BRANCH = "" %}{% endif %}
-{% if OS_INFO is undefined %}{% set OS_INFO = "" %}{% endif %}
-{% if LAVA_TEST_NAME_SUFFIX is undefined %}{% set LAVA_TEST_NAME_SUFFIX = "" %}{% endif %}
+{% set KERNEL_BRANCH = KERNEL_BRANCH|default("") %}
+{% set OS_INFO = OS_INFO|default("") %}
+{% set LAVA_TEST_NAME_SUFFIX = LAVA_TEST_NAME_SUFFIX|default("") %}
 
 {% set test_name = "ltp-" + testnames|join('-') + LAVA_TEST_NAME_SUFFIX %}
 
