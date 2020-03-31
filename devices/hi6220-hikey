@@ -10,7 +10,7 @@
 {% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("hikey:~") %}
 {% block device_type %}hi6220-hikey-r2{% endblock %}
 {% set boot_method = "grub" %}
-{% set DEPLOY_OS = "oe" %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 
 {% block auto_login_commands %}
       login_commands:
