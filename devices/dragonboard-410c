@@ -1,11 +1,12 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"fastboot.jinja2" %}
 
-{% set rootfs = true %}
-{% set rootfs_label = 'rootfs' %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("dragonboard-410c:") %}
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
-{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("dragonboard-410c:") %}
+
+{% set rootfs = true %}
+{% set rootfs_label = 'rootfs' %}
 
 {% block device_type %}dragonboard-410c{% endblock %}
 
