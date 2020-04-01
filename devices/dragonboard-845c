@@ -1,12 +1,14 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"fastboot.jinja2" %}
 
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("dragonboard-845c:") %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set PTABLE_LABEL = "partition:0" %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
+
+{% set ptable = true %}
 {% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}
-{% set ptable = true %}
-{% set PTABLE_LABEL = "partition:0" %}
-{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
-{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("dragonboard-845c:") %}
 
 {% block device_type %}dragonboard-845c{% endblock %}
 
