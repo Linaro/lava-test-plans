@@ -1,15 +1,15 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"fastboot.jinja2" %}
 
-{% block device_type %}sdm845-mtp{% endblock %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
-{% set rootfs_label = 'userdata' %}
 {% set install_fastboot = false %}
 {% set pre_power_command = false %}
 {% set pre_os_command = false %}
+{% set rootfs_label = 'userdata' %}
 
-{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
-{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
+{% block device_type %}sdm845-mtp{% endblock %}
 
 {% block auto_login_commands %}
 {% if AUTO_LOGIN_USERNAME != 'root' %}
