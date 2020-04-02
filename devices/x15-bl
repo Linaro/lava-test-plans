@@ -1,11 +1,12 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"fastboot.jinja2" %}
 
+{% set boot_method = boot_method|default("u-boot") %}
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
-{% set rootfs_label = "userdata" %}
 {% set pre_os_command = false %}
-{% set boot_method = boot_method|default("u-boot") %}
+{% set rootfs_label = "userdata" %}
+
 {% block device_type %}x15-bl{% endblock %}
 
 {% block boot_commands %}
