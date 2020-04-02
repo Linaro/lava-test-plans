@@ -1,12 +1,13 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"nfs.jinja2" %}
 
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@intel-corei7-64:") %}
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
-{% set rootfs_label="nfsrootfs" %}
+
 {% set auto_login = true %}
 {% set boot_method = "ipxe" %}
-{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@intel-corei7-64:") %}
+{% set rootfs_label="nfsrootfs" %}
 {% set use_context = true %}
 
 {% block context %}
