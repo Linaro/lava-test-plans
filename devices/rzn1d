@@ -1,15 +1,16 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"nfs.jinja2" %}
 
-{% set run_nand_commands = true %}
-{% set run_tftp_commands = true %}
-{% set target_deploy_timeout = 5 %}
-{% set boot_method = boot_method|default("u-boot") %}
-{% set target_boot_timeout = 10 %}
-{% set auto_login = auto_login|default(true) %}
 {% set AUTO_LOGIN_PASSWORD_PROMPT = "Password:" %}
 {% set AUTO_LOGIN_PASSWORD = "P@ssword-1" %}
 {% set BOOT_OS_PROMTP = "root@rzn1-snarc:" %}
+
+{% set auto_login = auto_login|default(true) %}
+{% set boot_method = boot_method|default("u-boot") %}
+{% set run_nand_commands = true %}
+{% set run_tftp_commands = true %}
+{% set target_boot_timeout = 10 %}
+{% set target_deploy_timeout = 5 %}
 
 {% block device_type %}rzn1d{% endblock %}
 
