@@ -1,6 +1,7 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"qemu.jinja2" %}
 
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
 {% block global_settings %}
