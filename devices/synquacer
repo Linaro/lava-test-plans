@@ -1,9 +1,9 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"nfs.jinja2" %}
 
-{% set rootfs_label="nfsrootfs" %}
 {% set auto_login = true %}
 {% set boot_method = "grub" %}
+{% set rootfs_label="nfsrootfs" %}
 {% set use_context = true %}
 
 {% block context %}
