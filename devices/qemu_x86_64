@@ -2,6 +2,7 @@
 {% extends PROJECT+"qemu.jinja2" %}
 
 {% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@intel-corei7-64:") %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
 {% block global_settings %}
