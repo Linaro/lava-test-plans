@@ -2,6 +2,8 @@
 {% extends PROJECT+"qemu.jinja2" %}
 
 {% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@intel-core2-32:") %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
