@@ -4,6 +4,11 @@
 {% include PROJECT+"include/lkft-metadata.jinja2" %}
 {% endblock metadata %}
 
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("download") %}
+{% set LXC_PTABLE_FILE = LXC_PTABLE_FILE|default("ptable-linux-8g.img") %}
+{% set LXC_BOOT_FILE = LXC_BOOT_FILE|default("boot.img") %}
+{% set LXC_ROOTFS_FILE = LXC_ROOTFS_FILE|default("rpb-console-image-lkft.rootfs.img") %}
+
 {% block lxc_extra_packages %}
     - android-tools-fsutils
     - curl

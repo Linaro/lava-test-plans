@@ -11,6 +11,7 @@
 {% block device_type %}hi6220-hikey-r2{% endblock %}
 {% set boot_method = "grub" %}
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
 {% block auto_login_commands %}
       login_commands:

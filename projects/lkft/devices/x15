@@ -1,0 +1,4 @@
+{% extends "devices/x15" %}
+
+{% set BOOT_LABEL = BOOT_LABEL|default("kernel") %}
+{% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}

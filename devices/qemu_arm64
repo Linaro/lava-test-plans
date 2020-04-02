@@ -1,6 +1,8 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"qemu.jinja2" %}
 
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
+
 {% block global_settings %}
 {{ super() }}
   arch: arm64
