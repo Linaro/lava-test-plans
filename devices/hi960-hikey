@@ -1,14 +1,15 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"fastboot.jinja2" %}
 
-{% set rootfs = true %}
-{% set rootfs_label = 'system' %}
-{% set ptable = false %}
-{% set reboot_reset = true %}
-{% block device_type %}hi960-hikey{% endblock %}
+{% set auto_login = false %}
 {% set boot_method = "grub" %}
 {% set pre_os_command_action = "grub-sequence-action" %}
-{% set auto_login = false %}
+{% set ptable = false %}
+{% set reboot_reset = true %}
+{% set rootfs = true %}
+{% set rootfs_label = 'system' %}
+
+{% block device_type %}hi960-hikey{% endblock %}
 
 {% block boot_commands %}
     commands: installed

@@ -1,17 +1,19 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"fastboot.jinja2" %}
 
-{% set rootfs = true %}
-{% set rootfs_label = 'system' %}
-{% set ptable = true %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("hikey:~") %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set PTABLE_LABEL = "ptable" %}
 {% set PTABLE_URL = "http://images.validation.linaro.org/snapshots.linaro.org/96boards/reference-platform/components/uefi-staging/69/hikey/release/ptable-linux-8g.img" %}
-{% set reboot_reset = true %}
-{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("hikey:~") %}
-{% block device_type %}hi6220-hikey-r2{% endblock %}
-{% set boot_method = "grub" %}
-{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
+
+{% set boot_method = "grub" %}
+{% set ptable = true %}
+{% set reboot_reset = true %}
+{% set rootfs = true %}
+{% set rootfs_label = 'system' %}
+
+{% block device_type %}hi6220-hikey-r2{% endblock %}
 
 {% block auto_login_commands %}
       login_commands:
