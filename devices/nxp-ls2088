@@ -2,11 +2,12 @@
 {% extends PROJECT+"nfs.jinja2" %}
 
 {% set DEPLOY_OS = DEPLOY_OS|default("debian") %}
-{% set rootfs_label="nfsrootfs" %}
+
 {% set auto_login = true %}
 {% set boot_method = "u-boot" %}
-{% set use_context = true %}
 {% set extra_kernel_args = 'arm-smmu-mod.disable_bypass=n arm-smmu.disable_bypass=n ' + extra_kernel_args|default("") %}
+{% set rootfs_label="nfsrootfs" %}
+{% set use_context = true %}
 
 {% block context %}
   arch: arm64
