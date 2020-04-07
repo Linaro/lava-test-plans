@@ -10,7 +10,7 @@
 "# ROOTFS_URL_FORMAT": "variable-value"
 "ROOTFS_URL_COMP": "gz"
 "DEPLOY_OS": "debian"
-"LXC_ROOTFS_FILE": "lxc-rootfs-file"
+"DOCKER_ROOTFS_FILE": "docker-rootfs-file"
 "BOOT_OS_PROMPT": "variable-value"
 "QA_SERVER_PROJECT": "qa-server-project"
 # ARMNN
