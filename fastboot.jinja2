@@ -4,6 +4,7 @@ reboot_to_fastboot: false
 
 {% set use_context = true %}
 
+{% set DOCKER_IMAGE = DOCKER_IMAGE|default("debian:buster") %}
 {% set install_fastboot = install_fastboot|default(true) %}
 {% set ptable = ptable|default(false) %}
 {% set PTABLE_LABEL = PTABLE_LABEL|default("ptable") %}
@@ -25,60 +26,12 @@ reboot_to_fastboot: false
   test_character_delay: 10
 {% endblock context %}
 
-{% block protocols %}
-protocols:
-  lava-lxc:
-    name: lxc-target
-    template: debian
-    distribution: debian
-    release: buster
-    arch: amd64
-    mirror: http://deb.debian.org/debian
-{% endblock protocols %}
-
 {% block actions %}
-{% block lxc %}
-- deploy:
-    namespace: tlxc
-    timeout:
-      minutes: {{ lxc_deploy_timeout }}
-    to: lxc
-    packages:
-    - wget
-    - unzip
-{% block lxc_extra_packages %}
-{% endblock lxc_extra_packages %}
-    os: debian
-
-- boot:
-    namespace: tlxc
-    prompts:
-    - 'root@(.*):/#'
-    timeout:
-      minutes: {{ lxc_boot_timeout }}
-    method: lxc
-
-{% if install_fastboot == true %}
-- test:
-    namespace: tlxc
-    timeout:
-      minutes: {{ lxc_install_fastboot_timeout }}
-    definitions:
-    - repository: https://github.com/Linaro/test-definitions.git
-      from: git
-      path: automated/linux/android-platform-tools/install.yaml
-      name: install-android-platform-tools-r2800
-      parameters:
-        LINK: 'https://dl.google.com/android/repository/platform-tools_r28.0.0-linux.zip'
-{% endif %}
-{% endblock lxc %}
-
 {% block deploy_target %}
 - deploy:
     timeout:
       minutes: {{ target_deploy_timeout }}
     to: {{ DEPLOY_TARGET }}
-    namespace: target
     images:
 {% if ptable == true %}
       {{ PTABLE_LABEL }}:
@@ -156,11 +109,16 @@ protocols:
 {% endif %}
 {% endif %}
     os: {{DEPLOY_OS}}
+    postprocess:
+      docker:
+        image: {{DOCKER_IMAGE}}
 {% endblock deploy_target %}
 
 {% block boot_target %}
 - boot:
-    namespace: target
+    docker:
+      image: {{DOCKER_IMAGE}}
+    commands: installed
 {% if auto_login == true %}
 {% include "include/boot_target/auto_login.jinja2" %}
 {% block auto_login_commands %}
@@ -173,9 +131,6 @@ protocols:
 {% endblock boot_commands %}
 {% include "include/boot_target/boot_commands.jinja2" %}
 {% endblock boot_target %}
-
-{% block test_lxc %}
-{% endblock test_lxc %}
 
 {% block test_target %}
 {% include "include/test_target.jinja2" %}

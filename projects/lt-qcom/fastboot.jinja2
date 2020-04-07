@@ -31,18 +31,18 @@
           - overlay_file=/lava-lxc/overlays/target/overlay.tar.gz
           - overlay_size=$(gzip -l $overlay_file | tail -1 | awk '{print $2}')
           - overlay_size=$(( $overlay_size / 1024 ))
-          - simg2img {{LXC_ROOTFS_FILE}} {{LXC_ROOTFS_FILE}}.ext4
-          - free_blocks=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Free blocks" | awk '{print $3}')
-          - block_size=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Block size" | awk '{print $3}')
+          - simg2img {{DOCKER_ROOTFS_FILE}} {{DOCKER_ROOTFS_FILE}}.ext4
+          - free_blocks=$(dumpe2fs -h {{DOCKER_ROOTFS_FILE}}.ext4 | grep "Free blocks" | awk '{print $3}')
+          - block_size=$(dumpe2fs -h {{DOCKER_ROOTFS_FILE}}.ext4 | grep "Block size" | awk '{print $3}')
           - free_size=$(( $block_size * $free_blocks / 1024 ))
           - if [ "$free_size" -lt "$overlay_size" ]; then
-          -    block_count=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Block count" | awk '{print $3}')
+          -    block_count=$(dumpe2fs -h {{DOCKER_ROOTFS_FILE}}.ext4 | grep "Block count" | awk '{print $3}')
           -    current_size=$(( $block_size * $block_count / 1024 ))
           -    extra_size=32768
           -    final_size=$(( $current_size + $overlay_size + $extra_size ))
-          -    fsck_code=$(e2fsck -y -f {{LXC_ROOTFS_FILE}}.ext4)
-          -    resize2fs {{LXC_ROOTFS_FILE}}.ext4 "$final_size"K
-          -    img2simg {{LXC_ROOTFS_FILE}}.ext4 {{LXC_ROOTFS_FILE}}
+          -    fsck_code=$(e2fsck -y -f {{DOCKER_ROOTFS_FILE}}.ext4)
+          -    resize2fs {{DOCKER_ROOTFS_FILE}}.ext4 "$final_size"K
+          -    img2simg {{DOCKER_ROOTFS_FILE}}.ext4 {{DOCKER_ROOTFS_FILE}}
           -    echo "resize_rootfs:" "pass"
           - else
           -    echo "resize_rootfs:" "skip"
@@ -70,7 +70,7 @@
           - then
           -     configs_dir=$(mktemp -d /tmp/configs.XXXX)
           -     git clone --depth 1 http://git.linaro.org/ci/job/configs.git $configs_dir
-          -     $configs_dir/lt-qcom-linux-test/copy_test_overlay.sh /lava-lxc/{{LXC_BOOT_FILE}} $overlay_file
+          -     $configs_dir/lt-qcom-linux-test/copy_test_overlay.sh /lava-lxc/{{DOCKER_BOOT_FILE}} $overlay_file
           -     echo "apply_test_overlay_bootimg:" "pass"
           - else
           -     echo "apply_test_overlay_bootimg:" "skip"
@@ -84,10 +84,10 @@
     namespace: target
     images:
       boot:
-        url: lxc:///{{LXC_BOOT_FILE}}
+        url: lxc:///{{DOCKER_BOOT_FILE}}
 {% if rootfs == true %}
       {{ rootfs_label }}:
-        url: lxc:///{{LXC_ROOTFS_FILE}}
+        url: lxc:///{{DOCKER_ROOTFS_FILE}}
         apply-overlay: true
 {% endif %}
     os: {{DEPLOY_OS}}

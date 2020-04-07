@@ -5,69 +5,40 @@
 {% endblock metadata %}
 
 {% set DEPLOY_TARGET = DEPLOY_TARGET|default("download") %}
-{% set LXC_PTABLE_FILE = LXC_PTABLE_FILE|default("ptable-linux-8g.img") %}
-{% set LXC_BOOT_FILE = LXC_BOOT_FILE|default("boot.img") %}
-{% set LXC_ROOTFS_FILE = LXC_ROOTFS_FILE|default("rpb-console-image-lkft.rootfs.img") %}
-
-{% block lxc_extra_packages %}
-    - android-tools-fsutils
-    - curl
-    - cpio
-    - file
-    - git
-    - libguestfs-tools
-    - linux-image-amd64
-    - mkbootimg
-    - xz-utils
-    - --no-install-recommends
-{% endblock lxc_extra_packages %}
+{% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("ptable-linux-8g.img") %}
+{% set DOCKER_BOOT_FILE = DOCKER_BOOT_FILE|default("boot.img") %}
+{% set DOCKER_ROOTFS_FILE = DOCKER_ROOTFS_FILE|default("rpb-console-image-lkft.rootfs.img") %}
 
 {% block deploy_target %}
 {{ super() }}
 {% if DEPLOY_TARGET == "download" %}
-- test:
-    namespace: tlxc
-    timeout:
-      minutes: {{ lxc_test_timeout }}
-    definitions:
-    - from: inline
-      name: kir
-      path: inline/kir.yaml
-      repository:
-        metadata:
-          description: Squash kernel, dtb and modules into rootfs
-          format: Lava-Test Test Definition 1.0
-          name: resize-rootfs
-        run:
-          steps:
-          - pwd
-          - cd /lava-lxc
-          - git clone -b 20200325 https://github.com/linaro/kir.git
-          - ./kir/lava/board_setup.sh {{DEVICE_TYPE}}
+        steps:
+        - /kir/lava/board_setup.sh {{DEVICE_TYPE}}
 
 - deploy:
     timeout:
       minutes: {{ target_deploy_timeout }}
     to: fastboot
-    namespace: target
+    docker:
+      image: {{DOCKER_IMAGE}}
     images:
 {% if ptable == true %}
       ptable:
-        url: lxc:///{{LXC_PTABLE_FILE}}
+        url: downloads://{{DOCKER_PTABLE_FILE}}
 {% if reboot_reset == true %}
         reboot: hard-reset
 {% endif %}
 {% endif %}
 {% if boot == true and BOOT_LABEL != "kernel" %}
       boot:
-        url: lxc:///{{LXC_BOOT_FILE}}
+        url: downloads://{{DOCKER_BOOT_FILE}}
 {% if reboot_reset == true %}
         reboot: hard-reset
 {% endif %}
 {% endif %}
 {% if rootfs == true %}
       {{ rootfs_label }}:
-        url: lxc:///{{LXC_ROOTFS_FILE}}
+        url: downloads://{{DOCKER_ROOTFS_FILE}}
         apply-overlay: true
 {% endif %}
     os: {{DEPLOY_OS}}
