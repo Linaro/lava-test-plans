@@ -5,6 +5,7 @@
 {% endblock metadata %}
 
 {% set DEPLOY_TARGET = DEPLOY_TARGET|default("download") %}
+{% set DOCKER_IMAGE = DOCKER_IMAGE|default("roxell/kir") %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("ptable-linux-8g.img") %}
 {% set DOCKER_BOOT_FILE = DOCKER_BOOT_FILE|default("boot.img") %}
 {% set DOCKER_ROOTFS_FILE = DOCKER_ROOTFS_FILE|default("rpb-console-image-lkft.rootfs.img") %}
