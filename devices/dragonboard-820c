@@ -5,6 +5,7 @@
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
+{% set pre_power_command = true %}
 {% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}
 
@@ -17,8 +18,3 @@
         - su
 {% endif %}
 {% endblock auto_login_commands %}
-
-{% block deploy_target %}
-{{ super() }}
-{% include "include/pre-power-command.jinja2" %}
-{% endblock deploy_target %}
