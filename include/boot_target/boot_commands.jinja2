@@ -2,3 +2,8 @@
 - command:
     name: pre_os_command
 {% endif %}
+
+{% if pre_power_command is defined and pre_power_command == true %}
+- command:
+    name: pre_power_command
+{% endif %}

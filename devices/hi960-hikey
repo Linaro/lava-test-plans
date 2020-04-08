@@ -4,6 +4,7 @@
 {% set auto_login = false %}
 {% set boot_method = "grub" %}
 {% set pre_os_command = true %}
+{% set pre_power_command = true %}
 {% set ptable = false %}
 {% set reboot_reset = true %}
 {% set rootfs = true %}
@@ -14,9 +15,3 @@
 {% block boot_commands %}
     commands: installed
 {% endblock boot_commands %}
-
-{% block deploy_target %}
-{{ super() }}
-{% include "include/pre-power-command.jinja2" %}
-{% endblock deploy_target %}
-
