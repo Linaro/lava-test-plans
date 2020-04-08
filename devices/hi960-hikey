@@ -3,7 +3,7 @@
 
 {% set auto_login = false %}
 {% set boot_method = "grub" %}
-{% set pre_os_command_action = "grub-sequence-action" %}
+{% set pre_os_command = true %}
 {% set ptable = false %}
 {% set reboot_reset = true %}
 {% set rootfs = true %}
