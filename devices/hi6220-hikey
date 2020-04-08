@@ -11,7 +11,7 @@
 {% set ptable = true %}
 {% set reboot_reset = true %}
 {% set rootfs = true %}
-{% set rootfs_label = 'system' %}
+{% set rootfs_label = rootfs_label|default("system") %}
 
 {% block device_type %}hi6220-hikey-r2{% endblock %}
 
