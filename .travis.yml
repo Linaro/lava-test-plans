@@ -47,4 +47,4 @@ script:
   # check python syntax
   - black --check submit_for_testing.py
   # check GPDX compliance
-  - docker run -v $(pwd):/lava-test-plans --workdir /lava-test-plans fsfe/reuse reuse lint
+  - docker run -v $(pwd):/lava-test-plans --workdir /lava-test-plans fsfe/reuse lint
