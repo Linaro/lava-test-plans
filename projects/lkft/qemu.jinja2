@@ -17,7 +17,7 @@
 
 {% block rootfs_extra_args %}
         {{ super() }}
-        image_arg: -drive format=raw,file={rootfs},if=virtio -m 4096 -smp {{ smp_core_count }} -nographic
+        image_arg: -hda {rootfs} -m 4096 -smp {{ smp_core_count }} -nographic
 {% endblock rootfs_extra_args %}
 
 {% block test_target %}
