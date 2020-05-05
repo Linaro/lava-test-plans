@@ -21,6 +21,9 @@ timeouts:
     minutes: {% if job_timeout is defined %}{{ job_timeout }}{% else %}20{% endif %}
   connection:
     minutes: 2
+  actions:
+    finalize:
+      seconds: 60
 
 {% if use_context is defined and use_context == true %}
 context:
