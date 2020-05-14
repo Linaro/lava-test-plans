@@ -17,7 +17,8 @@
     - setenv fdtfile am57xx-beagle-x15.dtb
     - setenv console ttyS2,115200n8
     - setenv mmcdev 1
-    - "setenv bootpart 1:9"
+    - part number mmc 1 {{ rootfs_label }} part_num
+    - "setenv bootpart 1:${part_num}"
     - run mmcboot
 {% endblock boot_commands %}
 
