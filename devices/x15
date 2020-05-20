@@ -8,7 +8,7 @@
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
 {% set pre_os_command = false %}
-{% set rootfs_label = "userdata" %}
+{% set rootfs_label = "super" %}
 
 {% block device_type %}x15{% endblock %}
 
