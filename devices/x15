@@ -32,7 +32,7 @@
           description: "Mount local disk for tmp space"
         run:
           steps:
-{% if KERNEL_VERSION != '4.4' %}
+{% if SKIPGEN_KERNEL_VERSION != '4.4' or SKIPGEN_KERNEL_VERSION != 'linux-4.4.y' %}
           - export STORAGE_DEV=$(lava-target-storage SATA || lava-target-storage USB)
           - test -n "${STORAGE_DEV}" || lava-test-raise "STORAGE_DEV not found; job exit"
           - echo "y" | mkfs -t ext4 ${STORAGE_DEV} || lava-test-raise "mkfs -t ext4 ${STORAGE_DEV} failed; job exit"

@@ -11,7 +11,7 @@
 "BOOT_URL": "boot-url"
 "SYSTEM_URL": "system-url"
 "DEVICE_TYPE": "device-type"
-"KERNEL_VERSION": "kernel-version"
+"SKIPGEN_KERNEL_VERSION": "skipgen-kernel-version"
 "BUILD_NUMBER": "123"
 "LAVA_JOB_PRIORITY": "99"
 "TDEFINITIONS_REVISION": "tdefinitions-revision"
