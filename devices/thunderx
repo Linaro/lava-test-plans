@@ -1,0 +1,30 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"nfs.jinja2" %}
+
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@thunderx:") %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+{% set RAMDISK_URL = RAMDISK_URL|default("ramdisk-url") %}
+{% set RAMDISK_URL_COMP = RAMDISK_URL_COMP|default("gz") %}
+
+{% set auto_login = true %}
+{% set boot_method = "grub" %}
+{% set rootfs_label="nfsrootfs" %}
+{% set use_context = true %}
+
+{% block context %}
+  test_character_delay: 10
+{% endblock context %}
+
+{% block device_type %}thunderx{% endblock %}
+
+{% block boot_commands %}
+    commands: nfs
+    parameters:
+      shutdown-message: "reboot: Restarting system"
+{% endblock boot_commands %}
+
+{% block auto_login_commands %}
+      login_commands:
+        - su
+{% endblock auto_login_commands %}
