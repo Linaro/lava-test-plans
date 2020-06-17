@@ -1,0 +1,2 @@
+{% extends "devices/thunderx" %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@juno:") %}
