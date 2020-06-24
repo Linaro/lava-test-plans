@@ -1,7 +1,4 @@
 - test:
-{% if DEPLOY_TARGET is undefined or DEPLOY_TARGET != "download" %}
-    namespace: target
-{% endif %}
     timeout:
       minutes: {{ test_timeout }}
 {% if test_target_interactive is undefined %}

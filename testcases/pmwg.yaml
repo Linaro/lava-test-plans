@@ -28,7 +28,6 @@
 
 {% block test_lxc %}
 - test:
-    namespace: tlxc
     timeout:
       minutes: {% if job_timeout is defined %}{{ job_timeout }}{% else %}60{% endif %}
     definitions:

@@ -29,7 +29,6 @@
 
 {% block test_target %}
 - test:
-    namespace: target
     timeout:
       minutes: 5
     definitions:

@@ -8,7 +8,6 @@
 
 {% block deploy_target %}
 - deploy:
-    namespace: target
     timeout:
       minutes: {{ target_deploy_timeout }}
     to: tftp
@@ -81,7 +80,6 @@
 
 {% block boot_target %}
 - boot:
-    namespace: target
 {% if auto_login == true %}
 {% include "include/boot_target/auto_login.jinja2" %}
 {% block auto_login_commands %}
