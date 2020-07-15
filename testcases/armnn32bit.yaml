@@ -38,3 +38,4 @@
       from: inline
       name: armnn
       path: inline/armnn.yaml
+{% endblock test_target %}
