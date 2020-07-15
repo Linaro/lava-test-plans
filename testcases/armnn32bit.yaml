@@ -9,7 +9,7 @@
 
 {% block test_target %}
   {{ super() }}
-     -repository:
+     - repository:
         metadata:
           format: Lava-Test Test Definition 1.0
           name: armnn-test
