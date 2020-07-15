@@ -1,0 +1,29 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"qemu.jinja2" %}
+
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@stm32mp1", "root@debian:~#") %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+
+
+{% block deploy_target %}
+- deploy:
+    timeout:
+      minutes: {{ target_deploy_timeout }}
+    to: {{ DEPLOY_TARGET }}
+    namespace: target
+    images:
+      tarball: {{ TARBALL_URL }}
+      layout: {{ LAYOUT_URL }}
+    os: {{ DEPLOY_OS }}
+{% endblock deploy_target %}
+
+
+{% block boot_target %}
+- boot:
+    namespace: target
+{% include "include/boot_target/boot_os_prompt.jinja2" %}
+{% include "include/boot_target/timeout_and_method.jinja2" %}
+   transfer_overlay:
+     download_command: udhcpc; cd /tmp ; wget
+     unpack_command: tar -C / -xzf
+{% endblock boot_target %}
