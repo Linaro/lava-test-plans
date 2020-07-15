@@ -25,7 +25,7 @@
           - apt-get install -y wget
           - mkdir /usr/local/bin
           - cd /usr/local/bin
-          - wget --no-check-certificate {{ ARMNN32_TARBALL_URL }}
+          - wget --no-check-certificate {{ ARMNN_TARBALL_URL }}
           - tar xf armnn32.tar.xz
           - cd home/theodore
           - export BASEDIR=`pwd`
