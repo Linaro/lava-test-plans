@@ -1,0 +1,20 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set test_timeout = 45 %}
+{% block metadata %}
+  {{ super() }}
+  igt-gpu-tools__url: "https://gitlab.freedesktop.org/drm/igt-gpu-tools"
+{% endblock metadata %}
+
+{% set test_name = "igt-gpu-tools" %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: https://github.com/Linaro/test-definitions.git
+      from: git
+      path: automated/linux/igt/igt-test.yaml
+      name: {{test_name}}
+      parameters:
+        IGT_DIR: "/usr/share/igt-gpu-tools"
+        TEST_LIST: "CHAMELIUM"
+{% endblock test_target %}
