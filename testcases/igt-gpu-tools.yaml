@@ -1,5 +1,10 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
+{% block tags %}
+tags:
+ - chamelium
+{% endblock tags %}
+
 {% set test_timeout = 45 %}
 {% block metadata %}
   {{ super() }}
