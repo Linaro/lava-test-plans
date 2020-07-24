@@ -1,6 +1,6 @@
 {% extends "testcases/master/template-ssuite.yaml.jinja2" %}
 
-{% set testnames = 'throughput replayed-startup' %}
+{% set testnames = 'throughput replayed-gnome-term-startup' %}
 {% set testdevnames = '$(lava-target-storage SATA || lava-target-storage USB)' %}
 {% set s_path = '/opt/S-suite/' %}
 {% set test_timeout = 60 %}
