@@ -398,7 +398,7 @@ def main():
             logger.debug(testpath)
             logger.debug(test)
             container = client.containers.run(
-                image="lavasoftware/amd64-lava-server:2019.12",
+                image="lavasoftware/amd64-lava-server:latest",
                 command="/usr/share/lava-common/lava-schema.py job /data/%s"
                 % test.rsplit("/", maxsplit=1)[1],
                 volumes={"%s" % testpath: {"bind": "/data", "mode": "rw"}},
