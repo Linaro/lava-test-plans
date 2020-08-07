@@ -1,37 +1,45 @@
+reboot_to_fastboot: false
+
 {% extends "master.jinja2" %}
 
-{% set rootfs = true %}
 {% set use_context = true %}
-{% set rootfs_label = rootfs_label|default("rootfs") %}
-{% set DEPLOY_TARGET = DEPLOY_TARGET|default("tmpfs") %}
-{% set boot = boot|default(true) %}
-{% set BOOT_LABEL = BOOT_LABEL|default("kernel") %}
-{% set boot_method = boot_method|default("qemu") %}
-{% set apply_overlay = apply_overlay|default("rootfs") %}
-{% set target_boot_timeout = target_deploy_timeout|default(10) %}
-{% set auto_login = auto_login|default(true) %}
-{% set AUTO_LOGIN_USERNAME = AUTO_LOGIN_USERNAME|default("root") %}
 
-{% block global_settings %}
-{{ super() }}
-  guestfs_interface: virtio
-{% endblock global_settings %}
+{% set DOCKER_IMAGE = DOCKER_IMAGE|default("debian:buster") %}
+{% set install_fastboot = install_fastboot|default(true) %}
+{% set ptable = ptable|default(false) %}
+{% set PTABLE_LABEL = PTABLE_LABEL|default("ptable") %}
+{% set reboot_reset = reboot_reset|default(false) %}
+{% set boot = boot|default(true) %}
+{% set BOOT_LABEL = BOOT_LABEL|default("boot") %}
+{% set rootfs = rootfs|default(true) %}
+{% set rootfs_label = rootfs_label|default("rootfs") %}
+{% set apply_overlay = apply_overlay|default("rootfs") %}
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("fastboot") %}
+{% set pre_power_command = pre_power_command|default(true) %}
+{% set pre_os_command = pre_os_command|default(true) %}
+{% set auto_login = auto_login|default(true) %}
+{% set boot_method = boot_method|default("fastboot") %}
+
+
+
+{% block context %}
+  test_character_delay: 10
+{% endblock context %}
 
 {% block actions %}
-
 {% block deploy_target %}
 - deploy:
     timeout:
       minutes: {{ target_deploy_timeout }}
     to: {{ DEPLOY_TARGET }}
     images:
-{% if ptable is defined and ptable == true %}
-      ptable:
+{% if ptable == true %}
+      {{ PTABLE_LABEL }}:
         url: {{PTABLE_URL}}
 {% if PTABLE_URL_COMP is defined %}
         compression: {{PTABLE_URL_COMP}}
 {% endif %}
-{% if reboot_reset is defined and reboot_reset == true and DEPLOY_TARGET == "fastboot" %}
+{% if reboot_reset == true and DEPLOY_TARGET == "fastboot" %}
         reboot: hard-reset
 {% endif %}
 {% endif %}
@@ -43,7 +51,7 @@
 {% if BOOT_URL_COMP is defined %}
         compression: {{BOOT_URL_COMP}}
 {% endif %}
-{% if reboot_reset is defined and reboot_reset == true and DEPLOY_TARGET == "fastboot" and BOOT_LABEL == "boot" %}
+{% if reboot_reset == true and DEPLOY_TARGET == "fastboot" and BOOT_LABEL == "boot" %}
         reboot: hard-reset
 {% endif %}
 {% if apply_overlay == "bootimg" %}
@@ -101,6 +109,9 @@
 {% endif %}
 {% endif %}
     os: {{DEPLOY_OS}}
+    postprocess:
+      docker:
+        image: {{DOCKER_IMAGE}}
 {% endblock deploy_target %}
 
 {% block pre_os_command %}
@@ -109,6 +120,10 @@
 
 {% block boot_target %}
 - boot:
+    docker:
+      image: {{DOCKER_IMAGE}}
+{% block boot_commands %}
+{% endblock boot_commands %}
 {% if auto_login == true %}
 {% include "include/boot_target/auto_login.jinja2" %}
 {% block auto_login_commands %}
@@ -117,8 +132,6 @@
 {% endif %}
 {% include "include/boot_target/boot_os_prompt.jinja2" %}
 {% include "include/boot_target/timeout_and_method.jinja2" %}
-{% block boot_commands %}
-{% endblock boot_commands %}
 {% endblock boot_target %}
 
 {% block test_target %}

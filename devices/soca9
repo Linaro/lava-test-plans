@@ -16,7 +16,6 @@
 
 {% block deploy_target %}
 - deploy:
-    namespace: target
     timeout:
       minutes: 10
     to: flasher

@@ -1,184 +1,32 @@
-reboot_to_fastboot: false
-
-{% extends "master.jinja2" %}
-
-{% set use_context = true %}
-
-{% set install_fastboot = install_fastboot|default(true) %}
-{% set ptable = ptable|default(false) %}
-{% set PTABLE_LABEL = PTABLE_LABEL|default("ptable") %}
-{% set reboot_reset = reboot_reset|default(false) %}
-{% set boot = boot|default(true) %}
-{% set BOOT_LABEL = BOOT_LABEL|default("boot") %}
-{% set rootfs = rootfs|default(true) %}
-{% set rootfs_label = rootfs_label|default("rootfs") %}
-{% set apply_overlay = apply_overlay|default("rootfs") %}
-{% set DEPLOY_TARGET = DEPLOY_TARGET|default("fastboot") %}
-{% set pre_power_command = pre_power_command|default(true) %}
-{% set pre_os_command = pre_os_command|default(true) %}
-{% set auto_login = auto_login|default(true) %}
-{% set boot_method = boot_method|default("fastboot") %}
-
-
-
-{% block context %}
-  test_character_delay: 10
-{% endblock context %}
-
-{% block protocols %}
-protocols:
-  lava-lxc:
-    name: lxc-target
-    template: debian
-    distribution: debian
-    release: buster
-    arch: amd64
-    mirror: http://deb.debian.org/debian
-{% endblock protocols %}
-
-{% block actions %}
-{% block lxc %}
-- deploy:
-    namespace: tlxc
-    timeout:
-      minutes: {{ lxc_deploy_timeout }}
-    to: lxc
-    packages:
-    - wget
-    - unzip
-{% block lxc_extra_packages %}
-{% endblock lxc_extra_packages %}
-    os: debian
-
-- boot:
-    namespace: tlxc
-    prompts:
-    - 'root@(.*):/#'
-    timeout:
-      minutes: {{ lxc_boot_timeout }}
-    method: lxc
-
-{% if install_fastboot == true %}
-- test:
-    namespace: tlxc
-    timeout:
-      minutes: {{ lxc_install_fastboot_timeout }}
-    definitions:
-    - repository: https://github.com/Linaro/test-definitions.git
-      from: git
-      path: automated/linux/android-platform-tools/install.yaml
-      name: install-android-platform-tools-r2800
-      parameters:
-        LINK: 'https://dl.google.com/android/repository/platform-tools_r28.0.0-linux.zip'
-{% endif %}
-{% endblock lxc %}
+{% extends "include/fastboot.jinja2" %}
 
 {% block deploy_target %}
+{{ super() }}
 - deploy:
     timeout:
       minutes: {{ target_deploy_timeout }}
-    to: {{ DEPLOY_TARGET }}
-    namespace: target
+    to: fastboot
+    docker:
+      image: {{DOCKER_IMAGE}}
     images:
 {% if ptable == true %}
-      {{ PTABLE_LABEL }}:
-        url: {{PTABLE_URL}}
-{% if PTABLE_URL_COMP is defined %}
-        compression: {{PTABLE_URL_COMP}}
-{% endif %}
-{% if reboot_reset == true and DEPLOY_TARGET == "fastboot" %}
+      ptable:
+        url: downloads://{{DOCKER_PTABLE_FILE}}
+{% if reboot_reset == true %}
         reboot: hard-reset
 {% endif %}
 {% endif %}
-{% if boot == true %}
-      {{ BOOT_LABEL }}:
-        url: {{BOOT_URL}}
-{% block kernel_extra_args %}
-{% endblock kernel_extra_args %}
-{% if BOOT_URL_COMP is defined %}
-        compression: {{BOOT_URL_COMP}}
-{% endif %}
-{% if reboot_reset == true and DEPLOY_TARGET == "fastboot" and BOOT_LABEL == "boot" %}
+{% if boot == true and BOOT_LABEL != "kernel" %}
+      boot:
+        url: downloads://{{DOCKER_BOOT_FILE}}
+{% if reboot_reset == true %}
         reboot: hard-reset
-{% endif %}
-{% if apply_overlay == "bootimg" %}
-        apply-overlay: true
-{% endif %}
-{% block boot_extra_args %}
-{% endblock boot_extra_args %}
-{% if BOOT_LABEL != "kernel" and KERNEL_URL is defined %}
-      kernel:
-        url: {{KERNEL_URL}}
-{% if KERNEL_URL_COMP is defined %}
-        compression: {{KERNEL_URL_COMP}}
-{% endif %}
-{% endif %}
-{% endif %}
-{% if DTB_URL is defined %}
-      dtb:
-        url: {{DTB_URL}}
-{% endif %}
-{% if MODULES_URL is defined %}
-      modules:
-        url: {{MODULES_URL}}
-{% if MODULES_URL_FORMAT is defined %}
-        format: {{MODULES_URL_FORMAT}}
-{% endif %}
-{% if MODULES_URL_COMP is defined %}
-        compression: {{MODULES_URL_COMP}}
 {% endif %}
 {% endif %}
 {% if rootfs == true %}
       {{ rootfs_label }}:
-        url: {{ROOTFS_URL}}
-{% if ROOTFS_URL_FORMAT is defined %}
-        format: {{ROOTFS_URL_FORMAT}}
-{% endif %}
-{% if ROOTFS_URL_COMP is defined %}
-        compression: {{ROOTFS_URL_COMP}}
-{% endif %}
-{% if apply_overlay == "rootfs" %}
+        url: downloads://{{DOCKER_ROOTFS_FILE}}
         apply-overlay: true
-{% endif %}
-{% block rootfs_extra_args %}
-{% endblock rootfs_extra_args %}
-{% if OVERLAY_MODULES_URL is defined %}
-        overlays:
-          modules:
-            url: {{OVERLAY_MODULES_URL}}
-            path: /
-{% if OVERLAY_MODULES_URL_FORMAT is defined %}
-            format: {{OVERLAY_MODULES_URL_FORMAT}}
-{% endif %}
-{% if OVERLAY_MODULES_URL_COMP is defined %}
-            compression: {{OVERLAY_MODULES_URL_COMP}}
-{% endif %}
-{% endif %}
 {% endif %}
     os: {{DEPLOY_OS}}
 {% endblock deploy_target %}
-
-{% block boot_target %}
-- boot:
-    namespace: target
-{% if auto_login == true %}
-{% include "include/boot_target/auto_login.jinja2" %}
-{% block auto_login_commands %}
-{% include "include/boot_target/auto_login_commands.jinja2" %}
-{% endblock auto_login_commands %}
-{% endif %}
-{% include "include/boot_target/boot_os_prompt.jinja2" %}
-{% include "include/boot_target/timeout_and_method.jinja2" %}
-{% block boot_commands %}
-{% endblock boot_commands %}
-{% include "include/boot_target/boot_commands.jinja2" %}
-{% endblock boot_target %}
-
-{% block test_lxc %}
-{% endblock test_lxc %}
-
-{% block test_target %}
-{% include "include/test_target.jinja2" %}
-{% endblock test_target %}
-
-{% endblock actions %}

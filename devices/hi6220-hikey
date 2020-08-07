@@ -8,10 +8,11 @@
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
 {% set boot_method = "grub" %}
+{% set pre_power_command = true %}
 {% set ptable = true %}
 {% set reboot_reset = true %}
 {% set rootfs = true %}
-{% set rootfs_label = 'system' %}
+{% set rootfs_label = rootfs_label|default("system") %}
 
 {% block device_type %}hi6220-hikey-r2{% endblock %}
 
@@ -24,11 +25,6 @@
 {% block boot_commands %}
     commands: installed
 {% endblock boot_commands %}
-
-{% block deploy_target %}
-{{ super() }}
-{% include "include/pre-power-command.jinja2" %}
-{% endblock deploy_target %}
 
 {% block test_target %}
   {{ super() }}
