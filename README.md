@@ -11,6 +11,18 @@ You need to install Python dependencies:
 
     pip3 install -r requirements.txt
 
+or
+
+You need to do if you have docker installed:
+    docker run --volume $HOME/path/to/lava-test-plans:/xyz -i -t lavasoftware/lava-test-plans /bin/bash
+    cd /xyz
+
+lavasoftware/lava-test-plans:latest points to the latest released version.
+lavasoftware/lava-test-plans:master points to the latest development.
+
+There will be a directory with /lava-test-plans from either a "released"
+version or directly from master.
+
 If the above commands succeed, you can run to check that the program starts correctly
 
     ./submit_for_testing.py -h
@@ -54,3 +66,12 @@ Overall job timeout is a sum of action timeouts. There are 6 components:
  * *test_timeout*
 
 When LXC is not in use all *lxc_* timeouts are set to 0. *test_timeout* is defined for each test template. *target_* timeouts can be set separately for each device.
+
+# CI for docker multiarch builds
+lava-test-plans gets mirrored to gitlab
+https://gitlab.com/Linaro/lava-test-plans to build multiarch docker containers
+and publish them to https://hub.docker.com/r/lavasoftware/lava-test-plans, that
+is why there is a .gitlab-ci.yml in this repository.
+
+# Repository
+Pull requests are welcome to https://github.com/linaro/lava-test-plans.
