@@ -6,6 +6,6 @@
 
 {% block context %}
   {{ super() }}
-  booti_dtb_addr: "0x85000000"
+  booti_dtb_addr: "0x86000000"
   extra_nfsroot_args: ',wsize=65536'
 {% endblock context %}
