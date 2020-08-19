@@ -391,7 +391,7 @@ def main():
     if args.test_lava_validity:
         import docker
 
-        client = docker.from_env()
+        client = docker.from_env(version="1.38")
         logger.debug("Checking for LAVA validity")
         for test in set(test_list):
             testpath = os.path.join(os.getcwd(), output_path, args.device_type)

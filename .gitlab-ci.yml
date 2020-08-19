@@ -1,0 +1,84 @@
+services:
+  - docker:dind
+
+.docker:
+  image: docker
+  before_script:
+    - docker info
+    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - export tag="lavasoftware/lava-test-plans:${CI_COMMIT_TAG}${TAG_APPEND}"
+    - export latest="lavasoftware/lava-test-plans:latest${TAG_APPEND}"
+  script:
+    - docker build --pull --tag "${tag}" --tag "${latest}" .
+    - docker push "${tag}"
+    - docker push "${latest}"
+  variables:
+    DOCKER_DRIVER: overlay2
+
+docker-amd64:
+  extends: .docker
+  stage: build
+  variables:
+    TAG_APPEND: -amd64
+  only:
+    - tags
+
+docker-arm64:
+  extends: .docker
+  stage: build
+  tags:
+     - arm64-dind
+  variables:
+    TAG_APPEND: -arm64
+  only:
+    - tags
+
+.docker-master:
+  extends: .docker
+  stage: build
+  variables:
+    IMAGE_NAME: "lavasoftware/lava-test-plans:master"
+  script:
+    - docker build --pull --tag "${IMAGE_NAME}${TAG_APPEND}" .
+    - docker push "${IMAGE_NAME}${TAG_APPEND}"
+  only:
+    - master
+
+docker-master-amd64:
+  extends: .docker-master
+  stage: build
+  variables:
+    TAG_APPEND: -amd64
+
+docker-master-arm64:
+  extends: .docker-master
+  stage: build
+  tags:
+     - arm64-dind
+  variables:
+    TAG_APPEND: -arm64
+
+publish-dockerhub:
+  extends: .docker
+  stage: deploy
+  variables:
+    DOCKER_CLI_EXPERIMENTAL: "enabled"
+  script:
+    - docker manifest create "${tag}" "${tag}-amd64" "${tag}-arm64"
+    - docker manifest create "${latest}" "${latest}-amd64" "${latest}-arm64"
+    - docker manifest push "${tag}"
+    - docker manifest push "${latest}"
+  only:
+    - tags
+
+publish-master-dockerhub:
+  extends: .docker
+  stage: deploy
+  variables:
+    DOCKER_CLI_EXPERIMENTAL: "enabled"
+    IMAGE_NAME: "lavasoftware/lava-test-plans:master"
+  script:
+    - docker manifest create "${IMAGE_NAME}" "${IMAGE_NAME}-amd64" "${IMAGE_NAME}-arm64"
+    - docker manifest push "${IMAGE_NAME}"
+  only:
+    - master
