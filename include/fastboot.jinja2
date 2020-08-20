@@ -1,5 +1,3 @@
-reboot_to_fastboot: false
-
 {% extends "master.jinja2" %}
 
 {% set use_context = true %}
@@ -9,6 +7,7 @@ reboot_to_fastboot: false
 {% set ptable = ptable|default(false) %}
 {% set PTABLE_LABEL = PTABLE_LABEL|default("ptable") %}
 {% set reboot_reset = reboot_reset|default(false) %}
+{% set reboot_to_fastboot = reboot_to_fastboot|default("false") %}
 {% set boot = boot|default(true) %}
 {% set BOOT_LABEL = BOOT_LABEL|default("boot") %}
 {% set rootfs = rootfs|default(true) %}
@@ -21,6 +20,10 @@ reboot_to_fastboot: false
 {% set boot_method = boot_method|default("fastboot") %}
 
 
+{% block global_settings %}
+{{ super() }}
+reboot_to_fastboot: {{ reboot_to_fastboot }}
+{% endblock global_settings %}
 
 {% block context %}
   test_character_delay: 10
