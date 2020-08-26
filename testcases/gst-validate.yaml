@@ -9,7 +9,7 @@
 
 {% block test_target %}
   {{ super() }}
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/gst-validate/gst-validate.yaml
       params:

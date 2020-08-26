@@ -9,7 +9,7 @@
 
 {% block test_target %}
   {{ super() }}
-    - repository: https://github.com/Linaro/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/network-basic/network-basic.yaml
       name: network-basic-tests

@@ -9,7 +9,7 @@
 
 {% block test_target %}
   {{ super() }}
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/24h-stress-test/24h-stress-test.yaml
       params:
@@ -17,7 +17,7 @@
         DURATION: "5400"
       name: linux-stress-cpu
 
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/24h-stress-test/24h-stress-test.yaml
       params:
@@ -25,7 +25,7 @@
         DURATION: "5400"
       name: linux-stress-oom
 
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/24h-stress-test/24h-stress-test.yaml
       params:

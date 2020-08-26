@@ -6,6 +6,7 @@
 {% set target_deploy_timeout = target_deploy_timeout|default(40) %}
 {% set target_boot_timeout = target_boot_timeout|default(15) %}
 {% set test_timeout = test_timeout|default(60) %}
+{% set TEST_DEFINITIONS_REPOSITORY = TEST_DEFINITIONS_REPOSITORY|default("https://github.com/Linaro/test-definitions.git") %}
 
 {% set job_timeout = lxc_deploy_timeout + lxc_boot_timeout + lxc_install_fastboot_timeout + target_deploy_timeout + target_boot_timeout + test_timeout %}
 

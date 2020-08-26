@@ -14,7 +14,7 @@
   {{ super() }}
 {% block test_target_prep %}
 {% endblock test_target_prep %}
-    - repository: https://github.com/Linaro/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/ltp-open-posix/ltp-open-posix.yaml
       name: ltp-open-posix-tests

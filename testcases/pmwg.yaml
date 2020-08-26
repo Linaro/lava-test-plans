@@ -31,7 +31,7 @@
     timeout:
       minutes: {% if job_timeout is defined %}{{ job_timeout }}{% else %}60{% endif %}
     definitions:
-    - repository: https://git.linaro.org/lava-team/refactoring.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: testdefs/arm-probe.yaml
       name: arm-probe
@@ -57,7 +57,7 @@
       timeout:
         minutes: {{ test_timeout / 9 }}
 
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/workload-automation/workload-automation.yaml
       params:

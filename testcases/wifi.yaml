@@ -9,14 +9,14 @@
 
 {% block test_target %}
   {{ super() }}
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/wlan-smoke/wlan-smoke.yaml
       params:
         DEVICE: {{WLAN_DEVICE}}
       name: linux-wlan-smoke
 
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/wlan-download/wlan-download.yaml
       params:

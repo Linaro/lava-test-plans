@@ -65,3 +65,4 @@
 "PIGLIT_IGNORE_TESTS_REPO": "false"
 "PIGLIT_IGNORE_TESTS_FILE": "foo.txt"
 "LAVA_TEST_NAME_SUFFIX": ""
+"TEST_DEFINITIONS_REPOSITORY": "https://github.com/Linaro/test-definitions.git"
