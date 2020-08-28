@@ -49,11 +49,11 @@ testplan_device_path = "devices/"
 
 def parse_template(yaml_string):
     """
-        Round trip lava_job through ruamel to test parsing and
-        improve formatting. Comments are preserved.
+    Round trip lava_job through ruamel to test parsing and
+    improve formatting. Comments are preserved.
 
-        In: yaml-formatted string
-        Out: validated yaml-formatted string
+    In: yaml-formatted string
+    Out: validated yaml-formatted string
     """
     logger.debug(yaml_string)
     yaml = YAML()
@@ -67,8 +67,8 @@ def parse_template(yaml_string):
 
 def get_job_name(lava_job_string):
     """
-        In: yaml-formatted string
-        Out: LAVA job's name
+    In: yaml-formatted string
+    Out: LAVA job's name
     """
     yaml = YAML()
     lava_job = yaml.load(lava_job_string)
