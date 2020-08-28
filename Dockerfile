@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       && rm -rf /var/lib/apt/lists/*
 
 COPY . /lava-test-plans
-RUN echo $(git -C /lava-test-plans describe)> /lava-test-plans/.git_describe
+RUN echo "lava-test-plans version: $(git -C /lava-test-plans describe)"> /lava-test-plans/.version
 RUN rm -rf /lava-test-plans/.git
 
 FROM python:3.8-slim-buster
@@ -24,5 +24,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY --from=git_builder /lava-test-plans /lava-test-plans
 RUN pip3 install -r /lava-test-plans/requirements.txt
-RUN bash -l -c 'echo export LAVA_TEST_PLANS_GIT_DESCRIBE="$(cat /lava-test-plans/.git_describe)" >> /etc/bash.bashrc'
-RUN rm -rf /lava-test-plans/.git_describe
