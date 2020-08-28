@@ -20,7 +20,7 @@
 {% block test_target_prep %}
 {% endblock test_target_prep %}
 {% for testname in testnames %}
-    - repository: https://github.com/Linaro/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/ltp/ltp.yaml
       parameters:

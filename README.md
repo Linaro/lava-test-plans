@@ -52,6 +52,7 @@ variables:
  tag1,
  * *UBOOT_VERSION_STRING*: string that is matched in the u-boot shell from output of command *version*
  * *OVERLAY_MODULES_* *: overlays modules into the rootfs.
+ * *TEST_DEFINITIONS_REPOSITORY*: points to the test repository to use, default: https://github.com/Linaro/test-definitions.git
 
 Variables can also be stored in YAML file. Usual YAML syntax applies.
 

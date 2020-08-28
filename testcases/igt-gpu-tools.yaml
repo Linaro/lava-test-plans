@@ -10,7 +10,7 @@
 
 {% block test_target %}
   {{ super() }}
-    - repository: https://github.com/Linaro/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/igt/igt-test.yaml
       name: {{test_name}}

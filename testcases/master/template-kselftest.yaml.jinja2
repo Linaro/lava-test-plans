@@ -33,7 +33,7 @@
           - systemctl stop systemd-timesyncd || true
       name: timesync-off
       path: inline/timesync-off.yaml
-    - repository: https://github.com/Linaro/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       revision: '{{ TDEFINITIONS_REVISION }}'
       path: automated/linux/kselftest/kselftest.yaml

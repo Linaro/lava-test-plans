@@ -9,14 +9,14 @@
 
 {% block test_target %}
   {{ super() }}
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/glmark2/glmark2.yaml
       name: linux-glmark2
       timeout:
         minutes: 10
 
-    - repository: https://git.linaro.org/qa/test-definitions.git
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/piglit/piglit.yaml
       name: linux-piglit
