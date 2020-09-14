@@ -2,6 +2,7 @@
 
 import argparse
 import fnmatch
+import itertools
 import os
 import re
 import requests
@@ -244,9 +245,11 @@ def main():
         help="""Specific test cases (as Jinja2 templates) to submit.
                         It is assumed that the templates produce valid LAVA job
                         definitions. All variables are substituted using Jinja2
-                        engine""",
+                        engine. Multiple --test-case variables are allowed:
+                        --test-case test1.yaml test2.yaml --test-case test3.yaml""",
         dest="test_case",
         nargs="*",
+        action="append",
         required=False,
     )
     parser.add_argument(
@@ -331,7 +334,8 @@ def main():
                 test_list.append(os.path.join(test_plan_path, test))
 
     if args.test_case:
-        for test in args.test_case:
+        flat_test_case_list = list(itertools.chain.from_iterable(args.test_case))
+        for test in flat_test_case_list:
             test_case_path = os.path.join(args.testcase_path, test)
             test_list.append(test_case_path)
 
