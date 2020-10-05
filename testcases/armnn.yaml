@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 15 %}
 {% block metadata %}
@@ -6,13 +6,11 @@
 {% endblock metadata %}
 
 {% set test_name = "armnn" %}
+{% set test_suite_name = "armnn-unit-tests" %}
+{% set test_path_file = 'automated/linux/armnn/armnn-unit-tests.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/armnn/armnn-unit-tests.yaml
-      name: armnn-unit-tests
       parameters:
               ARMNN_TARBALL: '{{ ARMNN_TARBALL_URL }}'
 {% endblock test_target %}

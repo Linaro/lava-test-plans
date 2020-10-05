@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 45 %}
 {% block metadata %}
@@ -7,13 +7,10 @@
 {% endblock metadata %}
 
 {% set test_name = "igt-gpu-tools" %}
+{% set test_path_file = 'automated/linux/igt/igt-test.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/igt/igt-test.yaml
-      name: {{test_name}}
       parameters:
         IGT_DIR: "/usr/share/igt-gpu-tools"
         TEST_LIST: "CHAMELIUM"

@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 45 %}
 {% block metadata %}
@@ -9,13 +9,10 @@
 {% endblock metadata %}
 
 {% set test_name = "libhugetlbfs" %}
+{% set test_path_file = 'automated/linux/libhugetlbfs/libhugetlbfs.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/libhugetlbfs/libhugetlbfs.yaml
-      name: libhugetlbfs
       parameters:
         WORD_SIZE: {% if libhuggetlbfs_word_size is defined %}{{libhuggetlbfs_word_size|int|abs}}{% else %}64{% endif %}
 {% endblock test_target %}

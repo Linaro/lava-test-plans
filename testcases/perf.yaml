@@ -1,18 +1,12 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 30 %}
-{% block metadata %}
-  {{ super() }}
-{% endblock metadata %}
 
 {% set test_name = "perf" %}
+{% set test_path_file = 'automated/linux/perf/perf.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/perf/perf.yaml
-      name: perf
       parameters:
         SKIP_INSTALL: 'true'
 {% endblock test_target %}

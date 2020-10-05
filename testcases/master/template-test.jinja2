@@ -1,0 +1,9 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: '{{test_path_file}}'
+      name: {% if test_suite_name is undefined %}'{{test_name}}'{% else %} '{{test_suite_name}}'{% endif %}
+{% endblock test_target %}

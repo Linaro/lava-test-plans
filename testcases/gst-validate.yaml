@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 150 %}
 {% block metadata %}
@@ -6,14 +6,12 @@
 {% endblock metadata %}
 
 {% set test_name = "gst-validate" %}
+{% set test_suite_name = "linux-gst-validate" %}
+{% set test_path_file = 'automated/linux/gst-validate/gst-validate.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/gst-validate/gst-validate.yaml
       params:
         GST_IGNORE_TESTS_REPO: {{GST_IGNORE_TESTS_REPO}}
         GST_IGNORE_TESTS_FILE: {{GST_IGNORE_TESTS_FILE}}
-      name: linux-gst-validate
 {% endblock test_target %}

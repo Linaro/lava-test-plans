@@ -1,17 +1,7 @@
- 
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 840 %}
-{% block metadata %}
-  {{ super() }}
-{% endblock metadata %}
 
 {% set test_name = "armnn" %}
-
-{% block test_target %}
-  {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/armnn-benchmarks/armnn-benchmarking.yaml
-      name: armnn-mlperf-benchmark
-{% endblock test_target %}
+{% set test_suite_name = "armnn-mlperf-benchmark" %}
+{% set test_path_file = 'automated/linux/armnn-benchmarks/armnn-benchmarking.yaml' %}
