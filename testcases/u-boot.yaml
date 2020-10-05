@@ -28,7 +28,7 @@
       - command: version
         name: version
         successes:
-        - message: {{ UBOOT_VERSION_STRING|default("U-Boot") }}
+        - message: '{{ UBOOT_VERSION_STRING|default("U-Boot") }}'
       - command: help test
         name: help
         successes:
