@@ -8,7 +8,7 @@
   ltp-open-posix-tests__revision: "{{LTP_REVISION | default('unknown')}}"
 {% endblock metadata %}
 
-{% set test_name = "ltp-open-posix" %}
+{% set test_name = test_name | default("ltp-open-posix") %}
 {% set test_suite_name = "ltp-open-posix-tests" %}
 {% set test_path_file = 'automated/linux/ltp-open-posix/ltp-open-posix.yaml' %}
 

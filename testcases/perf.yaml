@@ -2,7 +2,7 @@
 
 {% set test_timeout = 30 %}
 
-{% set test_name = "perf" %}
+{% set test_name = test_name | default("perf") %}
 {% set test_path_file = 'automated/linux/perf/perf.yaml' %}
 
 {% block test_target %}

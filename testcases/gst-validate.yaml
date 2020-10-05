@@ -5,7 +5,7 @@
   {{ super() }}
 {% endblock metadata %}
 
-{% set test_name = "gst-validate" %}
+{% set test_name = test_name | default("gst-validate") %}
 {% set test_suite_name = "linux-gst-validate" %}
 {% set test_path_file = 'automated/linux/gst-validate/gst-validate.yaml' %}
 

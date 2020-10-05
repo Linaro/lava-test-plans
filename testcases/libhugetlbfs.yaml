@@ -8,7 +8,7 @@
   libhugetlbfs__revision: "{{LIBHUGETLBFS_REVISION | default('unknown')}}"
 {% endblock metadata %}
 
-{% set test_name = "libhugetlbfs" %}
+{% set test_name = test_name | default("libhugetlbfs") %}
 {% set test_path_file = 'automated/linux/libhugetlbfs/libhugetlbfs.yaml' %}
 
 {% block test_target %}

@@ -6,7 +6,7 @@
 {% set auto_login = false %}
 {% set BOOT_OS_PROMPT = 'root@qemuarm64:~#' %}
 
-{% set test_name = "bootrr" %}
+{% set test_name = test_name | default("bootrr") %}
 
 {% block test_target %}
   {{ super() }}

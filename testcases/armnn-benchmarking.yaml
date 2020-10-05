@@ -2,6 +2,6 @@
 
 {% set test_timeout = 840 %}
 
-{% set test_name = "armnn" %}
+{% set test_name = test_name | default("armnn") %}
 {% set test_suite_name = "armnn-mlperf-benchmark" %}
 {% set test_path_file = 'automated/linux/armnn-benchmarks/armnn-benchmarking.yaml' %}

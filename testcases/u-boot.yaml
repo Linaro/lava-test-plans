@@ -14,7 +14,7 @@
   {{ super() }}
 {% endblock metadata %}
 
-{% set test_name = "u-boot" %}
+{% set test_name = test_name | default("u-boot") %}
 
 {% block test_target %}
   {{ super() }}
