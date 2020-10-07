@@ -1,0 +1,17 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set test_name = "kunit" %}
+{% set test_timeout = 45 %}
+
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+
+{% block test_target %}
+  {{ super() }}
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/kunit/kunit.yaml
+      name: '{{test_name}}'
+{% endblock test_target %}
