@@ -2,7 +2,7 @@
 
 {% set test_name = test_name | default("kunit") %}
 {% set test_path_file = 'automated/linux/kunit/kunit.yaml' %}
-{% set test_timeout = 45 %}
+{% set test_timeout = 15 %}
 
 {% block test_target %}
   {{ super() }}
