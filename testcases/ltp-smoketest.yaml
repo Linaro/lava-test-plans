@@ -1,0 +1,4 @@
+{% extends "testcases/master/template-ltp.yaml.jinja2" %}
+
+{% set testnames = ['smoketest'] %}
+{% set test_timeout = 15 %}
