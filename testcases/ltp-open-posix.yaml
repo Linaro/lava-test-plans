@@ -8,16 +8,14 @@
   ltp-open-posix-tests__revision: "{{LTP_REVISION | default('unknown')}}"
 {% endblock metadata %}
 
-{% block job_name %}lkft-ltp-open-posix-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+{% set test_name = test_name | default("ltp-open-posix") %}
+{% set test_suite_name = "ltp-open-posix-tests" %}
+{% set test_path_file = 'automated/linux/ltp-open-posix/ltp-open-posix.yaml' %}
 
 {% block test_target %}
   {{ super() }}
 {% block test_target_prep %}
 {% endblock test_target_prep %}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/ltp-open-posix/ltp-open-posix.yaml
-      name: ltp-open-posix-tests
       parameters:
         SKIP_INSTALL: 'true'
 {% endblock test_target %}

@@ -1,18 +1,16 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 5 %}
 {% block metadata %}
   {{ super() }}
 {% endblock metadata %}
 
-{% set test_name = "bt" %}
+{% set test_name = test_name | default("bt") %}
+{% set test_suite_name = "linux-hci-smoke" %}
+{% set test_path_file = 'automated/linux/hci-smoke/hci-smoke.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/hci-smoke/hci-smoke.yaml
       params:
               BOOT: auto
-      name: linux-hci-smoke
 {% endblock test_target %}

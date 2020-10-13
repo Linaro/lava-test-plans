@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 25 %}
 {% block metadata %}
@@ -8,12 +8,5 @@
   libgpiod__revision: "{{LIBGPIOD_REVISION | default('unknown')}}"
 {% endblock metadata %}
 
-{% set test_name = "libgpiod" %}
-
-{% block test_target %}
-  {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/gpiod/gpiod.yaml
-      name: libgpiod
-{% endblock test_target %}
+{% set test_name = test_name | default("libgpiod") %}
+{% set test_path_file = 'automated/linux/gpiod/gpiod.yaml' %}

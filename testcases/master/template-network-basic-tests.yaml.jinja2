@@ -1,18 +1,11 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 25 %}
-{% block metadata %}
-  {{ super() }}
-{% endblock metadata %}
-
 {% set test_name = "network-basic-tests" %}
+{% set test_path_file = 'automated/linux/network-basic/network-basic.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/network-basic/network-basic.yaml
-      name: network-basic-tests
       parameters:
         SKIP_INSTALL: "true"
         NFS: "true"

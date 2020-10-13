@@ -5,7 +5,7 @@
   {{ super() }}
 {% endblock metadata %}
 
-{% set test_name = "stress" %}
+{% set test_name = test_name | default("stress") %}
 
 {% block test_target %}
   {{ super() }}

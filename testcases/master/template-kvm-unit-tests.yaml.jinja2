@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set use_context = true %}
 
@@ -11,13 +11,10 @@
 {% endblock metadata %}
 
 {% set test_name = "kvm-unit-tests" %}
+{% set test_path_file = 'automated/linux/kvm-unit-tests/kvm-unit-tests.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/kvm-unit-tests/kvm-unit-tests.yaml
-      name: kvm-unit-tests
       parameters:
         SKIP_INSTALL: 'true'
         SMP: {% if DEVICE_TYPE == "juno-r2" %}'false'{% else %}'true'{% endif %}

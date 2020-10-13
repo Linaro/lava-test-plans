@@ -1,19 +1,13 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 25 %}
 {% set video_driver = "vivid.ko" %}
-{% block metadata %}
-  {{ super() }}
-{% endblock metadata %}
 
-{% set test_name = "v4l2-compliance" %}
+{% set test_name = test_name | default("v4l2-compliance") %}
+{% set test_path_file = 'automated/linux/v4l2/v4l2-compliance.yaml' %}
 
 {% block test_target %}
   {{ super() }}
-    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
-      from: git
-      path: automated/linux/v4l2/v4l2-compliance.yaml
-      name: v4l2-compliance
       parameters:
         VIDEO_DRIVER: {{ video_driver }}
 {% endblock test_target %}
