@@ -3,7 +3,8 @@
 {% set test_name = "rteval" %}
 {% set test_dir = '/scratch/rteval/' %}
 {% set test_prog_version = 'master' %}
-{% set test_timeout = 75 %}
+{% set duration = duration | default(10) %}
+{% set test_timeout = test_timeout | default(15) %}
 
 {% block metadata %}
   {{ super() }}
@@ -20,4 +21,5 @@
         SKIP_INSTALL: "true"
         TEST_DIR: '{{test_dir}}'
         TEST_PROG_VERSION: '{{test_prog_version}}'
+        DURATION: '{{duration}}'
 {% endblock test_target %}
