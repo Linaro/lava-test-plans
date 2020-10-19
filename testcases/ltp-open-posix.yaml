@@ -1,4 +1,4 @@
-{% extends device_type %}
+{% extends "testcases/master/template-master.jinja2" %}
 
 {% set test_timeout = 75 %}
 {% block metadata %}
