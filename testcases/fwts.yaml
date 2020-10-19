@@ -1,0 +1,11 @@
+{% extends "testcases/master/template-test.jinja2" %}
+
+{% set test_name = test_name | default("fwts") %}
+{% set test_path_file = 'automated/linux/fwts/fwts.yaml' %}
+{% set test_timeout = test_timeout | default(15) %}
+
+{% block test_target %}
+  {{ super() }}
+      parameters:
+        SKIP_INSTALL: "true"
+{% endblock test_target %}
