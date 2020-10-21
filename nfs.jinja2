@@ -3,18 +3,24 @@
 {% set lxc_deploy_timeout = 0 %}
 {% set lxc_boot_timeout = 0 %}
 {% set lxc_install_fastboot_timeout = 0 %}
+{% set target_deploy_to = target_deploy_to|default("tftp") %}
 
 {% block actions %}
 
 {% block deploy_target %}
 - deploy:
+{% if deploy_namespace is defined %}
+    namespace: {{ deploy_namespace }}
+{% endif %}
     timeout:
       minutes: {{ target_deploy_timeout }}
-    to: tftp
+    to: {{ target_deploy_to }}
+{% if KERNEL_URL is defined %}
     kernel:
       url: {{KERNEL_URL}}
 {% if KERNEL_URL_COMP is defined %}
       compression: {{KERNEL_URL_COMP}}
+{% endif %}
 {% endif %}
 {% block kernel_extra_args %}
 {% endblock kernel_extra_args %}
@@ -80,6 +86,12 @@
 
 {% block boot_target %}
 - boot:
+{% if boot_namespace is defined %}
+    namespace: {{ boot_namespace }}
+{% endif %}
+{% if boot_connection_namespace is defined %}
+    connection-namespace: {{ boot_connection_namespace }}
+{% endif %}
 {% if auto_login == true %}
 {% include "include/boot_target/auto_login.jinja2" %}
 {% block auto_login_commands %}
