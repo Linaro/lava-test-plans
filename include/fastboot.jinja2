@@ -137,8 +137,6 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% include "include/boot_target/timeout_and_method.jinja2" %}
 {% endblock boot_target %}
 
-{% block test_target %}
-{% include "include/test_target.jinja2" %}
-{% endblock test_target %}
+{{ super() }}
 
 {% endblock actions %}

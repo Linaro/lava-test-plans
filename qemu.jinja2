@@ -121,8 +121,6 @@
 {% endblock boot_commands %}
 {% endblock boot_target %}
 
-{% block test_target %}
-{% include "include/test_target.jinja2" %}
-{% endblock test_target %}
+{{ super() }}
 
 {% endblock actions %}
