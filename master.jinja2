@@ -16,6 +16,8 @@
 {% set AUTO_LOGIN_PASSWORD_PROMPT = AUTO_LOGIN_PASSWORD_PROMPT|default("") %}
 {% set AUTO_LOGIN_PASSWORD = AUTO_LOGIN_PASSWORD|default("") %}
 
+{% set enable_tests = enable_tests|default(true) %}
+
 {% block global_settings %}
 timeouts:
   job:

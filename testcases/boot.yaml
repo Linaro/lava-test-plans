@@ -1,0 +1,7 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{# Empty test case to only cover boot test on target #}
+
+{% set enable_tests = false %}
+{% set test_name = test_name|default("boot test") %}
+{% set auto_login = true %}

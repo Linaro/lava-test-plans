@@ -28,6 +28,7 @@
 {% endblock auto_login_commands %}
 
 {% block test_target %}
+{% if enable_tests is defined and enable_tests %}
 - test:
     timeout:
       minutes: 5
@@ -50,5 +51,6 @@
       name: prep-tmp-disk
       path: inline/prep.yaml
   {{ super() }}
+{% endif %}
 {% endblock test_target %}
 

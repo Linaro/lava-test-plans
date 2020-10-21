@@ -27,6 +27,7 @@
 {% endblock boot_commands %}
 
 {% block test_target %}
+{% if enable_tests is defined and enable_tests %}
   {{ super() }}
     - from: inline
       repository:
@@ -50,4 +51,5 @@
           - cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq || true
       name: prep-inline
       path: inline/prep.yaml
+{% endif %}
 {% endblock test_target %}

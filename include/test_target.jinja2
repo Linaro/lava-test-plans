@@ -1,3 +1,4 @@
+{% if enable_tests is defined and enable_tests %}
 - test:
     timeout:
       minutes: {{ test_timeout }}
@@ -5,4 +6,5 @@
     definitions:
 {% else %}
     interactive:
+{% endif %}
 {% endif %}
