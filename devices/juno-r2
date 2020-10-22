@@ -28,6 +28,7 @@
 {% endblock kernel_extra_args %}
 
 {% block test_target %}
+{% if enable_tests is defined and enable_tests %}
 - test:
     timeout:
       minutes: 5
@@ -50,4 +51,5 @@
       name: prep-inline
       path: inline/prep.yaml
   {{ super() }}
+{% endif %}
 {% endblock test_target %}

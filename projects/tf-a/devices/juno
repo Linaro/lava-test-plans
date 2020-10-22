@@ -1,0 +1,26 @@
+{% extends "devices/juno" %}
+
+{% set target_recovery_timeout = target_recovery_timeout|default(10) %}
+{% set deploy_namespace = "target" %}
+{% set boot_namespace = deploy_namespace %}
+{% set recovery_namespace = "recovery" %}
+{% set boot_connection_namespace = recovery_namespace %}
+{% set target_deploy_to = "nfs" %}
+
+{% block metadata %}
+{% include PROJECT+"include/tf-a-metadata.jinja2" %}
+{% endblock metadata %}
+
+{% block deploy_target %}
+{% if recovery_namespace is defined and RECOVERY_IMAGE is defined %}
+- deploy:
+    namespace: recovery
+    timeout:
+      minutes: {{ target_recovery_timeout }}
+    to: vemsd
+    recovery_image:
+      url: {{RECOVERY_IMAGE}}
+      compression: {{RECOVERY_IMAGE_COMP | default('zip')}}
+{% endif %}
+{{ super() }}
+{% endblock deploy_target %}

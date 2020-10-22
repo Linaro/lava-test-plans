@@ -1,0 +1,22 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"nfs.jinja2" %}
+
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+
+{% set auto_login = true %}
+{% set boot_method = "u-boot" %}
+{% set rootfs_label="nfsrootfs" %}
+
+{% block context %}
+{% endblock context %}
+
+{% block device_type %}juno{% endblock %}
+
+{% block boot_target %}
+{{ super() }}
+{% endblock boot_target %}
+
+{% block boot_commands %}
+    commands: {{ target_boot_commands|default("norflash") }}
+{% endblock boot_commands %}
