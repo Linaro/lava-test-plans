@@ -1,7 +1,8 @@
 {% extends "master.jinja2" %}
 
-{% set rootfs = true %}
-{% set use_context = true %}
+{% set rootfs = rootfs|default(true) %}
+{% set use_context = use_context|default(true) %}
+{% set guestfs_virtio = guestfs_virtio|default(true) %}
 {% set rootfs_label = rootfs_label|default("rootfs") %}
 {% set DEPLOY_TARGET = DEPLOY_TARGET|default("tmpfs") %}
 {% set boot = boot|default(true) %}
@@ -14,7 +15,9 @@
 
 {% block global_settings %}
 {{ super() }}
+{% if guestfs_virtio is defined and guestfs_virtio == true %}
   guestfs_interface: virtio
+{% endif %}
 {% endblock global_settings %}
 
 {% block actions %}
@@ -100,6 +103,12 @@
 {% endif %}
 {% endif %}
 {% endif %}
+{% if flasher is defined and flasher == true and DEPLOY_TARGET == "flasher" %}
+      tarball:
+        url: {{ TARBALL_URL }}
+      layout:
+        url: {{ LAYOUT_URL }}
+{% endif %}
     os: {{DEPLOY_OS}}
 {% endblock deploy_target %}
 
@@ -117,6 +126,9 @@
 {% endif %}
 {% include "include/boot_target/boot_os_prompt.jinja2" %}
 {% include "include/boot_target/timeout_and_method.jinja2" %}
+{% if flasher is defined and flasher == true %}
+{% include "include/boot_target/transfer_overlay.jinja2" %}
+{% endif %}
 {% block boot_commands %}
 {% endblock boot_commands %}
 {% endblock boot_target %}
