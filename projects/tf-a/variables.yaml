@@ -2,6 +2,8 @@
 "BUILD_NUMBER": "123"
 "LAVA_JOB_PRIORITY": "99"
 "ROOTFS_URL": "nfsrootfs-url"
+"ROOTFS_URL_COMP": "gz"
+"BOOT_OS_PROMPT": "root@(.*):~#"
 # Schneider variables
 "OPTEE_ITB_URL": "variable-value"
 "UBOOT_ITB_URL": "variable-value"
@@ -9,8 +11,6 @@
 "KERNEL_ZIMAGE_URL": "variable-value"
 "NFSROOTFS_DEV_URL": "variable-value"
 "AUTO_LOGIN_PROMPT": "prompt-value"
-"AUTO_LOGIN_USERNAME": "username-value"
-"AUTO_LOGIN_PASSWORD": "password-value"
 "PROJECT": "projects/tf-a/"
 "BOOT_LABEL": "boot-label-value"
 "DEPLOY_TARGET": "downloads"
