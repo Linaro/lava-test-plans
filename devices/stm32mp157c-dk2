@@ -1,0 +1,18 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"qemu.jinja2" %}
+
+{% set DOWNLOAD_COMMANDS = DOWNLOAD_COMMANDS|default("udhcpc; cd /tmp; wget") %}
+{% set UNPACK_COMMANDS = UNPACK_COMMANDS|default("tar -C / -xzf") %}
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@stm32mp1") %}
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("flasher") %}
+
+{% set boot = boot|default(false) %}
+{% set use_context = use_context|default(false) %}
+{% set flasher = flasher|default(true) %}
+{% set guestfs_virtio = guestfs_virtio|default(false) %}
+{% set rootfs = rootfs|default(false) %}
+{% set boot_method = boot_method|default("minimal") %}
+{% set auto_login = auto_login|default(false) %}
+
+{% block device_type %}stm32mp157c-dk2{% endblock %}

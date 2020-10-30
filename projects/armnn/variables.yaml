@@ -19,5 +19,7 @@
 "PTABLE_URL": "ptable-url"
 "KERNEL_URL": "kernel-url"
 "RAMDISK_URL": "ramdisk-url"
+"TARBALL_URL": "https://snapshots.linaro.org/components/armnn/123/ArmFin.tar.xz"
+"LAYOUT_URL": "https://snapshots.linaro.org/components/armnn/123/aiLayout-optee.tsv"
 # misc variables
 "ARTIFACTORIAL_TOKEN": "1234abcd"
