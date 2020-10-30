@@ -42,10 +42,11 @@ except ImportError:
 
 
 # Templates base path
-template_base_path = "./"
-testplan_base_path = "testplans/"
-testcase_base_path = "testcases/"
-testplan_device_path = "devices/"
+script_dirname = os.path.dirname(__file__)
+template_base_path = script_dirname
+testplan_base_path = os.path.join(script_dirname, "testplans/")
+testcase_base_path = os.path.join(script_dirname, "testcases/")
+testplan_device_path = os.path.join(script_dirname, "devices/")
 
 
 def parse_template(yaml_string):
