@@ -1,4 +1,5 @@
 {% extends "devices/nxp-ls2088" %}
 
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set KERNEL_URL_COMP = KERNEL_URL_COMP|default("gz") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
