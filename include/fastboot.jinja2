@@ -115,6 +115,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
     postprocess:
       docker:
         image: {{DOCKER_IMAGE}}
+        local: true
 {% endblock deploy_target %}
 
 {% block pre_os_command %}
@@ -125,6 +126,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 - boot:
     docker:
       image: {{DOCKER_IMAGE}}
+      local: true
 {% block boot_commands %}
 {% endblock boot_commands %}
 {% if auto_login == true %}
