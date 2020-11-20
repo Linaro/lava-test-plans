@@ -124,9 +124,6 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 
 {% block boot_target %}
 - boot:
-    docker:
-      image: {{DOCKER_IMAGE}}
-      local: true
 {% block boot_commands %}
 {% endblock boot_commands %}
 {% if auto_login == true %}
