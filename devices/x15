@@ -7,6 +7,7 @@
 {% set boot_method = "u-boot" %}
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
+{% set pre_boot_command = false %}
 {% set pre_os_command = false %}
 {% set pre_power_command = false %}
 {% set reboot_to_fastboot = reboot_to_fastboot|default("true") %}

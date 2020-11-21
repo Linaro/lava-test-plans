@@ -5,6 +5,7 @@
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
+{% set pre_boot_command = true %}
 {% set pre_power_command = true %}
 {% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}

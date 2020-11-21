@@ -14,6 +14,7 @@
 {% set rootfs_label = rootfs_label|default("rootfs") %}
 {% set apply_overlay = apply_overlay|default("rootfs") %}
 {% set DEPLOY_TARGET = DEPLOY_TARGET|default("fastboot") %}
+{% set pre_boot_command = pre_boot_command|default(true) %}
 {% set pre_power_command = pre_power_command|default(true) %}
 {% set pre_os_command = pre_os_command|default(true) %}
 {% set auto_login = auto_login|default(true) %}
@@ -118,9 +119,9 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
         local: true
 {% endblock deploy_target %}
 
-{% block pre_os_command %}
-{% include "include/boot_target/boot_commands.jinja2" %}
-{% endblock pre_os_command %}
+{% block pre_boot_command %}
+{% include "include/boot_target/pre_boot_commands.jinja2" %}
+{% endblock pre_boot_command %}
 
 {% block boot_target %}
 - boot:

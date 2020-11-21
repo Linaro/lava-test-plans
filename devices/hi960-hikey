@@ -3,6 +3,7 @@
 
 {% set auto_login = false %}
 {% set boot_method = "grub" %}
+{% set pre_boot_command = true %}
 {% set pre_os_command = true %}
 {% set pre_power_command = true %}
 {% set ptable = false %}
