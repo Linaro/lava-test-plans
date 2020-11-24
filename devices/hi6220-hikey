@@ -9,6 +9,7 @@
 
 {% set boot_method = "grub" %}
 {% set pre_power_command = true %}
+{% set post_boot_command = true %}
 {% set ptable = true %}
 {% set reboot_reset = true %}
 {% set rootfs = true %}

@@ -6,6 +6,7 @@
 {% set pre_boot_command = true %}
 {% set pre_os_command = true %}
 {% set pre_power_command = true %}
+{% set post_boot_command = true %}
 {% set ptable = false %}
 {% set reboot_reset = true %}
 {% set rootfs = true %}
