@@ -2,3 +2,4 @@
 
 {% set testnames = ['cve'] %}
 {% set test_timeout = 60 %}
+{% set TIMEOUT_MULTIPLIER = 1 %}

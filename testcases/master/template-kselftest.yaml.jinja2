@@ -12,7 +12,7 @@
 
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set test_timeout = 55 %}
+{% set test_timeout = 85 %}
 {% block metadata %}
   {{ super() }}
   kselftest__url: "{{KSELFTESTS_URL | default('unknown')}}"
