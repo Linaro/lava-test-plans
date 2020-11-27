@@ -5,6 +5,7 @@
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
 {% set install_fastboot = false %}
+{% set pre_boot_command = false %}
 {% set pre_power_command = false %}
 {% set pre_os_command = false %}
 {% set rootfs_label = 'userdata' %}

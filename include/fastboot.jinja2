@@ -14,6 +14,7 @@
 {% set rootfs_label = rootfs_label|default("rootfs") %}
 {% set apply_overlay = apply_overlay|default("rootfs") %}
 {% set DEPLOY_TARGET = DEPLOY_TARGET|default("fastboot") %}
+{% set pre_boot_command = pre_boot_command|default(true) %}
 {% set pre_power_command = pre_power_command|default(true) %}
 {% set pre_os_command = pre_os_command|default(true) %}
 {% set auto_login = auto_login|default(true) %}
@@ -118,15 +119,12 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
         local: true
 {% endblock deploy_target %}
 
-{% block pre_os_command %}
-{% include "include/boot_target/boot_commands.jinja2" %}
-{% endblock pre_os_command %}
+{% block pre_boot_command %}
+{% include "include/boot_target/pre_boot_commands.jinja2" %}
+{% endblock pre_boot_command %}
 
 {% block boot_target %}
 - boot:
-    docker:
-      image: {{DOCKER_IMAGE}}
-      local: true
 {% block boot_commands %}
 {% endblock boot_commands %}
 {% if auto_login == true %}
@@ -138,6 +136,10 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% include "include/boot_target/boot_os_prompt.jinja2" %}
 {% include "include/boot_target/timeout_and_method.jinja2" %}
 {% endblock boot_target %}
+
+{% block post_boot_command %}
+{% include "include/boot_target/post_boot_command.jinja2" %}
+{% endblock post_boot_command %}
 
 {{ super() }}
 

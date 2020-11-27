@@ -4,6 +4,7 @@
 {% set boot_method = boot_method|default("u-boot") %}
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
+{% set pre_boot_command = false %}
 {% set pre_os_command = false %}
 {% set rootfs_label = "userdata" %}
 

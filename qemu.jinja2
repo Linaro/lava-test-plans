@@ -112,9 +112,9 @@
     os: {{DEPLOY_OS}}
 {% endblock deploy_target %}
 
-{% block pre_os_command %}
-{% include "include/boot_target/boot_commands.jinja2" %}
-{% endblock pre_os_command %}
+{% block pre_boot_command %}
+{% include "include/boot_target/pre_boot_commands.jinja2" %}
+{% endblock pre_boot_command %}
 
 {% block boot_target %}
 - boot:
