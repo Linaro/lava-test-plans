@@ -1,0 +1,10 @@
+{% extends "testcases/master/template-test.jinja2" %}
+
+{% set test_timeout = 15 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% set test_name = test_name | default("ml-bench") %}
+{% set test_suite_name = "ml-bench" %}
+{% set test_path_file = 'automated/linux/ml-bench/tvm-bench.yaml' %}
