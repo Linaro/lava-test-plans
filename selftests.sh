@@ -3,7 +3,6 @@
 function run_device_selftest()
 {
     ./submit_for_testing.py --variables variables.ini --device-type $1 --dry-run --test-case $2
-    echo $?
 }
 
 exit_code=0
@@ -15,11 +14,13 @@ do
         then
             for NESTED_DEVICE_TYPE in $DEVICE_TYPE/*
             do
-                device_exit_code=$(run_device_selftest $(basename $DEVICE_TYPE)/$(basename $NESTED_DEVICE_TYPE) $(basename $TEST))
+                run_device_selftest $(basename $DEVICE_TYPE)/$(basename $NESTED_DEVICE_TYPE) $(basename $TEST)
+                device_exit_code=$?
                 if [ $device_exit_code -gt $exit_code ]; then exit_code=$device_exit_code; fi
             done
         else
-            device_exit_code=$(run_device_selftest $(basename $DEVICE_TYPE) $(basename $TEST))
+            run_device_selftest $(basename $DEVICE_TYPE) $(basename $TEST)
+            device_exit_code=$?
             if [ $device_exit_code -gt $exit_code ]; then exit_code=$device_exit_code; fi
         fi
     done
