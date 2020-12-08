@@ -42,7 +42,7 @@ except ImportError:
 
 
 # Templates base path
-script_dirname = os.path.dirname(__file__)
+script_dirname = os.path.dirname(os.path.abspath(__file__))
 template_base_path = script_dirname
 testplan_base_path = os.path.join(script_dirname, "testplans/")
 testcase_base_path = os.path.join(script_dirname, "testcases/")
@@ -284,7 +284,7 @@ def main():
     logger.setLevel(args.verbose)
     exit_code = 0
 
-    output_path = "tmp"
+    output_path = os.path.join(script_dirname, "tmp")
     if args.dryrun:
         if not os.path.exists(output_path):
             os.mkdir(output_path)
@@ -294,19 +294,27 @@ def main():
 
     lava_jobs = []
 
-    THIS_DIR = os.path.abspath(args.template_path)
+    template_dirs = [
+        os.path.abspath(template_base_path),
+        os.path.abspath(args.testplan_path),
+        os.path.abspath(args.testcase_path),
+        os.path.abspath(args.testplan_device_path),
+    ]
     # prevent creating templates when variables are missing
     j2_env = Environment(
-        loader=FileSystemLoader(THIS_DIR, followlinks=True), undefined=StrictUndefined
+        loader=FileSystemLoader(template_dirs, followlinks=True),
+        undefined=StrictUndefined,
     )
     if args.dryrun:
         LoggingUndefined = make_logging_undefined(logger=logger, base=StrictUndefined)
         j2_env = Environment(
-            loader=FileSystemLoader(THIS_DIR, followlinks=True),
+            loader=FileSystemLoader(template_dirs, followlinks=True),
             undefined=LoggingUndefined,
         )
     context = {}
     for variables in args.variables:
+        if not os.path.exists(variables):
+            variables = os.path.join(script_dirname, variables)
         try:
             context.update(ConfigObj(variables).dict())
         except ConfigObjError:
@@ -324,21 +332,18 @@ def main():
     for variable in args.overwrite_variables:
         key, value = variable.split("=")
         context.update({key: value})
-    context.update(
-        {"device_type": os.path.join(args.testplan_device_path, args.device_type)}
-    )
+    context.update({"device_type": args.device_type})
     test_list = []
     if args.test_plan:
         for test_plan in args.test_plan:
-            test_plan_path = os.path.join(args.testplan_path, test_plan)
+            test_plan_path = os.path.abspath(
+                os.path.join(args.testplan_path, test_plan)
+            )
             for test in _get_test_plan_list(test_plan_path):
-                test_list.append(os.path.join(test_plan_path, test))
+                test_list.append(test)
 
     if args.test_case:
-        flat_test_case_list = list(itertools.chain.from_iterable(args.test_case))
-        for test in flat_test_case_list:
-            test_case_path = os.path.join(args.testcase_path, test)
-            test_list.append(test_case_path)
+        test_list = test_list + list(itertools.chain.from_iterable(args.test_case))
 
     if len(test_list) == 0:
         logger.error("No tests matched the given criteria.")
@@ -404,8 +409,7 @@ def main():
             logger.debug(test)
             container = client.containers.run(
                 image="lavasoftware/lava-server:latest",
-                command="/usr/share/lava-common/lava-schema.py job /data/%s"
-                % test.rsplit("/", maxsplit=1)[1],
+                command="/usr/share/lava-common/lava-schema.py job /data/%s" % test,
                 volumes={"%s" % testpath: {"bind": "/data", "mode": "rw"}},
                 detach=True,
             )
