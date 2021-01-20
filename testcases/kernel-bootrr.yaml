@@ -26,7 +26,9 @@
           - ls -l /dev
           - ls -l /sys
           - ls -l /proc
-          - echo "linux_kernel_smoke:" "pass"
+          - ls -l /lib/modules
+          - lsmod
+          - lava-test-case "linux_kernel_smoke" --result "pass"
     - from: inline
       name: qcomlt-kernel-bootrr
       path: inline/qcomlt-kernel-bootrr.yaml
