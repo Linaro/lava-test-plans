@@ -1,0 +1,16 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set test_name = test_name | default("multimedia") %}
+{% set test_timeout = 150 %}
+
+{% block test_target %}
+  {{ super() }}
+{% for vd in VIDEO_DEVICES %}
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/v4l2/v4l2-compliance.yaml
+      params:
+        VIDEO_DEVICE: {{ vd }}
+      name: linux-v4l2-compliance-{{ VIDEO_DEVICES[vd] }}
+{% endfor %}
+{% endblock test_target %}
