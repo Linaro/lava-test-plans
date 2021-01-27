@@ -8,7 +8,6 @@
 
 {% set pre_power_command = true %}
 {% set ptable = true %}
-{% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}
 
 {% block device_type %}dragonboard-845c{% endblock %}

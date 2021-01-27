@@ -8,7 +8,6 @@
 {% set pre_boot_command = true %}
 {% set pre_power_command = true %}
 {% set post_boot_command = true %}
-{% set rootfs = true %}
 {% set rootfs_label = 'rootfs' %}
 
 {% block device_type %}dragonboard-410c{% endblock %}
