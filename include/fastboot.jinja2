@@ -20,7 +20,6 @@
 {% set auto_login = auto_login|default(true) %}
 {% set boot_method = boot_method|default("fastboot") %}
 
-
 {% block global_settings %}
 {{ super() }}
 reboot_to_fastboot: {{ reboot_to_fastboot }}
@@ -142,6 +141,11 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% include "include/boot_target/boot_os_prompt.jinja2" %}
 {% include "include/boot_target/timeout_and_method.jinja2" %}
+{% if FASTBOOT_COMMANDS is defined %}
+    commands:
+{% for fcmd in FASTBOOT_COMMANDS %}
+      - {{ fcmd }}
+{% endfor %}
 {% endif %}
 {% if lxc_project == true and pre_os_command is defined and pre_os_command == true %}
     protocols:
