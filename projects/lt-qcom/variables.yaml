@@ -24,3 +24,5 @@
 "PTEST_EXCLUDE": "variable-value"
 "QA_SERVER_PROJECT": "qa-server-project"
 "PROJECT": "projects/lt-qcom/"
+"LXC_BOOT_FILE": ""
+"LXC_ROOTFS_FILE": ""
