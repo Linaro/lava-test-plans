@@ -2,7 +2,7 @@
 
 {% set test_timeout = 90 %}
 {% set rootfs = false %}
-{% set apply_overlay_bootimg = true %}
+{% set apply_overlay = 'bootimg' %}
 {% set auto_login = false %}
 {% set BOOT_OS_PROMPT = 'root@qemuarm64:~#' %}
 
