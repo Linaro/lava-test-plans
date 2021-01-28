@@ -26,3 +26,11 @@
 "PROJECT": "projects/lt-qcom/"
 "LXC_BOOT_FILE": ""
 "LXC_ROOTFS_FILE": ""
+"VIDEO_DEVICES" : {"/dev/video0": "venus-encoder", "/dev/video1": "venus-decoder"}
+"KERNEL_BRANCH": "variable-value"
+"KERNEL_REPO":  "variable-value"
+"KERNEL_COMMIT": "variable-value"
+"KERNEL_DESCRIBE": "variable-value"
+"KERNEL_CONFIG": "defconfig"
+"TOOLCHAIN": "unknown"
+"BUILD_URL": "https://some-url"
