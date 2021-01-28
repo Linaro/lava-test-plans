@@ -5,7 +5,6 @@
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
-{% set pre_power_command = true %}
 {% set rootfs_label = 'rootfs' %}
 
 {% block device_type %}dragonboard-820c{% endblock %}
