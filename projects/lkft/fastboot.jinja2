@@ -24,7 +24,7 @@
       image: {{DOCKER_IMAGE}}
     images:
 {% if ptable == true %}
-      ptable:
+      {{ PTABLE_LABEL }}:
         url: downloads://{{DOCKER_PTABLE_FILE}}
 {% if reboot_reset == true %}
         reboot: hard-reset
