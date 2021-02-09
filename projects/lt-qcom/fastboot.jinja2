@@ -1,7 +1,7 @@
 {% extends "include/fastboot.jinja2" %}
 
 {% set DEPLOY_TARGET = DEPLOY_TARGET|default("downloads") %}
-{% set DOCKER_IMAGE = DOCKER_IMAGE|default("roxell/kir") %}
+{% set DOCKER_IMAGE = DOCKER_IMAGE|default("linaro/kir") %}
 
 {% block deploy_target %}
 {{ super() }}
