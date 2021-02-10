@@ -1,0 +1,4 @@
+{% extends "devices/sdm845-mtp" %}
+
+{% set lxc_install_fastboot = false %}
+{% set lxc_install_packages = false %}
