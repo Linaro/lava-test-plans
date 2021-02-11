@@ -1,4 +1,6 @@
 {# timeouts #}
+
+{% set lxc_project = lxc_project|default(false) %}
 {% set lxc_deploy_timeout = lxc_deploy_timeout|default(15) %}
 {% set lxc_boot_timeout = lxc_boot_timeout|default(5) %}
 {% set lxc_install_fastboot_timeout = lxc_install_fastboot_timeout|default(10) %}

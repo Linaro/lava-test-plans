@@ -1,0 +1,40 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set test_name = test_name | default("smoke") %}
+{% set test_timeout = 150 %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/smoke/smoke.yaml
+      params:
+         TESTS: {{SMOKE_TESTS}}
+      name: linux-smoke
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/usb-smoke/usb-smoke-test.yaml
+      name: linux-usb-smoke
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/meminfo/meminfo.yaml
+      name: meminfo
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/hci-smoke/hci-smoke.yaml
+      params:
+         BOOT: auto
+      name: linux-hci-smoke
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/wlan-smoke/wlan-smoke.yaml
+      params:
+        DEVICE: {{WLAN_DEVICE}}
+      name: linux-wlan-smoke
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/ethernet/ethernet.yaml
+      params:
+        INTERFACE: {{ETH_DEVICE}}
+      name: linux-ethernet
+{% endblock test_target %}

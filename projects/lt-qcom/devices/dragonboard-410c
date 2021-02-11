@@ -1,0 +1,3 @@
+{% extends "devices/dragonboard-410c" %}
+
+{% set VIDEO_DEVICES = VIDEO_DEVICES|default({"/dev/video0": "venus-encoder", "/dev/video1": "venus-decoder"}) %}

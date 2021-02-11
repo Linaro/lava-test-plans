@@ -1,0 +1,4 @@
+{% extends "devices/qcs404-evb-1k" %}
+
+{% set lxc_install_fastboot = false %}
+{% set lxc_install_packages = false %}

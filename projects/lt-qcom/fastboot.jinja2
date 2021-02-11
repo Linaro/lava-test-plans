@@ -1,65 +1,173 @@
 {% extends "include/fastboot.jinja2" %}
 
-{% set DEPLOY_TARGET = DEPLOY_TARGET|default("downloads") %}
-{% set DOCKER_IMAGE = DOCKER_IMAGE|default("linaro/kir") %}
+{% set lxc_project = true %}
+{% set lxc_install_fastboot = lxc_install_fastboot|default(true) %}
+{% set lxc_install_packages = lxc_install_packages|default(true) %}
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("download") %}
+
+{% block metadata %}
+  source: https://github.com/Linaro/lava-test-plans.git
+  path: projects/lt-qcom/
+{% if OS_INFO == 'kernel' %}
+{% include PROJECT+"include/lt-qcom-"+OS_INFO+"-metadata.jinja2" %}
+{% endif %}
+{% endblock metadata %}
+
+{% block protocols %}
+protocols:
+  lava-lxc:
+    name: lxc-target
+    template: debian
+    distribution: debian
+    release: stretch
+    arch: amd64
+    mirror: http://deb.debian.org/debian
+{% endblock protocols %}
 
 {% block deploy_target %}
-{{ super() }}
-        steps:
-{% if rootfs == true %}
-        - cd /lava-lxc
-        - overlay_file=/lava-lxc/overlays/target/overlay.tar.gz
-        - overlay_size=$(gzip -l $overlay_file | tail -1 | awk '{print $2}')
-        - overlay_size=$(( $overlay_size / 1024 ))
-        - simg2img {{DOCKER_ROOTFS_FILE}} {{DOCKER_ROOTFS_FILE}}.ext4
-        - free_blocks=$(dumpe2fs -h {{DOCKER_ROOTFS_FILE}}.ext4 | grep "Free blocks" | awk '{print $3}')
-        - block_size=$(dumpe2fs -h {{DOCKER_ROOTFS_FILE}}.ext4 | grep "Block size" | awk '{print $3}')
-        - free_size=$(( $block_size * $free_blocks / 1024 ))
-        - if [ "$free_size" -lt "$overlay_size" ]; then
-        -    block_count=$(dumpe2fs -h {{DOCKER_ROOTFS_FILE}}.ext4 | grep "Block count" | awk '{print $3}')
-        -    current_size=$(( $block_size * $block_count / 1024 ))
-        -    extra_size=32768
-        -    final_size=$(( $current_size + $overlay_size + $extra_size ))
-        -    fsck_code=$(e2fsck -y -f {{DOCKER_ROOTFS_FILE}}.ext4)
-        -    resize2fs {{DOCKER_ROOTFS_FILE}}.ext4 "$final_size"K
-        -    img2simg {{DOCKER_ROOTFS_FILE}}.ext4 {{DOCKER_ROOTFS_FILE}}
-        -    echo "resize_rootfs:" "pass"
-        - else
-        -    echo "resize_rootfs:" "skip"
-        - fi
+- deploy:
+    namespace: tlxc
+    timeout:
+      minutes: 15
+    to: lxc
+{% if lxc_install_packages == true %}
+    packages:
+    - wget
+    - unzip
+    - img2simg
+    - simg2img
+    - e2fsprogs
+    - gzip
+    - cpio
+    - git
+    - mktemp
+    - abootimg
+{% endif %}
+    os: debian
+
+- boot:
+    namespace: tlxc
+    prompts:
+    - 'root@(.*):/#'
+    timeout:
+      minutes: 5
+    method: lxc
+
+{% if lxc_install_fastboot == true %}
+- test:
+    namespace: tlxc
+    timeout:
+      minutes: 10
+    definitions:
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/android-platform-tools/install.yaml
+      name: install-android-platform-tools-r2905
+      parameters:
+        LINK: 'https://dl.google.com/android/repository/platform-tools_r29.0.5-linux.zip'
 {% endif %}
 
-{% if apply_overlay_bootimg is defined and apply_overlay_bootimg == true %}
-        - overlay_file=/lava-lxc/overlays/target/overlay.tar.gz
-        - if [ -f $overlay_file ]
-        - then
-        -     configs_dir=$(mktemp -d /tmp/configs.XXXX)
-        -     git clone --depth 1 http://git.linaro.org/ci/job/configs.git $configs_dir
-        -     $configs_dir/lt-qcom-linux-test/copy_test_overlay.sh /lava-lxc/{{DOCKER_BOOT_FILE}} $overlay_file
-        -     echo "apply_test_overlay_bootimg:" "pass"
-        - else
-        -     echo "apply_test_overlay_bootimg:" "skip"
-        - fi
+{{ super() }}
+
+{% if rootfs == true %}
+- test:
+    namespace: tlxc
+    timeout:
+      minutes: 30
+    definitions:
+    - from: inline
+      name: resize-rootfs
+      path: inline/resize-rootfs.yaml
+      repository:
+        metadata:
+          description: resize rootfs image for test overlay
+          format: Lava-Test Test Definition 1.0
+          name: resize-rootfs
+        run:
+          steps:
+          - cd /lava-lxc
+          - overlay_file=/lava-lxc/overlays/target/overlay.tar.gz
+          - overlay_size=$(gzip -l $overlay_file | tail -1 | awk '{print $2}')
+          - overlay_size=$(( $overlay_size / 1024 ))
+          - simg2img {{LXC_ROOTFS_FILE}} {{LXC_ROOTFS_FILE}}.ext4
+          - free_blocks=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Free blocks" | awk '{print $3}')
+          - block_size=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Block size" | awk '{print $3}')
+          - free_size=$(( $block_size * $free_blocks / 1024 ))
+          - if [ "$free_size" -lt "$overlay_size" ]; then
+          -    block_count=$(dumpe2fs -h {{LXC_ROOTFS_FILE}}.ext4 | grep "Block count" | awk '{print $3}')
+          -    current_size=$(( $block_size * $block_count / 1024 ))
+          -    extra_size=32768
+          -    final_size=$(( $current_size + $overlay_size + $extra_size ))
+          -    fsck_code=$(e2fsck -y -f {{LXC_ROOTFS_FILE}}.ext4)
+          -    resize2fs {{LXC_ROOTFS_FILE}}.ext4 "$final_size"K
+          -    img2simg {{LXC_ROOTFS_FILE}}.ext4 {{LXC_ROOTFS_FILE}}
+          -    lava-test-case "resize_rootfs" --result "pass"
+          - else
+          -    lava-test-case "resize_rootfs" --result "skip"
+          - fi
+{% endif %}
+
+{% if apply_overlay == 'bootimg' %}
+- test:
+    namespace: tlxc
+    timeout:
+      minutes: 30
+    definitions:
+    - from: inline
+      name: apply-test-overlay-bootimg
+      path: inline/apply-test-overlay-bootimg.yaml
+      repository:
+        metadata:
+          description: Apply test overlay to Andoid boot image ramdisk
+          format: Lava-Test Test Definition 1.0
+          name: apply-test-overlay-bootimg
+        run:
+          steps:
+          - overlay_file=/lava-lxc/overlays/target/overlay.tar.gz
+          - if [ -f $overlay_file ]
+          - then
+          -     configs_dir=$(mktemp -d /tmp/configs.XXXX)
+          -     git clone --depth 1 http://git.linaro.org/ci/job/configs.git $configs_dir 
+          -     $configs_dir/lt-qcom-linux-test/copy_test_overlay.sh /lava-lxc/{{LXC_BOOT_FILE}} $overlay_file
+          -     lava-test-case "apply_test_overlay_bootimg" --result "pass"
+          - else
+          -     lava-test-case "apply_test_overlay_bootimg" --result "skip"
+          - fi
 {% endif %}
 
 - deploy:
     timeout:
       minutes: 40
     to: fastboot
-    docker:
-      image: {{DOCKER_IMAGE}}
+    namespace: target
     images:
+{% if ptable == true %}
+      "{{ PTABLE_LABEL }}":
+        url: lxc:///{{ LXC_PTABLE_FILE }}
+{% if reboot_reset == true %}
+        reboot: hard-reset
+{% endif %}
+{% endif %}
       boot:
-        url: downloads:///{{DOCKER_BOOT_FILE}}
+        url: lxc:///{{LXC_BOOT_FILE}}
 {% if rootfs == true %}
       {{ rootfs_label }}:
-        url: downloads:///{{DOCKER_ROOTFS_FILE}}
+        url: lxc:///{{LXC_ROOTFS_FILE}}
         apply-overlay: true
 {% endif %}
     os: {{DEPLOY_OS}}
+{% if pre_power_command is defined and pre_power_command == true %}
+    protocols:
+        lava-lxc:
+        - action: fastboot-deploy
+          request: pre-power-command
+          timeout:
+              minutes: 2
+{% endif %}
 {% endblock deploy_target %}
 
-{% block metadata %}
-  source: https://git.linaro.org/ci/job/configs.git
-  path: lt-qcom/lava-job-definitions/
-{% endblock metadata %}
+{% block pre_boot_command %}
+{% endblock pre_boot_command %}
+
+{% block post_boot_command %}
+{% endblock post_boot_command %}

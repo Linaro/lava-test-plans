@@ -1,0 +1,55 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set test_name = test_name | default("desktop") %}
+{% set test_timeout = 150 %}
+
+{% set DEQP_FAIL_LIST = DEQP_FAIL_LIST | default("deqp-freedreno-a307-fails.txt") %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/glmark2/glmark2.yaml
+      params:
+        GLMARK_BIN: "glmark2-es2"
+      name: linux-glmark
+    - from: inline
+      path: inline/linux-deqp-pre.yaml
+      repository:
+        metadata:
+          description: Linux DEQP Pre setup
+          format: Lava-Test Test Definition 1.0
+          name: linux-deqp-pre
+        run:
+          steps:
+          - ln -sf /usr/lib/libEGL.so.1.0.0 /usr/lib/libEGL.so
+          - lava-test-case "linux_deqp_pre" --result "pass"
+      name: linux-deqp-pre
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/deqp-runner/deqp-runner.yaml
+      params:
+        DEQP_BIN: "/usr/lib/opengl-es-cts/deqp-gles2"
+        DEQP_CASES: "--caselist /usr/lib/opengl-es-cts/gl_cts/data/mustpass/gles/aosp_mustpass/3.2.6.x/gles2-master.txt"
+        DEQP_FAIL: "--xfail-list /usr/share/mesa/{{ DEQP_FAIL_LIST }}"
+        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/deqp-default-skips.txt"
+      name: linux-deqp-gles2
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/deqp-runner/deqp-runner.yaml
+      params:
+        DEQP_BIN: "/usr/lib/opengl-es-cts/deqp-gles3"
+        DEQP_CASES: "--caselist /usr/lib/opengl-es-cts/gl_cts/data/mustpass/gles/aosp_mustpass/3.2.6.x/gles3-master.txt"
+        DEQP_FAIL: "--xfail-list /usr/share/mesa/{{ DEQP_FAIL_LIST }}"
+        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/deqp-default-skips.txt"
+      name: linux-deqp-gles3
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/deqp-runner/deqp-runner.yaml
+      params:
+        DEQP_BIN: "/usr/lib/opengl-es-cts/deqp-gles31"
+        DEQP_CASES: "--caselist /usr/lib/opengl-es-cts/gl_cts/data/mustpass/gles/aosp_mustpass/3.2.6.x/gles31-master.txt"
+        DEQP_FAIL: "--xfail-list /usr/share/mesa/{{ DEQP_FAIL_LIST }}"
+        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/deqp-default-skips.txt"
+      name: linux-deqp-gles31
+{% endblock test_target %}
