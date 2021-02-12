@@ -30,6 +30,8 @@ script:
   - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_arm64 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
   - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_arm --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
   - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type juno-r2 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
+  - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type dragonboard-410c --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
+  - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type dragonboard-845c --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
   - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type hi6220-hikey --dry-run --test-plan lkft-full --test-lava-validity
   - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type dragonboard-410c --dry-run --test-plan lkft-full --test-lava-validity
   - ./submit_for_testing.py --variables projects/lkft/variables.yaml --device-type nxp-ls2088 --dry-run --test-plan lkft-full --test-lava-validity
