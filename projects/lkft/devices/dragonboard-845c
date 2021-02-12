@@ -1,5 +1,7 @@
 {% extends "devices/dragonboard-845c" %}
 
+{% set BOOT_LABEL = "kernel" %}
+{% set BOOT_LABEL_OVERRIDE = true %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("gpt_both0.bin") %}
 {% set PTABLE_URL = PTABLE_URL|default("https://images.validation.linaro.org/snapshots.linaro.org/96boards/dragonboard845c/linaro/rescue/28/dragonboard-845c-bootloader-ufs-linux-28/gpt_both0.bin") %}
 {% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
