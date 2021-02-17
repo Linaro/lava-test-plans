@@ -434,7 +434,7 @@ def main():
             exit_code = 1
 
         if exit_code != 0:
-            exit(exit_code)
+            sys.exit(exit_code)
 
         qa_server_base = args.qa_server
         if not (
@@ -485,7 +485,7 @@ def main():
             if args.lava_token:
                 _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token)
     else:
-        exit(exit_code)
+        sys.exit(exit_code)
 
 
 if __name__ == "__main__":
