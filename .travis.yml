@@ -49,6 +49,10 @@ script:
   - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type dragonboard-845c --dry-run --test-plan armnn --test-lava-validity
   - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type synquacer --dry-run --test-plan armnn --test-lava-validity
   - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type stm32mp157c-dk2 --dry-run --test-plan armnn --test-lava-validity
+  - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type hi960-hikey --dry-run --test-plan armnn-benchmarking --test-lava-validity
+  - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type dragonboard-845c --dry-run --test-plan armnn-benchmarking --test-lava-validity
+  - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type synquacer --dry-run --test-plan armnn-benchmarking --test-lava-validity
+  - ./submit_for_testing.py --variables projects/armnn/variables.yaml --device-type stm32mp157c-dk2 --dry-run --test-plan armnn-benchmarking --test-lava-validity
   - ./submit_for_testing.py --variables projects/tf-a/variables.yaml --device-type juno --dry-run --test-plan tf-a --test-lava-validity --testplan-device-path projects/tf-a/devices
   # check python syntax
   - black --check submit_for_testing.py
