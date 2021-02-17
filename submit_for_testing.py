@@ -133,6 +133,7 @@ def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_
         logger.error("QA Reports submission failed")
         logger.info("offending job definition:")
         logger.info(lava_job)
+        sys.exit(1)
 
 
 def _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token):
