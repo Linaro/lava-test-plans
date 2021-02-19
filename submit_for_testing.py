@@ -286,9 +286,11 @@ def main():
     exit_code = 0
 
     output_path = os.path.join(script_dirname, "tmp")
-    if "/" in args.qa_server_project:
-        logger.error("--qa-server-project can not contain of a slash in the name")
-        sys.exit(1)
+
+    if args.qa_server_project:
+        if "/" in args.qa_server_project:
+            logger.error("--qa-server-project can not contain of a slash in the name")
+            sys.exit(1)
 
     if args.dryrun:
         if not os.path.exists(output_path):
