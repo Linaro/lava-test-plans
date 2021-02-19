@@ -133,6 +133,7 @@ def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_
         logger.error("QA Reports submission failed")
         logger.info("offending job definition:")
         logger.info(lava_job)
+        sys.exit(1)
 
 
 def _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token):
@@ -285,6 +286,10 @@ def main():
     exit_code = 0
 
     output_path = os.path.join(script_dirname, "tmp")
+    if "/" in args.qa_server_project:
+        logger.error("--qa-server-project can not contain of a slash in the name")
+        sys.exit(1)
+
     if args.dryrun:
         if not os.path.exists(output_path):
             os.mkdir(output_path)
@@ -429,7 +434,7 @@ def main():
             exit_code = 1
 
         if exit_code != 0:
-            exit(exit_code)
+            sys.exit(exit_code)
 
         qa_server_base = args.qa_server
         if not (
@@ -480,7 +485,7 @@ def main():
             if args.lava_token:
                 _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token)
     else:
-        exit(exit_code)
+        sys.exit(exit_code)
 
 
 if __name__ == "__main__":
