@@ -4,6 +4,7 @@
 {% include PROJECT+"include/lkft-metadata.jinja2" %}
 {% endblock metadata %}
 
+{% set BOOT_LABEL_OVERRIDE = BOOT_LABEL_OVERRIDE|default(false) %}
 {% set DEPLOY_TARGET = DEPLOY_TARGET|default("downloads") %}
 {% set DOCKER_IMAGE = DOCKER_IMAGE|default("linaro/kir") %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("ptable-linux-8g.img") %}
@@ -30,7 +31,7 @@
         reboot: hard-reset
 {% endif %}
 {% endif %}
-{% if boot == true and BOOT_LABEL != "kernel" %}
+{% if boot == true and BOOT_LABEL != "kernel" or BOOT_LABEL_OVERRIDE == true %}
       boot:
         url: downloads://{{DOCKER_BOOT_FILE}}
 {% if reboot_reset == true %}
