@@ -63,7 +63,7 @@ Overall job timeout is a sum of action timeouts. There are 6 components:
  * *lxc_boot_timeout*
  * *lxc_install_fastboot_timeout*
  * *target_deploy_timeout*
- * *target_boot_timeout*
+ * *TARGET_BOOT_TIMEOUT*
  * *test_timeout*
 
 When LXC is not in use all *lxc_* timeouts are set to 0. *test_timeout* is defined for each test template. *target_* timeouts can be set separately for each device.

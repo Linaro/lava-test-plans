@@ -3,7 +3,7 @@
 {% set test_timeout = 90 %}
 {% set boot_bootloader = true %}
 {% set boot_method = "bootloader" %}
-{% set target_boot_timeout = 1 %}
+{% set TARGET_BOOT_TIMEOUT = 1 %}
 {% set test_target_interactive = true %}
 {% set auto_login = false %}
 {% set run_fpga_commands = run_fpga_commands|default(false) %}

@@ -9,7 +9,7 @@
 {% set BOOT_LABEL = BOOT_LABEL|default("kernel") %}
 {% set boot_method = boot_method|default("qemu") %}
 {% set apply_overlay = apply_overlay|default("rootfs") %}
-{% set target_boot_timeout = target_deploy_timeout|default(10) %}
+{% set TARGET_BOOT_TIMEOUT = TARGET_BOOT_TIMEOUT|default(10) %}
 {% set auto_login = auto_login|default(true) %}
 {% set AUTO_LOGIN_USERNAME = AUTO_LOGIN_USERNAME|default("root") %}
 
