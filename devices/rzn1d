@@ -9,7 +9,7 @@
 {% set boot_method = boot_method|default("u-boot") %}
 {% set run_nand_commands = true %}
 {% set run_tftp_commands = true %}
-{% set target_boot_timeout = 10 %}
+{% set TARGET_BOOT_TIMEOUT = 10 %}
 {% set target_deploy_timeout = 5 %}
 
 {% block device_type %}rzn1d{% endblock %}
