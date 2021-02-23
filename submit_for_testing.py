@@ -329,7 +329,7 @@ def main():
             logger.info("Trying YAML")
             with open(variables, "r") as vars_file:
                 try:
-                    yaml = YAML()
+                    yaml = YAML(typ="safe")
                     context.update(yaml.load(vars_file))
                 except ParserError as e:
                     logger.error(e)
