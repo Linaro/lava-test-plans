@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/Linaro/lava-test-plans.svg?branch=master)](https://travis-ci.org/Linaro/lava-test-plans)
+![Build Status](https://github.com/Linaro/lava-test-plans/actions/workflows/test-plans-pipeline.yml/badge.svg)
+![REUSE Compliance Check](https://github.com/Linaro/lava-test-plans/actions/workflows/reuse.yml/badge.svg)
 
 # Installation
 
