@@ -3,7 +3,7 @@
 
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
-{% set GS_MACHINE = GS_MACHINE|default("virt-2.10,accel=kvm") %}
+{% set GS_MACHINE = GS_MACHINE|default("virt,accel=kvm") %}
 
 {% block global_settings %}
 {{ super() }}
