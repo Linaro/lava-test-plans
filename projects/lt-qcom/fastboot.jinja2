@@ -141,11 +141,13 @@ protocols:
     to: fastboot
     namespace: target
     images:
+{% if rootfs == true %}
 {% if ptable == true %}
       "{{ PTABLE_LABEL }}":
         url: lxc:///{{ LXC_PTABLE_FILE }}
 {% if reboot_reset == true %}
         reboot: hard-reset
+{% endif %}
 {% endif %}
 {% endif %}
       boot:
