@@ -1,3 +1,5 @@
 {% extends "devices/dragonboard-845c" %}
 
 {% set VIDEO_DEVICES = VIDEO_DEVICES|default({"/dev/video0": "venus-encoder", "/dev/video1": "venus-decoder"}) %}
+{% set PTABLE_URL = PTABLE_URL|default("https://images.validation.linaro.org/snapshots.linaro.org/96boards/dragonboard845c/linaro/rescue/69/dragonboard-845c-bootloader-ufs-linux-69/gpt_both0.bin") %}
+{% set LXC_PTABLE_FILE = LXC_PTABLE_FILE|default("gpt_both0.bin") %}
