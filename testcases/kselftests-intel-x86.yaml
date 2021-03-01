@@ -1,0 +1,4 @@
+{% extends "testcases/master/template-kselftest.yaml.jinja2" %}
+
+{% set testnames = ['intel_pstate', 'livepatch', 'ptrace', 'x86'] %}
+{% set test_timeout = 15 %}

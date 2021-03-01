@@ -4,7 +4,7 @@
 {%- if vsyscall_mode is defined %}
   {%- set vsyscall_suffix = "-vsyscall-mode-"+vsyscall_mode %}
 {%- endif -%}
-{% set test_name = "kselftests" + vsyscall_suffix %}
+{% set test_name = "kselftests" + testnames|join('-') + vsyscall_suffix %}
 {% set use_context = true %}
 {% if vsyscall_mode is defined %}
 {% set extra_kernel_args = 'vsyscall={{vsyscall_mode}} ' + extra_kernel_args|default("") %}
@@ -12,12 +12,13 @@
 
 {% extends "testcases/master/template-master.jinja2" %}
 
-{% set test_timeout = 85 %}
 {% block metadata %}
   {{ super() }}
-  kselftest__url: "{{KSELFTESTS_URL | default('unknown')}}"
-  kselftest__version: "{{KSELFTESTS_VERSION | default('unknown')}}"
-  kselftest__revision: "{{KSELFTESTS_REVISION | default('unknown')}}"
+{% for testname in testnames %}
+  kselftest-{{testname}}__url: "{{KSELFTESTS_URL | default('unknown')}}"
+  kselftest-{{testname}}__version: "{{KSELFTESTS_VERSION | default('unknown')}}"
+  kselftest-{{testname}}__revision: "{{KSELFTESTS_REVISION | default('unknown')}}"
+{% endfor %}
 {% endblock metadata %}
 
 {% block test_target %}
@@ -33,15 +34,18 @@
           - systemctl stop systemd-timesyncd || true
       name: timesync-off
       path: inline/timesync-off.yaml
+{% for testname in testnames %}
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       revision: '{{ TDEFINITIONS_REVISION }}'
       path: automated/linux/kselftest/kselftest.yaml
-      name: kselftest{{vsyscall_suffix}}
+      name: kselftest-{{testname}}{{vsyscall_suffix}}
       parameters:
+        TST_CMDFILES: '{{testname}}'
         KSELFTEST_PATH: {{KSELFTEST_PATH}}
         SKIPFILE: skipfile-lkft.yaml
         BOARD: '{{ DEVICE_TYPE }}'
         BRANCH: '{{ SKIPGEN_KERNEL_VERSION|default('default') }}'
         ENVIRONMENT: '{{ ENVIRONMENT|default("production") }}'
+{% endfor %}
 {% endblock test_target %}

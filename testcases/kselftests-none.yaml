@@ -1,3 +1,5 @@
 {% extends "testcases/master/template-kselftest.yaml.jinja2" %}
 
+{% set testnames = [''] %}
+{% set test_timeout = 85 %}
 {% set vsyscall_mode = 'none' %}
