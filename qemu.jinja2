@@ -90,8 +90,10 @@
 {% endif %}
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
-{% if OVERLAY_MODULES_URL is defined %}
+{% if OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined%}
         overlays:
+{% endif %}
+{% if OVERLAY_MODULES_URL is defined %}
           modules:
             url: {{OVERLAY_MODULES_URL}}
             path: /
@@ -100,6 +102,17 @@
 {% endif %}
 {% if OVERLAY_MODULES_URL_COMP is defined %}
             compression: {{OVERLAY_MODULES_URL_COMP}}
+{% endif %}
+{% endif %}
+{% if OVERLAY_KSELFTEST_URL is defined %}
+          kselftest:
+            url: {{OVERLAY_KSELFTEST_URL}}
+            path: {{KSELFTEST_PATH|default("/opt/kselftest_intree")}}
+{% if OVERLAY_KSELFTEST_URL_FORMAT is defined %}
+            format: {{OVERLAY_KSELFTEST_URL_FORMAT}}
+{% endif %}
+{% if OVERLAY_KSELFTEST_URL_COMP is defined %}
+            compression: {{OVERLAY_KSELFTEST_URL_COMP}}
 {% endif %}
 {% endif %}
 {% endif %}
