@@ -37,4 +37,8 @@
       params:
         INTERFACE: {{ETH_DEVICE}}
       name: linux-ethernet
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/pm-qa/pm-qa.yaml
+      name: linux-pm-qa
 {% endblock test_target %}
