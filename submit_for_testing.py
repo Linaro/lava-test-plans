@@ -120,15 +120,13 @@ def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_
             ).netloc,  # qa-reports backends are named as lava instances
         }
         logger.info("Submit to: %s" % qa_server_api)
-        results = requests.post(qa_server_api, data=data, headers=headers, timeout=31)
-        if results.status_code < 300:
-            logger.info(
-                "%s/testjob/%s %s"
-                % (qa_server_base, results.text, get_job_name(lava_job))
-            )
-        else:
-            logger.info(results.status_code)
-            logger.info(results.text)
+        response = requests.post(
+            qa_server_api, data=data, headers=headers, timeout=31
+        )
+        response.raise_for_status()
+        logger.info(
+            "%s/testjob/%s %s" % (qa_server_base, response.text, get_job_name(lava_job))
+        )
     except requests.exceptions.RequestException as err:
         logger.error("QA Reports submission failed")
         logger.info("offending job definition:")
