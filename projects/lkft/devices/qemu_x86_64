@@ -1,5 +1,7 @@
 {% extends "devices/qemu_x86_64" %}
 
 {% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("ext4") %}
+{% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
+{% set OVERLAY_KSELFTEST_URL_COMP = OVERLAY_KSELFTEST_URL_COMP|default("xz") %}
 {% set OVERLAY_MODULES_URL_FORMAT = OVERLAY_MODULES_URL_FORMAT|default("tar") %}
 {% set OVERLAY_MODULES_URL_COMP = OVERLAY_MODULES_URL_COMP|default("xz") %}
