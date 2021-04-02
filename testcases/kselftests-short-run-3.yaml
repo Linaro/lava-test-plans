@@ -1,4 +1,5 @@
 {% extends "master/template-kselftest.yaml.jinja2" %}
 
+{% set guestfs_size = 1024 %}
 {% set testnames = ['lib', 'membarrier', 'memfd', 'memory-hotplug', 'mincore', 'mount', 'mqueue', 'openat2', 'pidfd', 'pid_namespace', 'pstore', 'proc'] %}
 {% set test_timeout = 15 %}
