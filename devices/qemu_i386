@@ -11,6 +11,7 @@
 {% block global_settings %}
 {{ super() }}
   arch: i386
+  guestfs_size: {{ guestfs_size|default(512) }}
 {% endblock global_settings %}
 
 {% block device_type %}qemu{% endblock %}

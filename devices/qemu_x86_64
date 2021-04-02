@@ -8,6 +8,7 @@
 {% block global_settings %}
 {{ super() }}
   arch: amd64
+  guestfs_size: {{ guestfs_size|default(512) }}
 {% endblock global_settings %}
 
 {% block device_type %}qemu{% endblock %}
