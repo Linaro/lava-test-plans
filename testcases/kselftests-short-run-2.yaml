@@ -1,4 +1,5 @@
 {% extends "master/template-kselftest.yaml.jinja2" %}
 
+{% set guestfs_size = 1024 %}
 {% set testnames = ['efivarfs', 'filesystems', 'firmware', 'fpu', 'ftrace', 'futex', 'gpio', 'ipc', 'ir', 'kcmp', 'kexec'] %}
 {% set test_timeout = 20 %}

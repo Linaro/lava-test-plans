@@ -1,4 +1,5 @@
 {% extends "master/template-kselftest.yaml.jinja2" %}
 
+{% set guestfs_size = 1024 %}
 {% set testnames = ['android', 'breakpoints', 'capabilities', 'cgroup', 'clone3', 'core', 'cpufreq', 'cpu-hotplug', 'drivers'] %}
 {% set test_timeout = 20 %}
