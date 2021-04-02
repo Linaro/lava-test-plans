@@ -44,6 +44,18 @@
 {% if MODULES_URL_COMP is defined %}
       compression: {{MODULES_URL_COMP}}
 {% endif %}
+{% if OVERLAY_KSELFTEST_URL is defined %}
+    overlays:
+      kselftest:
+        url: {{OVERLAY_KSELFTEST_URL}}
+        path: {{KSELFTEST_PATH|default("/opt/kselftest_intree")}}
+{% if OVERLAY_KSELFTEST_URL_FORMAT is defined %}
+        format: {{OVERLAY_KSELFTEST_URL_FORMAT}}
+{% endif %}
+{% if OVERLAY_KSELFTEST_URL_COMP is defined %}
+        compression: {{OVERLAY_KSELFTEST_URL_COMP}}
+{% endif %}
+{% endif %}
 {% endif %}
 {% if OPTEE_URL is defined %}
     optee:
