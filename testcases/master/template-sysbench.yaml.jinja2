@@ -1,0 +1,22 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set KERNEL_BRANCH = KERNEL_BRANCH|default("") %}
+{% set OS_INFO = OS_INFO|default("") %}
+{% set LAVA_TEST_NAME_SUFFIX = LAVA_TEST_NAME_SUFFIX|default("") %}
+
+{% set test_name = "sysbench-" + testnames|join('-') + LAVA_TEST_NAME_SUFFIX %}
+
+{% block test_target %}
+  {{ super() }}
+{% block test_target_prep %}
+{% endblock test_target_prep %}
+{% for testname in testnames %}
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/sysbench/sysbench.yaml
+      parameters:
+        SKIP_INSTALL: 'false'
+        TESTS: '{{testname}}'
+      name: sysbench-{{testname}}{{LAVA_TEST_NAME_SUFFIX}}-tests
+{% endfor %}
+{% endblock test_target %}
