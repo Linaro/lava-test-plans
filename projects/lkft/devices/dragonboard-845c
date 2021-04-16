@@ -5,3 +5,5 @@
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("gpt_both0.bin") %}
 {% set PTABLE_URL = PTABLE_URL|default("https://images.validation.linaro.org/snapshots.linaro.org/96boards/dragonboard845c/linaro/rescue/28/dragonboard-845c-bootloader-ufs-linux-28/gpt_both0.bin") %}
 {% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
+{% set OVERLAY_KSELFTEST_URL_COMP = OVERLAY_KSELFTEST_URL_COMP|default("xz") %}
