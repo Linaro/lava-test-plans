@@ -114,6 +114,17 @@
 {% if OVERLAY_KSELFTEST_URL_COMP is defined %}
             compression: {{OVERLAY_KSELFTEST_URL_COMP}}
 {% endif %}
+{% if OVERLAY_CPUPOWER_URL is defined %}
+          cpupower:
+            url: {{OVERLAY_CPUPOWER_URL}}
+            path: {{CPUPOWER_PATH|default("/")}}
+{% if OVERLAY_CPUPOWER_URL_FORMAT is defined %}
+            format: {{OVERLAY_CPUPOWER_URL_FORMAT}}
+{% endif %}
+{% if OVERLAY_CPUPOWER_URL_COMP is defined %}
+            compression: {{OVERLAY_CPUPOWER_URL_COMP}}
+{% endif %}
+{% endif %}
 {% endif %}
 {% endif %}
 {% if flasher is defined and flasher == true and DEPLOY_TARGET == "flasher" %}
