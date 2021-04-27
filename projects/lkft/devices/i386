@@ -2,3 +2,5 @@
 
 {% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@intel-core2-32:") %}
 {% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}

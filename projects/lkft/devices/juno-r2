@@ -1,6 +1,8 @@
 {% extends "devices/juno-r2" %}
 
 {% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
 
 {% set extra_kernel_args = 'default_hugepagesz=2M hugepages=256 ' + extra_kernel_args|default("") %}
 

@@ -1,2 +1,4 @@
 {% extends "devices/thunderx" %}
 {% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@juno:") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
