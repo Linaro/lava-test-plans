@@ -357,7 +357,7 @@ def main():
 
     # convert test_list to set to remove potential duplicates
     for test in set(test_list):
-        """ Prepare lava jobs """
+        """Prepare lava jobs"""
         lava_job = None
         try:
             lava_job = j2_env.get_template(test).render(context)
@@ -474,7 +474,7 @@ def main():
         )
 
         for lava_job in lava_jobs:
-            """ Submit lava jobs """
+            """Submit lava jobs"""
             if args.qa_token:
                 _submit_to_squad(
                     lava_job,
