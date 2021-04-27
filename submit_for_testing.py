@@ -164,7 +164,12 @@ def main():
         "--build-id", "--build-number", help="ID for the build", dest="build_id"
     )
     parser.add_argument(
-        "--qa-server-team", help="Team in QA Reports service", dest="qa_server_team"
+        "--qa-server-team",
+        help="Team in QA Reports service; deprecated",
+        dest="qa_server_team",
+    )
+    parser.add_argument(
+        "--qa-server-group", help="Group in QA Reports service", dest="qa_server_group"
     )
     parser.add_argument(
         "--qa-server-project",
@@ -442,8 +447,10 @@ def main():
             qa_server_base.startswith("http://")
             or qa_server_base.startswith("https://")
         ):
+            if args.qa_server_team and not args.qa_server_group:
+                args.qa_server_group = args.qa_server_team
             qa_server_base = "https://" + qa_server_base
-        qa_server_team = args.qa_server_team
+        qa_server_group = args.qa_server_group
         qa_server_project = args.qa_server_project
         qa_server_build = args.build_id
 
@@ -458,7 +465,7 @@ def main():
 
         qa_server_api = "%s/api/submitjob/%s/%s/%s/%s" % (
             qa_server_base,
-            qa_server_team,
+            qa_server_group,
             qa_server_project,
             qa_server_build,
             qa_server_env,
