@@ -1,4 +1,6 @@
 {% extends "devices/nxp-ls2088" %}
 
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
