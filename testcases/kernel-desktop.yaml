@@ -4,6 +4,7 @@
 {% set test_timeout = 150 %}
 
 {% set DEQP_FAIL_LIST = DEQP_FAIL_LIST | default("deqp-freedreno-a307-fails.txt") %}
+{% set DEQP_EXCLUDE_LIST = DEQP_EXCLUDE_LIST | default("deqp-all-skips.txt") %}
 
 {% block test_target %}
   {{ super() }}
@@ -32,7 +33,7 @@
         DEQP_BIN: "/usr/lib/opengl-es-cts/deqp-gles2"
         DEQP_CASES: "--caselist /usr/lib/opengl-es-cts/gl_cts/data/mustpass/gles/aosp_mustpass/3.2.6.x/gles2-master.txt"
         DEQP_FAIL: "--xfail-list /usr/share/mesa/{{ DEQP_FAIL_LIST }}"
-        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/deqp-default-skips.txt"
+        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/{{ DEQP_EXCLUDE_LIST }}"
       name: linux-deqp-gles2
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
@@ -41,7 +42,7 @@
         DEQP_BIN: "/usr/lib/opengl-es-cts/deqp-gles3"
         DEQP_CASES: "--caselist /usr/lib/opengl-es-cts/gl_cts/data/mustpass/gles/aosp_mustpass/3.2.6.x/gles3-master.txt"
         DEQP_FAIL: "--xfail-list /usr/share/mesa/{{ DEQP_FAIL_LIST }}"
-        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/deqp-default-skips.txt"
+        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/{{ DEQP_EXCLUDE_LIST }}"
       name: linux-deqp-gles3
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
@@ -50,6 +51,6 @@
         DEQP_BIN: "/usr/lib/opengl-es-cts/deqp-gles31"
         DEQP_CASES: "--caselist /usr/lib/opengl-es-cts/gl_cts/data/mustpass/gles/aosp_mustpass/3.2.6.x/gles31-master.txt"
         DEQP_FAIL: "--xfail-list /usr/share/mesa/{{ DEQP_FAIL_LIST }}"
-        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/deqp-default-skips.txt"
+        DEQP_EXCLUDE: "--exclude-list /usr/share/mesa/{{ DEQP_EXCLUDE_LIST }}"
       name: linux-deqp-gles31
 {% endblock test_target %}
