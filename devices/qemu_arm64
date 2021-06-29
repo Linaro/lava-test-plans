@@ -4,13 +4,14 @@
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 {% set GS_MACHINE = GS_MACHINE|default("virt,accel=kvm") %}
+{% set QEMU_CPU_VARIABLES = QEMU_CPU_VARIABLES|default("host") %}
 
 {% block global_settings %}
 {{ super() }}
   arch: arm64
   netdevice: tap
   machine: {{ GS_MACHINE }}
-  cpu: host{% if DEVICE_TYPE == 'qemu_arm' %},aarch64=off{% endif %}
+  cpu: {{ QEMU_CPU_VARIABLES }}{% if DEVICE_TYPE == 'qemu_arm' %},aarch64=off{% endif %}
   guestfs_size: {{ guestfs_size|default(512) }}
 {% endblock global_settings %}
 
