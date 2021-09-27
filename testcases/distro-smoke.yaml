@@ -1,0 +1,82 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set test_timeout = 120 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% set test_name = test_name | default("distro-smoke") %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/smoke/smoke.yaml
+      params:
+        TESTS: {{SMOKE_TESTS}}
+      name: linux-smoke
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/usb-smoke/usb-smoke-test.yaml
+      name: linux-usb-smoke
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/toolchain-smoke/toolchain-smoke.yaml
+      name: linux-toolchain-smoke
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/device-tree/device-tree.yaml
+      name: linux-device-tree
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/meminfo/meminfo.yaml
+      name: meminfo
+
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/dd-wr-speed/dd-wr-speed.yaml
+      name: linux-dd-wr-speed
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/sysbench/sysbench.yaml
+      params:
+        NUM_THREADS: 4
+        TESTS: cpu memory threads mutex
+      name: linux-sysbench
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/device-read-perf/device-read-perf.yaml
+      name: linux-device-read-perf
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/hackbench/hackbench.yaml
+      name: linux-hackbench
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/linpack/linpack.yaml
+      name: linux-linpack
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/openssl/openssl-speed.yaml
+      name: linux-openssl-speed
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/stream/stream-uniprocessor.yaml
+      name: linux-stream-uniprocessor
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/pi-stress/pi-stress.yaml
+      name: linux-pi-stress
+
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/pm-qa/pm-qa.yaml
+      name: linux-pm-qa
+      params:
+        TESTS: {{PM_QA_TESTS}}
+
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/docker/docker.yaml
+      name: linux-containers
+{% endblock test_target %}
