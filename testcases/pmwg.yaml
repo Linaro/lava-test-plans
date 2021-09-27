@@ -50,8 +50,8 @@
           - apt-get -y install trace-cmd git
           - cd /root
           - git clone https://git.linaro.org/power/energy-probe-ext.git /energy-probe-ext
-          - export TARGET_IP=$$(lava-target-ip)
-          - echo $$TARGET_IP lava-target-ip >> /etc/hosts
+          - export TARGET_IP=$(lava-target-ip)
+          - echo $TARGET_IP lava-target-ip >> /etc/hosts
       name: prep-inline
       path: inline/prep.yaml
       timeout:
@@ -65,6 +65,9 @@
         AGENDA: agenda/qcomlt/linux-workloads-db410c.yaml
         WA_EXTENSION_PATHS: /energy-probe-ext
         ARTIFACTORIAL_URL: https://archive.validation.linaro.org/artifacts/team/qcomlt/
+        SKIP_UPGRADE_PIP_SETUPTOOLS: "True"
+        WA_TAG: "v2.7.0"
+        DEVLIB_TAG: "v1.1.2"
       name: linux-pmwg
       timeout:
         minutes: {{ test_timeout / 1.5 }}
