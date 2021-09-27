@@ -188,4 +188,9 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 
 {{ super() }}
 
+{% if lxc_project == true %}
+{% block test_lxc %}
+{% endblock test_lxc %}
+{% endif %}
+
 {% endblock actions %}
