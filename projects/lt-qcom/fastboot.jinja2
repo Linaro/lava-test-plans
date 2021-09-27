@@ -10,6 +10,8 @@
   path: projects/lt-qcom/
 {% if OS_INFO == 'kernel' %}
 {% include PROJECT+"include/lt-qcom-"+OS_INFO+"-metadata.jinja2" %}
+{% else %}
+{% include PROJECT+"include/lt-qcom-distro-metadata.jinja2" %}
 {% endif %}
 {% endblock metadata %}
 
