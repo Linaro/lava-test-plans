@@ -1,0 +1,12 @@
+{% extends "testcases/master/template-test.jinja2" %}
+
+{% set test_name = test_name | default("ptsematest") %}
+{% set test_path_file = 'automated/linux/ptsematest/ptsematest.yaml' %}
+{% set duration = duration | default("5m") %}
+{% set test_timeout = test_timeout | default(10) %}
+
+{% block test_target %}
+  {{ super() }}
+      parameters:
+        DURATION: '{{ duration }}'
+{% endblock test_target %}
