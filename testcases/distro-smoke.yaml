@@ -31,7 +31,6 @@
       from: git
       path: automated/linux/meminfo/meminfo.yaml
       name: meminfo
-
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/dd-wr-speed/dd-wr-speed.yaml
@@ -67,14 +66,12 @@
       from: git
       path: automated/linux/pi-stress/pi-stress.yaml
       name: linux-pi-stress
-
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/pm-qa/pm-qa.yaml
       name: linux-pm-qa
       params:
         TESTS: {{PM_QA_TESTS}}
-
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
       path: automated/linux/docker/docker.yaml
