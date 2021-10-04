@@ -1,0 +1,16 @@
+{% extends "testcases/master/template-test.jinja2" %}
+
+{% set test_name = test_name | default("signaltest") %}
+{% set test_path_file = 'automated/linux/signaltest/signaltest.yaml' %}
+{% set duration = duration | default("1m") %}
+{% set priority = priority | default(96) %}
+{% set threads = threads | default(2) %}
+{% set test_timeout = test_timeout | default(10) %}
+
+{% block test_target %}
+  {{ super() }}
+      parameters:
+        DURATION: '{{ duration }}'
+        PRIORITY: '{{ priority }}'
+        THREADS: '{{ threads }}'
+{% endblock test_target %}
