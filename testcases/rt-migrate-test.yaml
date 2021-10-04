@@ -1,0 +1,14 @@
+{% extends "testcases/master/template-test.jinja2" %}
+
+{% set test_name = test_name | default("rt-migrate-test") %}
+{% set test_path_file = 'automated/linux/rt-migrate-test/rt-migrate-test.yaml' %}
+{% set duration = duration | default("5m") %}
+{% set priority = priority | default(96) %}
+{% set test_timeout = test_timeout | default(10) %}
+
+{% block test_target %}
+  {{ super() }}
+      parameters:
+        DURATION: '{{ duration }}'
+        PRIORITY: '{{ priority }}'
+{% endblock test_target %}
