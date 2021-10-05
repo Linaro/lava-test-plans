@@ -23,7 +23,7 @@
       name: ssh-enable-target-login-inline
       path: inline/ssh-enable-target-login.yaml
       timeout:
-        minutes: {{ test_timeout / 18 }}
+        minutes: {{ test_timeout // 18 }}
 {% endblock test_target %}
 
 {% block test_lxc %}
@@ -37,7 +37,7 @@
       path: testdefs/arm-probe.yaml
       name: arm-probe
       timeout:
-        minutes: {{ test_timeout / 9 }}
+        minutes: {{ test_timeout // 9 }}
 
     - from: inline
       repository:
@@ -56,7 +56,7 @@
       name: prep-inline
       path: inline/prep.yaml
       timeout:
-        minutes: {{ test_timeout / 9 }}
+        minutes: {{ test_timeout // 9 }}
 
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
@@ -71,7 +71,7 @@
         DEVLIB_TAG: "v1.1.2"
       name: linux-pmwg
       timeout:
-        minutes: {{ test_timeout / 1.5 }}
+        minutes: {{ test_timeout }}
 {% endblock test_lxc %}
 
 {% block visibility %}
