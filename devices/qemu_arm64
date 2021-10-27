@@ -1,6 +1,9 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"qemu.jinja2" %}
 
+{% if USE_DOCKER is defined and USE_DOCKER == true %}
+{% set DOCKER_QEMU_BINARY = DOCKER_QEMU_BINARY|default("/usr/bin/qemu-system-aarch64") %}
+{% endif %}
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 {% set GS_MACHINE = GS_MACHINE|default("virt,accel=kvm") %}
