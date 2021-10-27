@@ -12,11 +12,19 @@
 {% set TARGET_BOOT_TIMEOUT = TARGET_BOOT_TIMEOUT|default(10) %}
 {% set auto_login = auto_login|default(true) %}
 {% set AUTO_LOGIN_USERNAME = AUTO_LOGIN_USERNAME|default("root") %}
+{% set USE_DOCKER = USE_DOCKER|default(false) %}
+{% if USE_DOCKER is defined and USE_DOCKER == true %}
+{% set DOCKER_QEMU_CONTAINER = DOCKER_QEMU_CONTAINER|default("linaro/lkft-qemu-should-not-used-for-long") %}
+{% set DOCKER_QEMU_VERSION = DOCKER_QEMU_VERSION|default('latest') %}
+{% endif %}
 
 {% block global_settings %}
 {{ super() }}
 {% if guestfs_virtio is defined and guestfs_virtio == true %}
   guestfs_interface: virtio
+{% endif %}
+{% if USE_DOCKER is defined and USE_DOCKER == true %}
+  netdevice: user
 {% endif %}
 {% endblock global_settings %}
 
@@ -153,6 +161,11 @@
 
 {% block boot_target %}
 - boot:
+{% if USE_DOCKER is defined and USE_DOCKER == true %}
+    docker:
+      binary: {{ DOCKER_QEMU_BINARY }}
+      image: {{ DOCKER_QEMU_CONTAINER}}:{{ DOCKER_QEMU_VERSION}}
+{% endif %}
 {% if auto_login == true %}
 {% include "include/boot_target/auto_login.jinja2" %}
 {% block auto_login_commands %}
