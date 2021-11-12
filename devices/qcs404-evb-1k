@@ -10,12 +10,3 @@
 {% set rootfs_label = 'userdata' %}
 
 {% block device_type %}qcs404-evb-1k{% endblock %}
-
-
-{% block auto_login_commands %}
-{% if AUTO_LOGIN_USERNAME != 'root' %}
-      login_commands:
-        # Become super user to run tests
-        - su
-{% endif %}
-{% endblock auto_login_commands %}
