@@ -59,6 +59,9 @@ jobs:
          python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type qcs404-evb-1k --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
          python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type qcs404-evb-4k --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
          python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type sdm845-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
+         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type sm8150-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
+         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type sm8250-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
+         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type sm8350-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
          python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type rzn1d --dry-run --test-plan schneider --test-lava-validity
          python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type soca9 --dry-run --test-plan schneider --test-lava-validity
          python3 submit_for_testing.py --variables projects/ti/variables.yaml --device-type x15-bl --dry-run --test-plan ti-uboot --test-lava-validity
