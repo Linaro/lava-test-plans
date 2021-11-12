@@ -8,11 +8,3 @@
 {% set rootfs_label = 'rootfs' %}
 
 {% block device_type %}dragonboard-820c{% endblock %}
-
-{% block auto_login_commands %}
-{% if AUTO_LOGIN_USERNAME != 'root' %}
-      login_commands:
-        # Become super user to run tests
-        - su
-{% endif %}
-{% endblock auto_login_commands %}
