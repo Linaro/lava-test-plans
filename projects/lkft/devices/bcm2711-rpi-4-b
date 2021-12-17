@@ -1,0 +1,15 @@
+{% extends "devices/bcm2711-rpi-4-b" %}
+
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
+{% set OVERLAY_KSELFTEST_URL_COMP = OVERLAY_KSELFTEST_URL_COMP|default("xz") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+
+{% block context %}
+  {{ super() }}
+  extra_nfsroot_args: ',vers=3'
+  console_device: 'ttyS0'
+{% endblock context %}
