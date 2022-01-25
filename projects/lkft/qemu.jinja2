@@ -21,6 +21,7 @@
 {% endblock rootfs_extra_args %}
 
 {% block test_target %}
+{% if enable_tests is defined and enable_tests %}
   {{ super() }}
     - from: inline
       repository:
@@ -34,4 +35,5 @@
             - ln -s /tmp /scratch
       name: prep-tmp-disk
       path: inline/prep.yaml
+{% endif %}
 {% endblock test_target %}
