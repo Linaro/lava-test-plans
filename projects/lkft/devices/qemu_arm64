@@ -10,5 +10,5 @@
 {% if DEVICE_TYPE == 'qemu_arm' %}
 {% set GS_MACHINE = "virt-2.10,accel=kvm" %}
 {% else %}
-{% set QEMU_CPU_VARIABLES = QEMU_CPU_VARIABLES|default("max") %}
+{% set QEMU_CPU_VARIABLES = QEMU_CPU_VARIABLES|default("max,pauth-impdef=on") %}
 {% endif %}
