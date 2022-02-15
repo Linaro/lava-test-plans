@@ -1,0 +1,27 @@
+{% extends device_type %}
+
+{% block job_specific_metadata %}
+  cts-url: "{{TEST_CTS_URL}}/android-cts.zip"
+  cts-manifest: "{{TEST_CTS_URL}}/pinned-manifest.xml"
+  cts-version: "{{TEST_CTS_VERSION}}"
+  cts-plan: "cts-lkft"
+{% endblock job_specific_metadata %}
+
+{% block test_target %}
+- test:
+    docker:
+      image: {{url_docker}}
+    timeout:
+      minutes: {{timeout_tests}}
+    definitions:
+    - repository: {{url_test_defintions_repo}}
+      from: git
+      path: automated/android/noninteractive-tradefed/tradefed.yaml
+      params:
+        TEST_PARAMS: {% block cts_test_params %}{% endblock cts_test_params %}
+        TEST_URL: "{{TEST_CTS_URL}}/android-cts.zip"
+        TEST_PATH: "android-cts"
+        RESULTS_FORMAT: "aggregated"
+        ANDROID_VERSION: "{{ANDROID_VERSION}}"
+      name: "cts-lkft"
+{% endblock test_target %}

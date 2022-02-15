@@ -1,0 +1,53 @@
+{% extends "base/lkft-base.yaml" %}
+
+{% block download_target %}
+- deploy:
+    to: downloads
+    images:
+      {% block partitions_urls %}
+      {% for partition in partitions_urls %}
+      {{partition}}:
+        url: {{partitions_urls[partition]}}
+        {% if partitions_urls[partition].endswith("xz") %}
+        compression: xz
+        {% endif %}
+      {% endfor %}
+      {% endblock partitions_urls %}
+{% endblock download_target %}
+
+{% block actions_between_download_deploy %}
+{% endblock actions_between_download_deploy %}
+
+{% block deploy_target %}
+- deploy:
+    timeout:
+      minutes: {{timeout_deploy}}
+    to: fastboot
+    docker:
+        image: {{url_docker}}
+    images:
+      {% block partitions_names %}
+      {% for partition in partitions_names %}
+      {{partition}}:
+        url: downloads://{{partitions_names[partition]}}
+      {% endfor %}
+      {% endblock partitions_names %}
+{% endblock deploy_target %}
+
+{% block actions_between_deploy_boot %}
+{% endblock actions_between_deploy_boot %}
+
+{% block boot_target %}
+- boot:
+    docker:
+        image: {{url_docker}}
+    method: fastboot
+    prompts:
+    - 'root@(.*):/#'
+    - 'console:/'
+    timeout:
+      minutes: {{timeout_boot}}
+{% endblock boot_target %}
+
+{% block test_target %}
+{% endblock test_target %}

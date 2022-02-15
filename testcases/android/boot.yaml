@@ -1,0 +1,19 @@
+{% extends device_type %}
+
+{% set timeout_tests = 30 %}
+{% set job_name = "boot" %}
+
+
+{% block test_target %}
+- test:
+      docker:
+        image: {{url_docker}}
+      timeout:
+        minutes: {{timeout_tests}}
+      definitions:
+        - repository: {{url_test_defintions_repo}}
+          from: git
+          path: automated/android/boottime/boottime.yaml
+          name: boottime-test
+
+{% endblock test_target %}

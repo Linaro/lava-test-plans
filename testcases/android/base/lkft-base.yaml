@@ -1,0 +1,131 @@
+{# timeouts #}
+{% set timeout_deploy = timeout_deploy|default(25) %}
+{% set timeout_between_deploy_boot = timeout_between_deploy_boot|default(0) %}
+{% set timeout_boot = timeout_boot|default(10) %}
+{% set timeout_tests = timeout_tests|default(10) %}
+{% set timeout_job_total = timeout_deploy + timeout_boot + timeout_tests %}
+{# default timeout value for each action if timeout not set #}
+{% set timeout_action = timeout_action|default(10) %}
+{% set timeout_connection = timeout_connection|default(2) %}
+
+{# urls #}
+{% set url_docker = url_docker|default("yongqinliu/linaro-android-docker:0.1") %}
+{% set url_test_defintions_repo = url_test_defintions_repo|default("https://github.com/Linaro/test-definitions.git") %}
+{% set job_name = job_name|default("lkft-android") %}
+
+{% set job_name = job_name|default("base") %}
+
+{########## LAVA JOB DEFINITION ##############}
+{% block global_settings %}
+{% endblock global_settings %}
+
+device_type: {% block device_type %}{{lava_device_type}}{% endblock device_type %}
+job_name: {% block job_name %}lkft-android-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}-{{job_name}}{% endblock job_name %}
+
+{% block priority %}
+priority: {{TEST_LAVA_JOB_PRIORITY}}
+{% endblock priority%}
+
+{% block visibility %}
+visibility:
+  group:
+    - {{TEST_LAVA_JOB_GROUP}}
+{% endblock visibility %}
+
+{% block job_gobal_timeout %}
+timeouts:
+  job:
+    minutes: {{timeout_job_total}}
+  action:
+    minutes: {{timeout_action}}
+  connection:
+    minutes: {{timeout_connection}}
+{% endblock job_gobal_timeout %}
+
+{% block tags %}
+{% if TAGS is defined and TAGS is sequence and TAGS is not string %}
+tags:
+{% for tag in TAGS %}
+{% if tag|length %}
+  - {{ tag }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock tags %}
+
+metadata:
+  android.build: "{{BUILD_NUMBER}}"
+  android.name: "{{JOB_NAME}}"
+  android.url: "{{REFERENCE_BUILD_URL}}"
+  android.version: "{{ANDROID_VERSION}}"
+{% if ANDROID_VENDOR_FINGERPRINT is defined %}
+  android.build.vendor.fingerprint: "{{ANDROID_VENDOR_FINGERPRINT}}"
+{% endif %}
+{% if ANDROID_GSI_FINGERPRINT is defined %}
+  android.build.gsi.url: "{{ANDROID_GSI_URL}}"
+  android.build.gsi.fingerprint: "{{ANDROID_GSI_FINGERPRINT}}"
+{% endif %}
+{% if TUXSUITE_DOWNLOAD_URL is defined %}
+  tuxsuite.download.url: "{{TUXSUITE_DOWNLOAD_URL}}"
+{% endif %}
+  lkft.build.config: "{{LKFT_BUILD_CONFIG}}"
+  git branch: "{{KERNEL_BRANCH}}"
+  git repo: "{{KERNEL_REPO}}"
+  git commit: "{{KERNEL_COMMIT}}"
+  git describe: "{{KERNEL_DESCRIBE}}"
+  build-url: "{{BUILD_URL}}"
+  toolchain: "{{TEST_METADATA_TOOLCHAIN}}"
+  series: lkft
+{% block job_specific_metadata %}
+{% endblock job_specific_metadata %}
+
+{% block secrets %}
+secrets:
+  ARTIFACTORIAL_TOKEN: "{{ARTIFACTORIAL_TOKEN}}"
+{% endblock %}
+
+actions:
+{% block actions %}
+
+{% block download_target %}
+{% endblock download_target %}
+
+{% block actions_between_download_deploy %}
+{% endblock actions_between_download_deploy %}
+
+{% block deploy_target %}
+{% endblock deploy_target %}
+
+{% block actions_between_deploy_boot %}
+{% endblock actions_between_deploy_boot %}
+
+{% block boot_target %}
+{% endblock boot_target %}
+
+- test:
+    docker:
+      image: {{url_docker}}
+    timeout:
+      minutes: 20
+    definitions:
+    - from: inline
+      path: android-boot.yaml
+      name: android-boot
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: android-boot
+          description: "android-boot"
+        run:
+          steps:
+            - lava-test-case "android-boot-sleep-3mins" --shell sleep 180
+            - lava-test-case "android-boot-lsusb-v" --shell lsusb -v
+            - lava-test-case "android-boot-wait-for-device" --shell adb wait-for-device
+            - lava-test-case "android-boot-sleep-1mins" --shell adb shell sleep 60
+            - lava-test-case "android-boot" --shell adb shell getprop sys.boot_completed
+            - lava-test-case "android-boot-screencap" --shell adb shell screencap -p /data/local/tmp/screencap.png
+
+{% block test_target %}
+{% endblock test_target %}
+
+{% endblock actions %}

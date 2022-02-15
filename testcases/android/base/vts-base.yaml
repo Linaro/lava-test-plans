@@ -1,0 +1,28 @@
+{% extends device_type %}
+
+{% block job_specific_metadata %}
+  vts-url: "{{TEST_VTS_URL}}/android-vts.zip"
+  vts-manifest: "{{TEST_VTS_URL}}/pinned-manifest.xml"
+  vts-version: "{{TEST_VTS_VERSION}}"
+  vts-plan: "vts-kernel"
+{% endblock job_specific_metadata %}
+
+{% block test_target %}
+- test:
+    docker:
+      image: {{url_docker}}
+    timeout:
+      minutes: {{timeout_tests}}
+    definitions:
+    - repository: {{url_test_defintions_repo}}
+      from: git
+      path: automated/android/noninteractive-tradefed/tradefed.yaml
+      params:
+        TEST_PARAMS: {% block vts_test_params %}{% endblock vts_test_params %}
+        TEST_URL: "{{TEST_VTS_URL}}/android-vts.zip"
+        TEST_PATH: "android-vts"
+        RESULTS_FORMAT: "aggregated"
+        ANDROID_VERSION: "{{ANDROID_VERSION}}"
+        TEST_REBOOT_EXPECTED: "true"
+      name: vts-test
+{% endblock test_target %}

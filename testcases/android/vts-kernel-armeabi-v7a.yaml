@@ -1,0 +1,7 @@
+{% extends "base/vts-base.yaml" %}
+
+{% set timeout_tests = 480 %}
+{% set job_name = "vts-kernel-armeabi-v7a" %}
+
+
+{% block vts_test_params %}vts-kernel --abi armeabi-v7a{% endblock vts_test_params %}

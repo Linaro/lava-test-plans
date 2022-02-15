@@ -1,0 +1,79 @@
+{% extends "base/device-base.yaml" %}
+
+{% set TAGS = TAGS|default(["old-firmware"]) %}
+{% set lava_device_type = lava_device_type|default("hi960-hikey") %}
+{% set timeout_between_deploy_boot = timeout_between_deploy_boot|default(5) %}
+
+
+{% set f_name_ptable = F_NAME_PRM_PTABLE_IMG|default("prm_ptable.img") %}
+{% set f_name_boot = F_NAME_BOOT_IMG|default("boot.img") %}
+{% set f_name_userdata = F_NAME_USERDATA_IMG|default("userdata.img") %}
+{% set f_name_super = F_NAME_SUPER_IMG|default("super.img") %}
+{% set f_name_system = F_NAME_SYSTEM_IMG|default("system.img") %}
+{% set f_name_vendor = F_NAME_VENDOR_IMG|default("vendor.img") %}
+
+{% set url_boot = URL_BOOT_IMG|default( REFERENCE_BUILD_URL + '/' + f_name_boot ) %}
+{% set url_userdata = URL_USERDATA_IMG|default( REFERENCE_BUILD_URL + '/' + f_name_userdata ) %}
+{% set url_super = URL_SUPER_IMG|default( REFERENCE_BUILD_URL + '/' + f_name_super ) %}
+{% set url_system = URL_SYSTEM_IMG|default( REFERENCE_BUILD_URL + '/' + f_name_system ) %}
+{% set url_vendor = URL_VENDOR_IMG|default( REFERENCE_BUILD_URL + '/' + f_name_vendor ) %}
+{% set url_ptable_hikey960 = URL_PRM_PTABLE_IMG|default("https://images.validation.linaro.org/snapshots.linaro.org/96boards/reference-platform/components/uefi-staging/85/hikey960/release/prm_ptable.img") %}
+
+
+{% if HIKEY960_SUPPORT_SUPER is defined %}
+{% set partitions_urls = partitions_urls|default({"ptable": url_ptable_hikey960,
+                                                  "boot": url_boot,
+                                                  "userdata": url_userdata,
+                                                  "super": url_super
+                                                  }) %}
+
+{% set partitions_names = partitions_names|default({"ptable": f_name_ptable,
+                                                    "boot": f_name_boot,
+                                                    "userdata": f_name_userdata,
+                                                    "super": f_name_super
+                                                   }) %}
+
+{% else %}
+
+{% set partitions_urls = partitions_urls|default({"ptable": url_ptable_hikey960,
+                                                  "boot": url_boot,
+                                                  "userdata": url_userdata,
+                                                  "system": url_system,
+                                                  "vendor": url_vendor
+                                                  }) %}
+
+{% set partitions_names = partitions_names|default({"ptable": f_name_ptable,
+                                                    "boot": f_name_boot,
+                                                    "userdata": f_name_userdata,
+                                                    "system": f_name_system,
+                                                    "vendor": f_name_vendor
+                                                   }) %}
+{% endif %}
+
+{% block secrets %}
+  {{ super() }}
+  AP_SSID: "{{AP_SSID}}"
+  AP_KEY: "{{AP_KEY}}"
+{% endblock %}
+
+{% block actions_between_deploy_boot %}
+- test:
+    docker:
+      image:  {{url_docker}}
+    timeout:
+      minutes: {{timeout_between_deploy_boot}}
+    definitions:
+    - from: inline
+      path: format-metatdata.yaml
+      name: format-metatdata
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: format-metatdata
+          description: format-metatdata
+        run:
+          steps:
+          - lava-test-case "fastboot-format-metadata" --shell fastboot format cache
+          - lava-test-case "fastboot-reboot-bootloader" --shell fastboot reboot bootloader
+
+{% endblock actions_between_deploy_boot %}

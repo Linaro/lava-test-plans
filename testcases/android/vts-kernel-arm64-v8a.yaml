@@ -1,0 +1,7 @@
+{% extends "base/vts-base.yaml" %}
+
+{% set timeout_tests = 480 %}
+{% set job_name = "vts-kernel-arm64-v8a" %}
+
+
+{% block vts_test_params %}vts-kernel --abi arm64-v8a{% endblock vts_test_params %}

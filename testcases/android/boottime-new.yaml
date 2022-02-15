@@ -1,0 +1,69 @@
+{% extends device_type %}
+
+{% set timeout_tests = 120 %}
+{% set timeout_boottime = 5 %}
+{% set job_name = "boottime" %}
+
+
+{% block test_target %}
+- test:
+      docker:
+        image: {{url_docker}}
+      timeout:
+        minutes: {{timeout_boottime}}
+      definitions:
+        - repository: {{url_test_defintions_repo}}
+          from: git
+          path: automated/android/boottime/boottime.yaml
+          name: fresh-install
+          params:
+            ANDROID_VERSION: master
+            OPERATION: COLLECT
+            COLLECT_NO: "0"
+        - repository: {{url_test_defintions_repo}}
+          from: git
+          path: automated/android/boottime/boottime.yaml
+          name: boottime-fresh-install
+          params:
+            ANDROID_VERSION: master
+            OPERATION: ANALYZE
+            COLLECT_NO: "0"
+
+{% for index in range(1,8)  %}
+- boot:
+    docker:
+      image: {{url_docker}}
+    prompts:
+    - root@(.*):/#
+    - console:/
+    timeout:
+      minutes: {{timeout_boot}}
+    method: fastboot
+
+- test:
+      docker:
+        image: {{url_docker}}
+      timeout:
+        minutes: {{timeout_boottime}}
+      definitions:
+        - repository: {{url_test_defintions_repo}}
+          from: git
+          path: automated/android/boottime/boottime.yaml
+          name: boottime-{{index}}
+          params:
+            ANDROID_VERSION: master
+            OPERATION: COLLECT
+            COLLECT_NO: {{index}}
+
+        {% if index == 7 %}
+        - repository: {{url_test_defintions_repo}}
+          from: git
+          path: automated/android/boottime/boottime.yaml
+          name: boottime-reboot
+          params:
+            ANDROID_VERSION: master
+            OPERATION: ANALYZE
+            COLLECT_NO: 7
+        {% endif %}
+{% endfor %} 
+{% endblock test_target %}
