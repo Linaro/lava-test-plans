@@ -1,8 +1,8 @@
-  git branch: {{KERNEL_BRANCH | default('""')}}
-  git repo: {{KERNEL_REPO | default('""')}}
-  git commit: {{KERNEL_COMMIT | default('""')}}
-  git describe: {{KERNEL_DESCRIBE | default('""')}}
-  make_kernelversion: "{{MAKE_KERNELVERSION | default('""')}}"
+  git_ref: {{KERNEL_BRANCH | default('""')}}
+  git_repo: {{KERNEL_REPO | default('""')}}
+  git_sha: {{KERNEL_COMMIT | default('""')}}
+  git_describe: {{KERNEL_DESCRIBE | default('""')}}
+  kernel_version: "{{MAKE_KERNELVERSION | default('""')}}"
   kernel-config: {{KERNEL_CONFIG_URL | default('""')}}
   build-url: {{BUILD_URL | default('""')}}
   artifact-location: {{KERNEL_ARCH_ARTIFACTS_PUB_DEST | default('""')}}
