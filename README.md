@@ -60,9 +60,9 @@ Variables can also be stored in YAML file. Usual YAML syntax applies.
 ## Timeouts
 
 Overall job timeout is a sum of action timeouts. There are 6 components:
- * *lxc_deploy_timeout*
- * *lxc_boot_timeout*
- * *lxc_install_fastboot_timeout*
+ * *deploy_timeout*
+ * *boot_timeout*
+ * *install_fastboot_timeout*
  * *target_deploy_timeout*
  * *TARGET_BOOT_TIMEOUT*
  * *test_timeout*

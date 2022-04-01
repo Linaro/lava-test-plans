@@ -1,8 +1,8 @@
 {% extends "master.jinja2" %}
 
-{% set lxc_deploy_timeout = 0 %}
-{% set lxc_boot_timeout = 0 %}
-{% set lxc_install_fastboot_timeout = 0 %}
+{% set deploy_timeout = 0 %}
+{% set boot_timeout = 0 %}
+{% set install_fastboot_timeout = 0 %}
 {% set target_deploy_to = target_deploy_to|default("tftp") %}
 
 {% block actions %}
