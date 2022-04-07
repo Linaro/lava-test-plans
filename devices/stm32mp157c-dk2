@@ -14,5 +14,3 @@
 {% set rootfs = rootfs|default(false) %}
 {% set boot_method = boot_method|default("minimal") %}
 {% set auto_login = auto_login|default(false) %}
-
-{% block device_type %}stm32mp157c-dk2{% endblock %}

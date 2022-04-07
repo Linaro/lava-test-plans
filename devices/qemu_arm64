@@ -9,6 +9,8 @@
 {% set GS_MACHINE = GS_MACHINE|default("virt,accel=kvm") %}
 {% set QEMU_CPU_VARIABLES = QEMU_CPU_VARIABLES|default("host") %}
 
+{% set lava_device_type = lava_device_type|default("qemu-arm") %}
+
 {% block global_settings %}
 {{ super() }}
   arch: arm64
@@ -17,8 +19,6 @@
   cpu: {{ QEMU_CPU_VARIABLES }}{% if DEVICE_TYPE == 'qemu_arm' %},aarch64=off{% endif %}
   guestfs_size: {{ guestfs_size|default(512) }}
 {% endblock global_settings %}
-
-{% block device_type %}qemu-arm{% endblock %}
 
 {% block rootfs_extra_args %}
         {{ super() }}

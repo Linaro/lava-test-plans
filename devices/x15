@@ -13,8 +13,6 @@
 {% set reboot_to_fastboot = reboot_to_fastboot|default("true") %}
 {% set rootfs_label = "super" %}
 
-{% block device_type %}x15{% endblock %}
-
 {% block boot_commands %}
     commands:
     - setenv fdtfile am57xx-beagle-x15.dtb

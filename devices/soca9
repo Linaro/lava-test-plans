@@ -12,8 +12,6 @@
 {% set run_tftp_commands = true %}
 {% set target_deploy_timeout = 5 %}
 
-{% block device_type %}soca9{% endblock %}
-
 {% block deploy_target %}
 - deploy:
     timeout:

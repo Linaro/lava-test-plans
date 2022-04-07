@@ -13,8 +13,6 @@
   bootloader_prompt: juno#
 {% endblock context %}
 
-{% block device_type %}juno-r2{% endblock %}
-
 {% block boot_target %}
 {{ super() }}
 {% endblock boot_target %}

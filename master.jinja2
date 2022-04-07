@@ -20,6 +20,8 @@
 
 {% set enable_tests = enable_tests|default(true) %}
 
+{% set lava_device_type = lava_device_type|default(device_type) %}
+
 {% block global_settings %}
 timeouts:
   job:
@@ -42,7 +44,7 @@ context:
 
 
 {% set LAVA_JOB_VISIBILITY = LAVA_JOB_VISIBILITY|default("public") %}
-device_type: {% block device_type %}{% endblock %}
+device_type: {{ lava_device_type }}
 job_name: {% block job_name %}{% endblock %}
 priority: {% block priority %}{{LAVA_JOB_PRIORITY}}{% endblock priority %}
 visibility: {% block visibility %}{{LAVA_JOB_VISIBILITY}}{% endblock visibility %}

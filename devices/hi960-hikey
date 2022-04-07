@@ -12,8 +12,6 @@
 {% set rootfs = true %}
 {% set rootfs_label = 'system' %}
 
-{% block device_type %}hi960-hikey{% endblock %}
-
 {% block boot_commands %}
     commands: installed
 {% endblock boot_commands %}

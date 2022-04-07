@@ -11,8 +11,6 @@
 {% block context %}
 {% endblock context %}
 
-{% block device_type %}juno{% endblock %}
-
 {% block boot_target %}
 {{ super() }}
 {% endblock boot_target %}

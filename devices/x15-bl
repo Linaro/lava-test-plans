@@ -8,8 +8,6 @@
 {% set pre_os_command = false %}
 {% set rootfs_label = "userdata" %}
 
-{% block device_type %}x15-bl{% endblock %}
-
 {% block boot_commands %}
 {% if boot_method == "u-boot" %}
     commands: {{ BOOT_COMMANDS|default("ramdisk") }}

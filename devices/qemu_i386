@@ -11,13 +11,13 @@
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
 
+{% set lava_device_type = lava_device_type|default("qemu") %}
+
 {% block global_settings %}
 {{ super() }}
   arch: i386
   guestfs_size: {{ guestfs_size|default(512) }}
 {% endblock global_settings %}
-
-{% block device_type %}qemu{% endblock %}
 
 {% block boot_extra_args %}
         image_arg: -kernel {kernel} --append "root=/dev/sda  rootwait console=ttyS0,115200"

@@ -10,11 +10,13 @@
 {% set rootfs_label="nfsrootfs" %}
 {% set use_context = true %}
 
+{% if DEVICE_TYPE == 'i386' %}
+{% set lava_device_type = lava_device_type|default("x86") %}
+{% endif %}
+
 {% block context %}
   test_character_delay: 10
 {% endblock context %}
-
-{% block device_type %}x86{% endblock %}
 
 {% block boot_commands %}
     commands: nfs

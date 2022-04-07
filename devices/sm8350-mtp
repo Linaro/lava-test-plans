@@ -8,5 +8,3 @@
 {% set pre_power_command = false %}
 {% set pre_os_command = false %}
 {% set rootfs_label = 'userdata' %}
-
-{% block device_type %}sm8350-mtp{% endblock %}

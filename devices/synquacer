@@ -10,8 +10,6 @@
   test_character_delay: 10
 {% endblock context %}
 
-{% block device_type %}synquacer{% endblock %}
-
 {% block boot_commands %}
     commands: nfs
     parameters:

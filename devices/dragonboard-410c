@@ -6,5 +6,3 @@
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
 {% set rootfs_label = 'rootfs' %}
-
-{% block device_type %}dragonboard-410c{% endblock %}

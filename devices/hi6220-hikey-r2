@@ -15,8 +15,6 @@
 {% set rootfs = true %}
 {% set rootfs_label = rootfs_label|default("system") %}
 
-{% block device_type %}hi6220-hikey-r2{% endblock %}
-
 {% block auto_login_commands %}
       login_commands:
         # Become super user to run tests

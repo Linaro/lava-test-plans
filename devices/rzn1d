@@ -12,8 +12,6 @@
 {% set TARGET_BOOT_TIMEOUT = 10 %}
 {% set target_deploy_timeout = 5 %}
 
-{% block device_type %}rzn1d{% endblock %}
-
 {% block kernel_extra_args %}
       type: uimage
 {% endblock kernel_extra_args %}
