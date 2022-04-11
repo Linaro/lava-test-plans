@@ -10,7 +10,6 @@
 "KERNEL_ARCH_ARTIFACTS_PUB_DEST": "artifact-url"
 "BOOT_URL": "boot-url"
 "SYSTEM_URL": "system-url"
-"DEVICE_TYPE": "device-type"
 "SKIPGEN_KERNEL_VERSION": "skipgen-kernel-version"
 "BUILD_NUMBER": "123"
 "LAVA_JOB_PRIORITY": "99"
