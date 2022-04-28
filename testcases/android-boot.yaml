@@ -1,0 +1,10 @@
+{% extends "testcases/master/template-android.jinja2" %}
+
+{% set test_timeout = 30 %}
+{% set test_name = "boot" %}
+
+{% block test_target_definitions %}
+{% with testname="boot-test" %}
+{% include "include/android-boottime-definition.jinja2" %}
+{% endwith %}
+{% endblock test_target_definitions %}
