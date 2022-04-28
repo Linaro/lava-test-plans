@@ -1,0 +1,22 @@
+  android.build: "{{ BUILD_NUMBER }}"
+  android.name: "{{ JOB_NAME }}"
+  android.url: "{{ REFERENCE_BUILD_URL }}"
+  android.version: "{{ ANDROID_VERSION }}"
+{% if ANDROID_VENDOR_FINGERPRINT is defined %}
+  android.build.vendor.fingerprint: "{{ ANDROID_VENDOR_FINGERPRINT }}"
+{% endif %}
+{% if ANDROID_GSI_FINGERPRINT is defined %}
+  android.build.gsi.url: "{{ ANDROID_GSI_URL }}"
+  android.build.gsi.fingerprint: "{{ ANDROID_GSI_FINGERPRINT }}"
+{% endif %}
+{% if TUXSUITE_DOWNLOAD_URL is defined %}
+  tuxsuite.download.url: "{{ TUXSUITE_DOWNLOAD_URL }}"
+{% endif %}
+  lkft.build.config: "{{ LKFT_BUILD_CONFIG }}"
+  git branch: "{{ KERNEL_BRANCH }}"
+  git repo: "{{ KERNEL_REPO }}"
+  git commit: "{{ KERNEL_COMMIT }}"
+  git describe: "{{ KERNEL_DESCRIBE }}"
+  build-url: "{{ BUILD_URL }}"
+  toolchain: "{{ TEST_METADATA_TOOLCHAIN }}"
+  series: lkft

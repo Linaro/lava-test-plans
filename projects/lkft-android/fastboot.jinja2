@@ -1,0 +1,119 @@
+{% extends "include/fastboot.jinja2" %}
+
+{% set deploy_download_timeout = deploy_download_timeout|default(15) %}
+{% set deploy_fastboot_timeout = deploy_fastboot_timeout|default(10) %}
+{% set pre_boot_timeout = pre_boot_timeout|default(0) %}
+{% set post_boot_timeout = post_boot_timeout|default(10) %}
+
+{# target_deploy_timeout is used to calculate the job_timeout defined in the root master.jinja2 file #}
+{# for android the variables of download_timeout, deploy_timeout, between_deploy_boot_timeout are used in the file devices/android/device-base#}
+{# common_tests_after_boot_timeout needs to be defined when there are common actions defined after the boot, but before the real tests started#}
+{% set target_deploy_timeout = deploy_download_timeout + deploy_fastboot_timeout + pre_boot_timeout + post_boot_timeout %}
+
+{% set rootfs = rootfs|default(false) %}
+{% set download_postprocess_required = download_postprocess_required|default(false) %}
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("downloads") %}
+
+{% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("ptable-linux-8g.img") %}
+{% set DOCKER_BOOT_FILE = DOCKER_BOOT_FILE|default("boot.img") %}
+{% set DOCKER_VBMETA_FILE = DOCKER_VBMETA_FILE|default("vbmeta.img") %}
+{% set DOCKER_SUPER_FILE = DOCKER_SUPER_FILE|default("super.img") %}
+{% set DOCKER_SYSTEM_FILE = DOCKER_SYSTEM_FILE|default("system.img") %}
+{% set DOCKER_VENDOR_FILE = DOCKER_VENDOR_FILE|default("vendor.img") %}
+{% set DOCKER_VENDOR_BOOT_FILE = DOCKER_VENDOR_BOOT_FILE|default("vendor_boot.img") %}
+{% set DOCKER_CACHE_FILE = DOCKER_CACHE_FILE|default("cache.img") %}
+{% set DOCKER_METADATA_FILE = DOCKER_METADATA_FILE|default("metadata.img") %}
+{% set DOCKER_RECOVERY_FILE = DOCKER_RECOVERY_FILE|default("recovery.img") %}
+{% set DOCKER_USERDATA_FILE = DOCKER_USERDATA_FILE|default("userdata.img") %}
+
+{#################### job definitions ##########################}
+
+{% block visibility %}
+  group:
+    - {{ TEST_LAVA_JOB_GROUP }}
+{% endblock visibility %}
+
+{% block settings %}
+secrets:
+  ARTIFACTORIAL_TOKEN: "{{ ARTIFACTORIAL_TOKEN }}"
+{% endblock settings %}
+
+{% block metadata %}
+{% include PROJECT+"include/metadata.jinja2" %}
+{% block job_specific_metadata %}
+{% endblock job_specific_metadata %}
+{% endblock metadata %}
+
+{% block deploy_target %}
+{{ super() }}
+
+{% block deploy_fastboot %}
+- deploy:
+    timeout:
+      minutes: {{ deploy_fastboot_timeout }}
+    to: fastboot
+    docker:
+      image: {{ DOCKER_IMAGE }}
+    images:
+{% if ptable == true %}
+      {{ PTABLE_LABEL }}:
+        url: downloads://{{ DOCKER_PTABLE_FILE }}
+{% endif %}
+{# only deploy to the boot partition when A/B partition not supported #}
+{% if boot == true and partition_boot_a == false %}
+      boot:
+        url: downloads://{{ DOCKER_BOOT_FILE }}
+{% endif %}
+{% if partition_boot_a == true %}
+      boot_a:
+        url: downloads://{{ DOCKER_BOOT_FILE }}
+{% endif %}
+{% if partition_boot_b == true %}
+      boot_b:
+        url: downloads://{{ DOCKER_BOOT_FILE }}
+{% endif %}
+{% if partition_super == true %}
+      super:
+        url: downloads://{{ DOCKER_SUPER_FILE }}
+{% endif %}
+{% if partition_system == true %}
+      system:
+        url: downloads://{{ DOCKER_SYSTEM_FILE }}
+{% endif %}
+{% if partition_vendor == true %}
+      vendor:
+        url: downloads://{{ DOCKER_VENDOR_FILE }}
+{% endif %}
+{% if partition_vendor_boot == true %}
+      vendor_boot:
+        url: downloads://{{ DOCKER_VENDOR_BOOT_FILE }}
+{% endif %}
+{% if partition_cache == true %}
+      cache:
+        url: downloads://{{ DOCKER_CACHE_FILE }}
+{% endif %}
+{% if partition_vbmeta_a == true %}
+      vbmeta_a:
+        url: downloads://{{ DOCKER_VBMETA_FILE }}
+{% endif %}
+{% if partition_vbmeta_b == true %}
+      vbmeta_b:
+        url: downloads://{{ DOCKER_VBMETA_FILE }}
+{% endif %}
+{% if partition_recovery == true %}
+      recovery:
+        url: downloads://{{ DOCKER_RECOVERY_FILE }}
+{% endif %}
+{% if partition_userdata == true %}
+      userdata:
+        url: downloads://{{ DOCKER_USERDATA_FILE }}
+{% endif %}
+{% endblock deploy_fastboot %}
+{% endblock deploy_target %}
+
+{% block post_boot_command %}
+{% with test_timeout=post_boot_timeout %}
+{% include "include/test_target.jinja2" %}
+{% endwith %}
+{% include PROJECT+"include/lkft-common-actions.jinja2" %}
+{% endblock post_boot_command %}

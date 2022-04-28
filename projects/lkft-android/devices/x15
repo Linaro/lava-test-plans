@@ -1,0 +1,25 @@
+{% extends "devices/x15" %}
+
+{% set TAGS = TAGS|default(["hdmi-dongle"]) %}
+
+{% set auto_login = auto_login|default(false) %}
+{% set boot_method = boot_method |default("fastboot") %}
+{% set BOOT_OS_PROMPT = [" :/"] %}
+
+{% set partition_boot_a = partition_boot_a|default(true) %}
+{% set partition_boot_b = partition_boot_b|default(true) %}
+{% set partition_vbmeta = partition_vbmeta|default(true) %} {# for the deploy download action#}
+{% set partition_vbmeta_a = partition_vbmeta_a|default(true) %}
+{% set partition_vbmeta_b = partition_vbmeta_b|default(true) %}
+{% set partition_super = partition_super|default(true) %}
+{% set partition_userdata = partition_userdata|default(true) %}
+{% set partition_recovery = partition_recovery|default(true) %}
+
+{# override the boot_commands block defined in "devices/x15" #}
+{% block boot_commands %}
+{% endblock boot_commands %}
+
+{# override the test_target block defined in "devices/x15" #}
+{% block test_target %}
+{% include "include/test_target.jinja2" %}
+{% endblock test_target %}
