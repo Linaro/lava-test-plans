@@ -1,0 +1,17 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set OS_INFO = OS_INFO|default("android") %}
+{% set DEPLOY_OS = DEPLOY_OS|default("android") %}
+
+{# urls #}
+{% set DOCKER_IMAGE = DOCKER_IMAGE|default("yongqinliu/linaro-android-docker:0.1") %}
+{% set use_docker_image_for_test_target = use_docker_image_for_test_target|default(true) %}
+
+{# variables needs to be converted to be used by the root master.jinja2 #}
+{% set LAVA_JOB_PRIORITY = LAVA_JOB_PRIORITY|default("medium") %}
+
+{########## LAVA JOB DEFINITION ##############}
+{% block test_target %}
+    {{ super() }}
+    {% block test_target_definitions %}{% endblock test_target_definitions %}
+{% endblock test_target %}
