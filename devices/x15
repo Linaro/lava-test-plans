@@ -4,7 +4,7 @@
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
 
-{% set boot_method = "u-boot" %}
+{% set boot_method = boot_method|default("u-boot") %}
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
 {% set pre_boot_command = false %}
