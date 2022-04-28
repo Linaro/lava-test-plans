@@ -18,6 +18,7 @@
 {% set pre_os_command = pre_os_command|default(true) %}
 {% set auto_login = auto_login|default(true) %}
 {% set boot_method = boot_method|default("fastboot") %}
+{% set download_postprocess_required = download_postprocess_required|default(true) %}
 
 {% block global_settings %}
 {{ super() }}
@@ -140,7 +141,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% endif %}
     os: {{DEPLOY_OS}}
-{% if lxc_project == false %}
+{% if lxc_project == false and download_postprocess_required == true %}
     postprocess:
       docker:
         image: {{DOCKER_IMAGE}}
