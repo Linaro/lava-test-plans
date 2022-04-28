@@ -20,6 +20,15 @@
 {% set boot_method = boot_method|default("fastboot") %}
 {% set download_postprocess_required = download_postprocess_required|default(true) %}
 
+{% set partition_super = partition_super|default(false) %}
+{% set partition_system = partition_system|default(false) %}
+{% set partition_vendor = partition_vendor|default(false) %}
+{% set partition_vendor_boot = partition_vendor_boot|default(false) %}
+{% set partition_cache = partition_cache|default(false) %}
+{% set partition_vbmeta = partition_vbmeta|default(false) %}
+{% set partition_recovery = partition_recovery|default(false) %}
+{% set partition_userdata = partition_userdata|default(false) %}
+
 {% block global_settings %}
 {{ super() }}
 reboot_to_fastboot: {{ reboot_to_fastboot }}
@@ -140,6 +149,64 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% endif %}
 {% endif %}
+
+{% if partition_super == true %}
+      super:
+        url: {{ SUPER_URL }}
+{% if SUPER_URL_COMP is defined %}
+        compression: {{ SUPER_URL_COMP }}
+{% endif %}
+{% endif %}
+{% if partition_system == true %}
+      system:
+        url: {{ SYSTEM_URL }}
+{% if SYSTEM_URL_COMP is defined %}
+        compression: {{ SYSTEM_URL_COMP }}
+{% endif %}
+{% endif %}
+{% if partition_vendor == true %}
+      vendor:
+        url: {{ VENDOR_URL }}
+{% if VENDOR_URL_COMP is defined %}
+        compression: {{ VENDOR_URL_COMP }}
+{% endif %}
+{% endif %}
+{% if partition_vendor_boot == true %}
+      vendor_boot:
+        url: {{ VENDOR_BOOT_URL }}
+{% if VENDOR_BOOT_URL_COMP is defined %}
+        compression: {{ VENDOR_BOOT_URL_COMP }}
+{% endif %}
+{% endif %}
+{% if partition_cache == true %}
+      cache:
+        url: {{ CACHE_URL }}
+{% if CACHE_URL_COMP is defined %}
+        compression: {{ CACHE_URL_COMP }}
+{% endif %}
+{% endif %}
+{% if partition_vbmeta == true %}
+      vbmeta:
+        url: {{ VBMETA_URL }}
+{% if VBMETA_URL_COMP is defined %}
+        compression: {{ VBMETA_URL_COMP }}
+{% endif %}
+{% endif %}
+{% if partition_recovery == true %}
+      recovery:
+        url: {{ RECOVERY_URL }}
+{% if RECOVERY_URL_COMP is defined %}
+        compression: {{ RECOVERY_URL_COMP }}
+{% endif %}
+{% endif %}
+{% if partition_userdata == true %}
+      userdata:
+        url: {{ RECOVERY_URL }}
+{% if RECOVERY_URL_COMP is defined %}
+        compression: {{ RECOVERY_URL_COMP }}
+{% endif %}
+{% endif %}
+
     os: {{DEPLOY_OS}}
 {% if lxc_project == false and download_postprocess_required == true %}
     postprocess:
