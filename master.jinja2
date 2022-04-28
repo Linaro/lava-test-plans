@@ -9,10 +9,16 @@
 {% set test_timeout = test_timeout|default(60) %}
 {% set TEST_DEFINITIONS_REPOSITORY = TEST_DEFINITIONS_REPOSITORY|default("https://github.com/Linaro/test-definitions.git") %}
 
+{# timeout for the pre_boot_command and post_boot_command blocks defined in include/fastboot.jinja2 #}
+{# if there are time consuming actions definded for them, then calc_boot_timeout will include the timeout for them #}
+{% set pre_boot_timeout = pre_boot_timeout|default(0) %}
+{% set post_boot_timeout = post_boot_timeout|default(0) %}
+{% set calc_boot_timeout = pre_boot_timeout + TARGET_BOOT_TIMEOUT + post_boot_timeout %}
+
 {% if lxc_project == true %}
-{% set job_timeout = deploy_timeout + boot_timeout + install_fastboot_timeout + target_deploy_timeout + TARGET_BOOT_TIMEOUT + test_timeout %}
+{% set job_timeout = deploy_timeout + boot_timeout + install_fastboot_timeout + target_deploy_timeout + calc_boot_timeout + test_timeout %}
 {% else %}
-{% set job_timeout = target_deploy_timeout + TARGET_BOOT_TIMEOUT + test_timeout %}
+{% set job_timeout = target_deploy_timeout + calc_boot_timeout + test_timeout %}
 {% endif %}
 
 {# auto_login_* #}
