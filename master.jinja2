@@ -10,9 +10,9 @@
 {% set TEST_DEFINITIONS_REPOSITORY = TEST_DEFINITIONS_REPOSITORY|default("https://github.com/Linaro/test-definitions.git") %}
 
 {% if lxc_project == true %}
-{% set job_timeout = deploy_timeout + boot_timeout + install_fastboot_timeout + calc_target_deploy_timeout + TARGET_BOOT_TIMEOUT + test_timeout %}
+{% set job_timeout = deploy_timeout + boot_timeout + install_fastboot_timeout + calc_target_deploy_timeout + calc_boot_timeout + test_timeout %}
 {% else %}
-{% set job_timeout = calc_target_deploy_timeout + TARGET_BOOT_TIMEOUT + test_timeout %}
+{% set job_timeout = calc_target_deploy_timeout + calc_boot_timeout + test_timeout %}
 {% endif %}
 
 {# auto_login_* #}

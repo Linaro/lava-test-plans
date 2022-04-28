@@ -20,11 +20,16 @@
 {% set boot_method = boot_method|default("fastboot") %}
 {% set deploy_download_timeout = deploy_download_timeout|default(target_deploy_timeout) %}
 
+{% set pre_boot_timeout = pre_boot_timeout|default(0) %}
+{% set post_boot_timeout = post_boot_timeout|default(0) %}
+
 {% DEPLOY_TARGET == "downloads" %}
 {% set calc_target_deploy_timeout = deploy_download_timeout + target_deploy_timeout %}
 {% else %}
 {% set calc_target_deploy_timeout = target_deploy_timeout %}
 {% endif %}
+
+{% set calc_boot_timeout = pre_boot_timeout + TARGET_BOOT_TIMEOUT + post_boot_timeout %}
 
 {% block global_settings %}
 {{ super() }}
