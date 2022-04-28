@@ -1,0 +1,10 @@
+        - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+          from: git
+          path: automated/android/boottime/boottime.yaml
+          name: {{ testname }}
+{% if test_operation is defined %}
+          params:
+            ANDROID_VERSION: master
+            OPERATION: {{ test_operation }}
+            COLLECT_NO: {{ test_index }}
+{% endif %}
