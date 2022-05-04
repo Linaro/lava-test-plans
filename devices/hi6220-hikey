@@ -29,7 +29,10 @@
 
 {% block test_target %}
 {% if enable_tests is defined and enable_tests %}
-  {{ super() }}
+- test:
+    timeout:
+      minutes: 5
+    definitions:
     - from: inline
       repository:
         metadata:
@@ -52,5 +55,6 @@
           - cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq || true
       name: prep-inline
       path: inline/prep.yaml
+  {{ super() }}
 {% endif %}
 {% endblock test_target %}
