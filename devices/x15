@@ -27,7 +27,10 @@
 
 {% block test_target %}
 {% if enable_tests is defined and enable_tests %}
-  {{ super() }}
+- test:
+    timeout:
+      minutes: 5
+    definitions:
     - from: inline
       repository:
         metadata:
@@ -47,5 +50,6 @@
           - mount
       name: prep-tmp-disk
       path: inline/prep.yaml
+  {{ super() }}
 {% endif %}
 {% endblock test_target %}
