@@ -4,7 +4,7 @@
 {{ super() }}
 - deploy:
     timeout:
-      minutes: {{ target_deploy_timeout }}
+      minutes: {{ fastboot_deploy_timeout }}
     to: fastboot
     docker:
       image: {{DOCKER_IMAGE}}

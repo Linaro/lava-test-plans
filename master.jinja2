@@ -4,15 +4,17 @@
 {% set deploy_timeout = deploy_timeout|default(15) %}
 {% set boot_timeout = boot_timeout|default(5) %}
 {% set install_fastboot_timeout = install_fastboot_timeout|default(10) %}
+{# fastboot_deploy_timeout is for 'to: fastboot' targets only #}
+{% set fastboot_deploy_timeout = fastboot_deploy_timeout|default(0) %}
 {% set target_deploy_timeout = target_deploy_timeout|default(40) %}
 {% set TARGET_BOOT_TIMEOUT = TARGET_BOOT_TIMEOUT|default(15)|int %}
 {% set test_timeout = test_timeout|default(60) %}
 {% set TEST_DEFINITIONS_REPOSITORY = TEST_DEFINITIONS_REPOSITORY|default("https://github.com/Linaro/test-definitions.git") %}
 
 {% if lxc_project == true %}
-{% set job_timeout = deploy_timeout + boot_timeout + install_fastboot_timeout + target_deploy_timeout + TARGET_BOOT_TIMEOUT + test_timeout %}
+{% set job_timeout = deploy_timeout + boot_timeout + install_fastboot_timeout + fastboot_deploy_timeout + target_deploy_timeout + TARGET_BOOT_TIMEOUT + test_timeout %}
 {% else %}
-{% set job_timeout = target_deploy_timeout + TARGET_BOOT_TIMEOUT + test_timeout %}
+{% set job_timeout = fastboot_deploy_timeout + target_deploy_timeout + TARGET_BOOT_TIMEOUT + test_timeout %}
 {% endif %}
 
 {# auto_login_* #}

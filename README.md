@@ -63,6 +63,7 @@ Overall job timeout is a sum of action timeouts. There are 6 components:
  * *deploy_timeout*
  * *boot_timeout*
  * *install_fastboot_timeout*
+ * *fastboot_deploy_timeout*
  * *target_deploy_timeout*
  * *TARGET_BOOT_TIMEOUT*
  * *test_timeout*
