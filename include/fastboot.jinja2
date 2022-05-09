@@ -18,6 +18,7 @@
 {% set pre_os_command = pre_os_command|default(true) %}
 {% set auto_login = auto_login|default(true) %}
 {% set boot_method = boot_method|default("fastboot") %}
+{% set fastboot_deploy_timeout = fastboot_deploy_timeout|default(40) %}
 
 {% block global_settings %}
 {{ super() }}
