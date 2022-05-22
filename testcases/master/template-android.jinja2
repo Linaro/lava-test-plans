@@ -11,6 +11,11 @@
 {% set LAVA_JOB_PRIORITY = LAVA_JOB_PRIORITY|default("medium") %}
 
 {########## LAVA JOB DEFINITION ##############}
+{# override the job_name block defined in testcases/master/template-master.jinja2 #}
+{# with the BUILD_NUMBER in the middle, it's possible to get the sub job name #}
+{# from this lava job name information #}
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}-{{test_name}}{% endblock job_name %}
+
 {% block test_target %}
     {{ super() }}
     {% block test_target_definitions %}{% endblock test_target_definitions %}
