@@ -12,3 +12,4 @@
 {% else %}
 {% set QEMU_CPU_VARIABLES = QEMU_CPU_VARIABLES|default("max,pauth-impdef=on") %}
 {% endif %}
+{% set USE_DOCKER = USE_DOCKER|default("true") %}
