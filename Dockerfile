@@ -23,4 +23,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       && rm -rf /var/lib/apt/lists/*
 
 COPY --from=git_builder /lava-test-plans /lava-test-plans
-RUN pip3 install --no-cache-dir -r /lava-test-plans/requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r /lava-test-plans/requirements.txt
