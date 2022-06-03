@@ -5,7 +5,10 @@
 {% set KERNEL_BRANCH = KERNEL_BRANCH|default("") %}
 {% set OS_INFO = OS_INFO|default("") %}
 
-{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-{{test_name}}-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}{% endblock job_name %}
+{# with the BUILD_NUMBER in the middle, it's possible to get #}
+{# the sub job name(which is the test_name here) #}
+{# from this lava job name information #}
+{% block job_name %}{{PROJECT_NAME}}-{{OS_INFO}}-{{KERNEL_BRANCH}}-{{BUILD_NUMBER}}-{{test_name}}{% endblock job_name %}
 
 {% block context %}
 {{ super() }}
