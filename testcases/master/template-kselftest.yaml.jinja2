@@ -39,7 +39,7 @@
       from: git
       revision: '{{ TDEFINITIONS_REVISION }}'
       path: automated/linux/kselftest/kselftest.yaml
-      name: kselftest-{{testname}}{{vsyscall_suffix}}
+      name: kselftest-{{testname|replace('.', '-')}}{{vsyscall_suffix}}
       parameters:
         TST_CMDFILES: '{{testname}}'
         KSELFTEST_PATH: {{KSELFTEST_PATH}}
