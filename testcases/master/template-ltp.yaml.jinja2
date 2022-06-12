@@ -32,6 +32,6 @@
         ENVIRONMENT: '{{ ENVIRONMENT|default('production') }}'
         TIMEOUT_MULTIPLIER: '{{ TIMEOUT_MULTIPLIER|default('3') }}'
         LTP_TMPDIR: '/scratch'
-      name: ltp-{{testname}}{{LAVA_TEST_NAME_SUFFIX}}-tests
+      name: ltp-{{testname|replace('.','-')}}{{LAVA_TEST_NAME_SUFFIX}}-tests
 {% endfor %}
 {% endblock test_target %}
