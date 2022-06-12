@@ -1,0 +1,4 @@
+{% extends "testcases/master/template-ltp.yaml.jinja2" %}
+
+{% set testnames = ['net.multicast', 'net.tcp_cmds'] %}
+{% set test_timeout = 20 %}
