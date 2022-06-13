@@ -1,0 +1,4 @@
+{% extends "testcases/master/template-ltp.yaml.jinja2" %}
+
+{% set testnames = ['net.nfs'] %}
+{% set test_timeout = 20 %}
