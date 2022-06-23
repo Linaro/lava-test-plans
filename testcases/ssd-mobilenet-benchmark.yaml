@@ -1,0 +1,10 @@
+{% extends "testcases/master/template-test.jinja2" %}
+
+{% set test_timeout = 35 %}
+{% block metadata %}
+  {{ super() }}
+{% endblock metadata %}
+
+{% set test_name = test_name | default("ssd-mobilenet") %}
+{% set test_suite_name = "tensorflow" %}
+{% set test_path_file = 'automated/linux/tensorflow/ssd-mobilenet.yaml' %}
