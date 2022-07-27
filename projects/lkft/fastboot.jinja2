@@ -10,12 +10,13 @@
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("ptable-linux-8g.img") %}
 {% set DOCKER_BOOT_FILE = DOCKER_BOOT_FILE|default("boot.img") %}
 {% set DOCKER_ROOTFS_FILE = DOCKER_ROOTFS_FILE|default("rpb-console-image-lkft.rootfs.img") %}
+{% set ROOTFS_IMAGE_NAME = ROOTFS_IMAGE_NAME|default("lkft-console-image") %}
 
 {% block deploy_target %}
 {{ super() }}
 {% if DEPLOY_TARGET == "downloads" %}
         steps:
-        - /kir/lava/board_setup.sh {{DEVICE_TYPE}}
+        - /kir/lava/board_setup.sh {{DEVICE_TYPE}} {{ROOTFS_IMAGE_NAME}}
 
 - deploy:
     timeout:
