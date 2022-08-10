@@ -1,0 +1,22 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "lava_test_plans"
+author = "Anders Roxell "
+author-email = "anders.roxell@linaro.org"
+home-page = "https://github.com/Linaro/lava-test-plans.git"
+description-file = "README.md"
+classifiers = ["License :: OSI Approved :: MIT License"]
+requires-python = ">=3.6"
+requires = [
+    "configobj",
+    "docker",
+    "jinja2",
+    "requests",
+    "ruamel.yaml",
+]
+
+[tool.flit.scripts]
+lava-test-plans = "lava_test_plans.__main__:main"
