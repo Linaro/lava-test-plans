@@ -309,14 +309,10 @@ def main():
     # prevent creating templates when variables are missing
     j2_env = Environment(
         loader=FileSystemLoader(template_dirs, followlinks=True),
-        undefined=StrictUndefined,
+        undefined=make_logging_undefined(logger=logger, base=StrictUndefined)
+        if args.dryrun
+        else StrictUndefined,
     )
-    if args.dryrun:
-        LoggingUndefined = make_logging_undefined(logger=logger, base=StrictUndefined)
-        j2_env = Environment(
-            loader=FileSystemLoader(template_dirs, followlinks=True),
-            undefined=LoggingUndefined,
-        )
     context = {}
     for variables in args.variables:
         if not os.path.exists(variables):
