@@ -2,14 +2,14 @@
 
 function run_device_selftest()
 {
-    ./submit_for_testing.py --variables variables.ini --device-type $1 --dry-run --test-case $2
+    python3 -m lava_test_plans --variables variables.ini --device-type $1 --dry-run --test-case $2
     echo $?
 }
 
 exit_code=0
-for DEVICE_TYPE in ./devices/*
+for DEVICE_TYPE in ./lava_test_plans/devices/*
 do
-    for TEST in ./testcases/*.yaml
+    for TEST in ./lava_test_plans/testcases/*.yaml
     do
         if [ -d $DEVICE_TYPE ]
         then

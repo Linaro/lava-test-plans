@@ -1,15 +1,22 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# vim: set ts=4
+#
+# Copyright 2022-present Linaro Limited
+#
+# SPDX-License-Identifier: MIT
 
 import argparse
+from configobj import ConfigObj, ConfigObjError
 import fnmatch
+from io import StringIO
 import itertools
+import logging
 import os
 import re
 import requests
 import sys
-from configobj import ConfigObj, ConfigObjError
-from io import StringIO
-from string import Template
+
 from jinja2 import (
     Environment,
     FileSystemLoader,
@@ -26,8 +33,6 @@ from ruamel.yaml.constructor import (
 from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.parser import ParserError
 from ruamel.yaml.composer import ComposerError
-
-import logging
 
 
 FORMAT = "[%(funcName)16s() ] %(message)s"
@@ -284,7 +289,7 @@ def main():
     logger.setLevel(args.verbose)
     exit_code = 0
 
-    output_path = os.path.join(script_dirname, "tmp")
+    output_path = os.path.abspath(os.path.join(script_dirname, "..", "tmp"))
 
     if args.qa_server_project:
         if "/" in args.qa_server_project:
@@ -480,10 +485,12 @@ def main():
                     args.qa_token,
                 )
             if args.lava_token:
-                _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token)
+                _submit_to_lava(
+                    lava_job, lava_url_base, args.lava_username, args.lava_token
+                )
     else:
         sys.exit(exit_code)
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
