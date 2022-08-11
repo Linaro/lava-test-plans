@@ -25,7 +25,7 @@ jobs:
 
       - name: Linting
         run: |
-         black --check submit_for_testing.py
+         black --check lava_test_plans
 
       - name: Check if all tests work with all devices
         run: |
@@ -33,47 +33,47 @@ jobs:
 
       - name: check if all tests plans work properly
         run: |
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type x15 --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type x86 --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_x86_64 --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_i386 --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_arm64 --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_arm --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type juno-r2 --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type x15 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type x86 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_x86_64 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_i386 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_arm64 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type qemu_arm --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type juno-r2 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type dragonboard-410c --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type dragonboard-845c --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type hi6220-hikey --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type dragonboard-410c --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type nxp-ls2088 --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type thunderx --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type thunderx --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type bcm2711-rpi-4-b --dry-run --test-plan lkft-full --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type bcm2711-rpi-4-b --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path projects/lkft/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type juno-r2 --dry-run --test-case vdso.yaml --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type dragonboard-410c --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
-         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type dragonboard-820c --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
-         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type qcs404-evb-1k --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
-         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type qcs404-evb-4k --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
-         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type sdm845-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
-         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type sm8150-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
-         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type sm8250-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
-         python3 submit_for_testing.py --variables projects/lt-qcom/variables.yaml --device-type sm8350-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path projects/lt-qcom/devices
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type rzn1d --dry-run --test-plan schneider --test-lava-validity
-         python3 submit_for_testing.py --variables projects/lkft/variables.yaml --device-type soca9 --dry-run --test-plan schneider --test-lava-validity
-         python3 submit_for_testing.py --variables projects/ti/variables.yaml --device-type x15-bl --dry-run --test-plan ti-uboot --test-lava-validity
-         python3 submit_for_testing.py --variables projects/armnn/variables.yaml --device-type hi960-hikey --dry-run --test-plan armnn --test-lava-validity
-         python3 submit_for_testing.py --variables projects/armnn/variables.yaml --device-type dragonboard-845c --dry-run --test-plan armnn --test-lava-validity
-         python3 submit_for_testing.py --variables projects/armnn/variables.yaml --device-type synquacer --dry-run --test-plan armnn --test-lava-validity
-         python3 submit_for_testing.py --variables projects/armnn/variables.yaml --device-type stm32mp157c-dk2 --dry-run --test-plan armnn --test-lava-validity
-         python3 submit_for_testing.py --variables projects/armnn/variables.yaml --device-type hi960-hikey --dry-run --test-plan armnn-benchmarking --test-lava-validity
-         python3 submit_for_testing.py --variables projects/armnn/variables.yaml --device-type dragonboard-845c --dry-run --test-plan armnn-benchmarking --test-lava-validity
-         python3 submit_for_testing.py --variables projects/armnn/variables.yaml --device-type synquacer --dry-run --test-plan armnn-benchmarking --test-lava-validity
-         python3 submit_for_testing.py --variables projects/armnn/variables.yaml --device-type stm32mp157c-dk2 --dry-run --test-plan armnn-benchmarking --test-lava-validity
-         python3 submit_for_testing.py --variables projects/tf-a/variables.yaml --device-type juno --dry-run --test-plan tf-a --test-lava-validity --testplan-device-path projects/tf-a/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type x15 --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type x86 --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type qemu_x86_64 --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type qemu_i386 --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type qemu_arm64 --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type qemu_arm --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type juno-r2 --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type x15 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type x86 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type qemu_x86_64 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type qemu_i386 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type qemu_arm64 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type qemu_arm --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type juno-r2 --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type dragonboard-410c --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type dragonboard-845c --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type hi6220-hikey --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type dragonboard-410c --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type nxp-ls2088 --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type thunderx --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type thunderx --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type bcm2711-rpi-4-b --dry-run --test-plan lkft-full --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type bcm2711-rpi-4-b --dry-run --test-plan lkft-full --test-lava-validity --testplan-device-path lava_test_plans/projects/lkft/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type juno-r2 --dry-run --test-case vdso.yaml --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lt-qcom/variables.yaml --device-type dragonboard-410c --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path lava_test_plans/projects/lt-qcom/devices
+         python3 -m lava_test_plans --variables projects/lt-qcom/variables.yaml --device-type dragonboard-820c --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path lava_test_plans/projects/lt-qcom/devices
+         python3 -m lava_test_plans --variables projects/lt-qcom/variables.yaml --device-type qcs404-evb-1k --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path lava_test_plans/projects/lt-qcom/devices
+         python3 -m lava_test_plans --variables projects/lt-qcom/variables.yaml --device-type qcs404-evb-4k --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path lava_test_plans/projects/lt-qcom/devices
+         python3 -m lava_test_plans --variables projects/lt-qcom/variables.yaml --device-type sdm845-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path lava_test_plans/projects/lt-qcom/devices
+         python3 -m lava_test_plans --variables projects/lt-qcom/variables.yaml --device-type sm8150-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path lava_test_plans/projects/lt-qcom/devices
+         python3 -m lava_test_plans --variables projects/lt-qcom/variables.yaml --device-type sm8250-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path lava_test_plans/projects/lt-qcom/devices
+         python3 -m lava_test_plans --variables projects/lt-qcom/variables.yaml --device-type sm8350-mtp --dry-run --test-plan lt-qcom/kernel --test-lava-validity --testplan-device-path lava_test_plans/projects/lt-qcom/devices
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type rzn1d --dry-run --test-plan schneider --test-lava-validity
+         python3 -m lava_test_plans --variables projects/lkft/variables.yaml --device-type soca9 --dry-run --test-plan schneider --test-lava-validity
+         python3 -m lava_test_plans --variables projects/ti/variables.yaml --device-type x15-bl --dry-run --test-plan ti-uboot --test-lava-validity
+         python3 -m lava_test_plans --variables projects/armnn/variables.yaml --device-type hi960-hikey --dry-run --test-plan armnn --test-lava-validity
+         python3 -m lava_test_plans --variables projects/armnn/variables.yaml --device-type dragonboard-845c --dry-run --test-plan armnn --test-lava-validity
+         python3 -m lava_test_plans --variables projects/armnn/variables.yaml --device-type synquacer --dry-run --test-plan armnn --test-lava-validity
+         python3 -m lava_test_plans --variables projects/armnn/variables.yaml --device-type stm32mp157c-dk2 --dry-run --test-plan armnn --test-lava-validity
+         python3 -m lava_test_plans --variables projects/armnn/variables.yaml --device-type hi960-hikey --dry-run --test-plan armnn-benchmarking --test-lava-validity
+         python3 -m lava_test_plans --variables projects/armnn/variables.yaml --device-type dragonboard-845c --dry-run --test-plan armnn-benchmarking --test-lava-validity
+         python3 -m lava_test_plans --variables projects/armnn/variables.yaml --device-type synquacer --dry-run --test-plan armnn-benchmarking --test-lava-validity
+         python3 -m lava_test_plans --variables projects/armnn/variables.yaml --device-type stm32mp157c-dk2 --dry-run --test-plan armnn-benchmarking --test-lava-validity
+         python3 -m lava_test_plans --variables projects/tf-a/variables.yaml --device-type juno --dry-run --test-plan tf-a --test-lava-validity --testplan-device-path lava_test_plans/projects/tf-a/devices

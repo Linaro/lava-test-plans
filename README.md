@@ -26,7 +26,7 @@ version or directly from master.
 
 If the above commands succeed, you can run to check that the program starts correctly
 
-    ./submit_for_testing.py -h
+    python3 -m lava_test_plans -h
 
 # External variables
 
@@ -36,8 +36,7 @@ is in the form
 key=value
 ```
 Lines starting with *#* are omited. Variables can also be set using
-*--overwrite-variables* parameter to *submit_for_testing.py* script. List of used
-variables:
+*--overwrite-variables* parameter. List of used variables:
 
  * *PROJECT_NAME*: used as the first part in the test job name. Can be set to
    differentiate LAVA test jobs between different teams/projects

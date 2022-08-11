@@ -14,8 +14,8 @@ For generate example of LAVA jobs manually,
 
 Kernel bootrr ramdisk based testing,
 
-$ ./submit_for_testing.py --variables projects/lt-qcom/variables.ini --testplan-device-path projects/lt-qcom/devices --device-type dragonboard-410c --dry-run --verbose 1 --test-case testcases/kernel-bootrr.yaml
+$ python3 -m lava_test_plans --variables projects/lt-qcom/variables.ini --testplan-device-path projects/lt-qcom/devices --device-type dragonboard-410c --dry-run --verbose 1 --test-case testcases/kernel-bootrr.yaml
 
 Kernel rootfs based testing,
 
-$ ./submit_for_testing.py --variables projects/lt-qcom/variables-db845c-rootfs.ini --testplan-device-path projects/lt-qcom/devices --device-type dragonboard-845c --dry-run --verbose 1 --test-case testcases/kernel-smoke.yaml
+$ python3 -m lava_test_plans --variables projects/lt-qcom/variables-db845c-rootfs.ini --testplan-device-path projects/lt-qcom/devices --device-type dragonboard-845c --dry-run --verbose 1 --test-case testcases/kernel-smoke.yaml
