@@ -34,6 +34,8 @@ from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.parser import ParserError
 from ruamel.yaml.composer import ComposerError
 
+from lava_test_plans import __version__
+
 
 FORMAT = "[%(funcName)16s() ] %(message)s"
 logging.basicConfig(level=logging.INFO, format=FORMAT)
@@ -146,6 +148,11 @@ def _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token):
 
 def main():
     parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s, {__version__}"
+    )
+
     # qa-reports parameters
     parser.add_argument(
         "--environment",
