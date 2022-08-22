@@ -44,7 +44,7 @@
         TST_CMDFILES: '{{testname}}'
         KSELFTEST_PATH: {{KSELFTEST_PATH}}
         SKIPFILE: skipfile-lkft.yaml
-        BOARD: '{{ DEVICE_TYPE }}'
+        BOARD: '{{ device_type }}'
         BRANCH: '{{ SKIPGEN_KERNEL_VERSION|default('default') }}'
         ENVIRONMENT: '{{ ENVIRONMENT|default("production") }}'
 {% endfor %}

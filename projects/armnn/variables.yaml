@@ -3,7 +3,6 @@
 "KERNEL_ARCH_ARTIFACTS_PUB_DEST": "artifact-url"
 "BOOT_URL": "boot-url"
 "SYSTEM_URL": "system-url"
-"DEVICE_TYPE": "device-type"
 "BUILD_NUMBER": "123"
 "LAVA_JOB_PRIORITY": "99"
 "ROOTFS_URL": "variable-value"

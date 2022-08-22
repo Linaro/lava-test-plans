@@ -15,7 +15,7 @@
 {{ super() }}
 {% if DEPLOY_TARGET == "downloads" %}
         steps:
-        - /kir/lava/board_setup.sh {{DEVICE_TYPE}}
+        - /kir/lava/board_setup.sh {{device_type}}
 
 - deploy:
     timeout:
