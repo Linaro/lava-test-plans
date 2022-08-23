@@ -14,7 +14,7 @@
   arch: arm64
   netdevice: tap
   machine: {{ GS_MACHINE }}
-  cpu: {{ QEMU_CPU_VARIABLES }}{% if DEVICE_TYPE == 'qemu_arm' %},aarch64=off{% endif %}
+  cpu: {{ QEMU_CPU_VARIABLES }}{% if DEVICE_TYPE == 'qemu_arm' or DEVICE_TYPE == 'qemu-arm' %},aarch64=off{% endif %}
   guestfs_size: {{ guestfs_size|default(512) }}
 {% endblock global_settings %}
 

@@ -4,7 +4,7 @@
 {% include PROJECT+"include/metadata.jinja2" %}
 {% endblock metadata %}
 
-{% if DEVICE_TYPE == 'qemu_arm' %}
+{% if DEVICE_TYPE == 'qemu_arm' or DEVICE_TYPE == 'qemu-arm' %}
 {# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
 {% set libhuggetlbfs_word_size = 32 %}
 {% set AUTO_LOGIN_PROMPT = AUTO_LOGIN_PROMPT|default("am57xx-evm login:") %}
