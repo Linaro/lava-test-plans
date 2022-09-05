@@ -1,9 +1,6 @@
 {% extends "testcases/master/template-test.jinja2" %}
 
 {% set test_timeout = 15 %}
-{% block metadata %}
-  {{ super() }}
-{% endblock metadata %}
 
 {% set test_name = test_name | default("pyarmnn-bench") %}
 {% set test_path_file = 'automated/linux/armnn/pyarmnn-bench.yaml' %}

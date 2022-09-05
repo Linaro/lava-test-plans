@@ -10,9 +10,6 @@
 {% set run_nand_commands = run_nand_commands|default(false) %}
 {% set run_tftp_commands = run_tftp_commands|default(false) %}
 {% set BOOT_OS_PROMPT = ['=>'] %}
-{% block metadata %}
-  {{ super() }}
-{% endblock metadata %}
 
 {% set test_name = test_name | default("u-boot") %}
 

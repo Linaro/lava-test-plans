@@ -4,9 +4,6 @@
 {% set test_name = test_name | default("ptest") %}
 {% set test_suite_name = "oe-ptest" %}
 {% set test_path_file = 'automated/linux/ptest/ptest.yaml' %}
-{% block metadata %}
-  {{ super() }}
-{% endblock metadata %}
 
 {% block test_target %}
   {{ super() }}

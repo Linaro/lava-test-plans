@@ -13,10 +13,6 @@
 
 {% block device_type %}juno{% endblock %}
 
-{% block boot_target %}
-{{ super() }}
-{% endblock boot_target %}
-
 {% block boot_commands %}
     commands: {{ target_boot_commands|default("norflash") }}
 {% endblock boot_commands %}
