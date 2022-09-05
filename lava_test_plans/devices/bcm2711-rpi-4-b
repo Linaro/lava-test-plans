@@ -15,10 +15,6 @@
 
 {% block device_type %}bcm2711-rpi-4-b{% endblock %}
 
-{% block boot_target %}
-{{ super() }}
-{% endblock boot_target %}
-
 {% block boot_commands %}
     commands: nfs
 {% endblock boot_commands %}
@@ -26,7 +22,3 @@
 {% block kernel_extra_args %}
       type: image
 {% endblock kernel_extra_args %}
-
-{% block test_target %}
-  {{ super() }}
-{% endblock test_target %}

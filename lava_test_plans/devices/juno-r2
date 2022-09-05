@@ -15,10 +15,6 @@
 
 {% block device_type %}juno-r2{% endblock %}
 
-{% block boot_target %}
-{{ super() }}
-{% endblock boot_target %}
-
 {% block boot_commands %}
     commands: nfs
 {% endblock boot_commands %}
