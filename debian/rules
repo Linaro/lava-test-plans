@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME = lava-test-plans
+
+export PYBUILD_TEST_PYTEST = 1
+export PYBUILD_TEST_ARGS = test/
+export LC_ALL = C.UTF-8
+
+# Support non-flit builds - requires setup.py to be present (which is the case
+# in pypi release tarballs)
+ifneq ($(shell pybuild --list-systems | grep flit),)
+export PYBUILD_SYSTEM = flit
+endif
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+# FIXME this should not be necessary with PYBUILD_TEST_PYTEST = 1 above
+# but I can't get it to work for some reason.
+override_dh_auto_test:
+	for p in $$(py3versions --supported); do $$p -m pytest test/; done

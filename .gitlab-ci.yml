@@ -1,3 +1,10 @@
+include:
+  - https://gitlab.com/Linaro/tuxpkg/-/raw/main/gitlab-ci-pipeline.yml
+
+variables:
+  TUXPKG: python3 -m tuxpkg
+  TUXPKG_PROJECT: lava-test-plans
+
 services:
   - docker:dind
 
@@ -82,3 +89,18 @@ publish-master-dockerhub:
     - docker manifest push "${IMAGE_NAME}"
   only:
     - master
+
+pages:
+  stage: deploy
+  needs:
+    - test
+    - repository
+  only:
+    - tags
+  script:
+    - mkdir public
+    - echo SOON > public/index.html
+    - cp -r dist/repo public/packages
+  artifacts:
+    paths:
+      - public
