@@ -20,8 +20,9 @@ jobs:
         run: |
          python -m pip install --upgrade pip
          pip install black
-         pip install -r requirements.txt
-         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+         pip install flit
+         export FLIT_ROOT_INSTALL=1
+         flit install --symlink
 
       - name: Linting
         run: |

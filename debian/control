@@ -1,0 +1,28 @@
+Source: lava-test-plans
+Maintainer: Anders Roxell <anders.roxell@linaro.org>
+Section: python
+Priority: optional
+Build-Depends: bash-completion,
+               debhelper-compat (= 13),
+               dh-python,
+               flit,
+               git,
+               python3-all,
+               python3-pytest,
+               python3-pytest-cov,
+               python3-pytest-mock
+Standards-Version: 4.6.0.1
+Homepage: https://github.com/linaro/lava-test-plans
+
+Package: lava-test-plans
+Architecture: all
+Depends: python3 (>= 3.6),
+         python3-configobj,
+         python3-docker,
+         python3-jinja2,
+         python3-requests,
+         python3-ruamel.yaml,
+         ${misc:Depends},
+         ${python3:Depends},
+Description: The lava-test-plans project makes it easier to generate LAVA job.
+ It generates the LAVA job definition file from a set of templates.
