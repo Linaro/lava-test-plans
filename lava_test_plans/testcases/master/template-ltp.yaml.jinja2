@@ -30,7 +30,7 @@
         BOARD: '{{ DEVICE_TYPE }}'
         BRANCH: '{{ SKIPGEN_KERNEL_VERSION|default('default') }}'
         ENVIRONMENT: '{{ ENVIRONMENT|default('production') }}'
-        TIMEOUT_MULTIPLIER: '{{ TIMEOUT_MULTIPLIER|default('3') }}'
+        TIMEOUT_MULTIPLIER: '{{ TIMEOUT_MULTIPLIER|default('10') }}'
         LTP_TMPDIR: '/scratch'
       name: ltp-{{testname|replace('.','-')}}{{LAVA_TEST_NAME_SUFFIX}}
 {% endfor %}
