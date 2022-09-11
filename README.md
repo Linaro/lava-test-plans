@@ -1,6 +1,11 @@
 ![Build Status](https://github.com/Linaro/lava-test-plans/actions/workflows/test-plans-pipeline.yml/badge.svg)
 ![REUSE Compliance Check](https://github.com/Linaro/lava-test-plans/actions/workflows/reuse.yml/badge.svg)
 
+# lava-test-plans
+
+The lava-test-plans project makes it easier to generate LAVA job definition files.
+It generates the LAVA job definition file from a set of templates.
+
 # Installation
 
 To install the latest development version:
