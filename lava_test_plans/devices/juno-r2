@@ -43,7 +43,7 @@
           steps:
           - export STORAGE_DEV=$(lava-target-storage SATA || lava-target-storage USB)
           - test -n "${STORAGE_DEV}" || lava-test-raise "STORAGE_DEV not found; job exit"
-          - echo "y" | mkfs -t ext4 ${STORAGE_DEV} || lava-test-raise "mkfs -t ext4 ${STORAGE_DEV} failed; job exit"
+          - echo "y" | mkfs.ext4 ${STORAGE_DEV} || lava-test-raise "mkfs.ext4 ${STORAGE_DEV} failed; job exit"
           - mkdir -p /scratch
           - mount ${STORAGE_DEV} /scratch && echo "mounted" || lava-test-raise "mount ${STORAGE_DEV} failed; job exit"
           - df -h
