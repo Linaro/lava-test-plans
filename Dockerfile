@@ -3,9 +3,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # hadolint ignore=DL3008
 RUN apt-get update && \
-    apt-get install --yes --no-install-recommends flit git && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install --yes --no-install-recommends flit git
 
 COPY . /lava-test-plans
 RUN cd /lava-test-plans && \
