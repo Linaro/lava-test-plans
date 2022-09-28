@@ -39,7 +39,7 @@ docker-arm64:
   variables:
     IMAGE_NAME: "lavasoftware/lava-test-plans:master"
   script:
-    - docker build --build-arg version="${CI_COMMIT_TAG}-${CI_COMMIT_SHORT_SHA}" --pull --tag "${IMAGE_NAME}${TAG_APPEND}" .
+    - docker build --build-arg version="master-${CI_COMMIT_SHORT_SHA}" --pull --tag "${IMAGE_NAME}${TAG_APPEND}" .
     - docker push "${IMAGE_NAME}${TAG_APPEND}"
   only:
     - master
