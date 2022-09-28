@@ -25,4 +25,6 @@ RUN apt-get update && \
 COPY --from=builder /lava-test-plans /tmp/lava-test-plans/
 RUN python3 -m pip install --no-cache-dir $(find /tmp/lava-test-plans/dist/ -name "lava_test_plans-*-py3-none-any.whl") && \
     rm -rf /tmp/lava-test-plans/ && \
-    find /usr -depth -name __pycache__ -type d -exec rm -rf {} \;
+    find /usr -depth -name __pycache__ -type d -exec rm -rf {} \; && \
+    mkdir /lava-test-plans && \
+    echo "${version}" > /lava-test-plans/.version
