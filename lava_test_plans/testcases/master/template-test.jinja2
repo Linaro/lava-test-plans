@@ -4,6 +4,9 @@
   {{ super() }}
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
+{% if test_target_redirect_to_kmsg is defined and test_target_redirect_to_kmsg %}
+      lava-signal: kmsg
+{% endif %}
       path: '{{test_path_file}}'
       name: {% if test_suite_name is undefined %}'{{test_name}}'{% else %} '{{test_suite_name}}'{% endif %}
 {% endblock test_target %}
