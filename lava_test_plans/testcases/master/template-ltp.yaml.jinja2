@@ -3,6 +3,7 @@
 {% set KERNEL_BRANCH = KERNEL_BRANCH|default("") %}
 {% set OS_INFO = OS_INFO|default("") %}
 {% set LAVA_TEST_NAME_SUFFIX = LAVA_TEST_NAME_SUFFIX|default("") %}
+{% set test_target_redirect_to_kmsg = test_target_redirect_to_kmsg|default(true) %}
 
 {% set test_name = "ltp-" + testnames|join('-') + LAVA_TEST_NAME_SUFFIX %}
 
@@ -22,6 +23,9 @@
 {% for testname in testnames %}
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
+{% if test_target_redirect_to_kmsg is defined and test_target_redirect_to_kmsg %}
+      lava-signal: kmsg
+{% endif %}
       path: automated/linux/ltp/ltp.yaml
       parameters:
         SKIP_INSTALL: 'true'
