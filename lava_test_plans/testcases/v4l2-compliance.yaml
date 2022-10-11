@@ -2,6 +2,7 @@
 
 {% set test_timeout = 25 %}
 {% set video_driver = "vivid.ko" %}
+{% set test_target_redirect_to_kmsg = true %}
 
 {% set test_name = test_name | default("v4l2-compliance") %}
 {% set test_path_file = 'automated/linux/v4l2/v4l2-compliance.yaml' %}
