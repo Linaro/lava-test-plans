@@ -2,4 +2,4 @@
 
 {% set guestfs_size = 1024 %}
 {% set testnames = ['timens', 'timers', 'tmpfs', 'tpm2', 'user', 'vm', 'zram'] %}
-{% set test_timeout = 20 %}
+{% set test_timeout = 40 %}

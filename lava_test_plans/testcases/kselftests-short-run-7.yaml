@@ -2,4 +2,4 @@
 
 {% set guestfs_size = 1024 %}
 {% set testnames = ['gpio', 'ipc', 'ir', 'kcmp', 'kexec','rseq', 'rtc'] %}
-{% set test_timeout = 20 %}
+{% set test_timeout = 40 %}

@@ -2,4 +2,4 @@
 
 {% set guestfs_size = 1024 %}
 {% set testnames = ['efivarfs', 'filesystems',  'filesystems.binderfs', 'filesytems.epoll', 'firmware', 'fpu', 'ftrace', 'futex'] %}
-{% set test_timeout = 20 %}
+{% set test_timeout = 40 %}

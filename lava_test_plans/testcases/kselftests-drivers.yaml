@@ -2,4 +2,4 @@
 
 {% set guestfs_size = 1024 %}
 {% set testnames = ['drivers.dma-buf'] %}
-{% set test_timeout = 10 %}
+{% set test_timeout = 30 %}
