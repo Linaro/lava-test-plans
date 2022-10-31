@@ -2,4 +2,4 @@
 
 {% set guestfs_size = 1024 %}
 {% set testnames = ['seccomp', 'sigaltstack', 'size', 'splice', 'static_keys', 'sync', 'sysctl'] %}
-{% set test_timeout = 15 %}
+{% set test_timeout = 45 %}

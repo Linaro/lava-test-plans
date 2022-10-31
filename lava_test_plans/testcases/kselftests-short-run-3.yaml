@@ -2,4 +2,4 @@
 
 {% set guestfs_size = 1024 %}
 {% set testnames = ['lib', 'membarrier', 'memfd', 'memory-hotplug', 'mincore', 'mount', 'mqueue'] %}
-{% set test_timeout = 15 %}
+{% set test_timeout = 45 %}
