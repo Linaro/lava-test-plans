@@ -97,7 +97,7 @@ def _load_template(template_name, template_path, device_type):
             logger.error(
                 "template (%s) was specified but does not exist" % template_file_name
             )
-            sys.exit(1)
+            return 1
 
     return template, template_file_name
 
@@ -139,7 +139,7 @@ def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_
         logger.error("QA Reports submission failed")
         logger.info("offending job definition:")
         logger.info(lava_job)
-        sys.exit(1)
+        return 1
 
 
 def _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token):
@@ -301,14 +301,14 @@ def main():
     if args.qa_server_project:
         if "/" in args.qa_server_project:
             logger.error("--qa-server-project can not contain of a slash in the name")
-            sys.exit(1)
+            return 1
 
     if args.dryrun:
         if not os.path.exists(output_path):
             os.mkdir(output_path)
     if args.qa_token is None and args.lava_token is None and not args.dryrun:
         logger.error("QA_REPORTS_TOKEN and LAVA_TOKEN are missing")
-        sys.exit(1)
+        return 1
 
     lava_jobs = []
 
@@ -361,7 +361,7 @@ def main():
 
     if len(test_list) == 0:
         logger.error("No tests matched the given criteria.")
-        sys.exit(1)
+        return 1
 
     # convert test_list to set to remove potential duplicates
     for test in set(test_list):
@@ -443,7 +443,7 @@ def main():
             exit_code = 1
 
         if exit_code != 0:
-            sys.exit(exit_code)
+            return exit_code
 
         qa_server_base = args.qa_server
         if not (
@@ -496,7 +496,7 @@ def main():
                     lava_job, lava_url_base, args.lava_username, args.lava_token
                 )
     else:
-        sys.exit(exit_code)
+        return exit_code
 
 
 if __name__ == "__main__":
