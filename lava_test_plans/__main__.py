@@ -305,7 +305,7 @@ def main():
 
     if args.dryrun:
         if not os.path.exists(output_path):
-            os.mkdir(output_path)
+            os.makedirs(output_path, exist_ok=True)
     if args.qa_token is None and args.lava_token is None and not args.dryrun:
         logger.error("QA_REPORTS_TOKEN and LAVA_TOKEN are missing")
         return 1
@@ -408,7 +408,7 @@ def main():
             )
             logger.info(testpath)
             if not os.path.exists(os.path.dirname(testpath)):
-                os.makedirs(os.path.dirname(testpath))
+                os.makedirs(os.path.dirname(testpath), exist_ok=True)
             with open(os.path.join(testpath), "w") as f:
                 f.write(lava_job)
 
