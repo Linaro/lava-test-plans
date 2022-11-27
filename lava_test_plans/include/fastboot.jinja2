@@ -19,6 +19,7 @@
 {% set auto_login = auto_login|default(true) %}
 {% set boot_method = boot_method|default("fastboot") %}
 {% set fastboot_deploy_timeout = fastboot_deploy_timeout|default(40) %}
+{% set download_postprocess_required = download_postprocess_required|default(true) %}
 
 {# partitions for android jobs #}
 {# boot_a partition would be set via boot_label #}
@@ -233,7 +234,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% endif %}
     os: {{DEPLOY_OS}}
-{% if lxc_project == false %}
+{% if lxc_project == false and download_postprocess_required == true %}
     postprocess:
       docker:
         image: {{DOCKER_IMAGE}}
