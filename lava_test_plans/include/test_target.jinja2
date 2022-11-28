@@ -1,5 +1,11 @@
+{% set USE_DOCKER_IMAGE_FOR_TEST_TARGET = USE_DOCKER_IMAGE_FOR_TEST_TARGET|default(false) %}
+
 {% if enable_tests is defined and enable_tests %}
 - test:
+{% if USE_DOCKER_IMAGE_FOR_TEST_TARGET == true %}
+    docker:
+      image: {{ DOCKER_IMAGE_FOR_TEST }}
+{% endif %}
 {% if lxc_project == true %}
     namespace: target
 {% endif %}
