@@ -1,0 +1,10 @@
+{% extends "include/fastboot.jinja2" %}
+
+{% set rootfs = rootfs|default(false) %}
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("downloads") %}
+{% set target_deploy_timeout = target_deploy_timeout |default(35) %}
+
+{#################### job definitions ##########################}
+{% block metadata %}
+{% include PROJECT+"include/metadata.jinja2" %}
+{% endblock metadata %}

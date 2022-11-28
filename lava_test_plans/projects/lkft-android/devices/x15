@@ -1,0 +1,42 @@
+{% extends "devices/x15" %}
+
+{% set TAGS = TAGS|default(["hdmi-dongle"]) %}
+
+{# to avoid overriding by the one definied in testcases #}
+{# like the one definied in testcases/boot.yaml is true by default #}
+{% set auto_login = false %}
+{% set boot_method = boot_method|default("fastboot") %}
+{% set BOOT_OS_PROMPT = ["console:/"] %}
+
+{% set partition_boot_b = partition_boot_b|default(true) %}
+{% set partition_vbmeta_a = partition_vbmeta_a|default(true) %}
+{% set partition_vbmeta_b = partition_vbmeta_b|default(true) %}
+{% set partition_super = partition_super|default(true) %}
+{% set partition_userdata = partition_userdata|default(true) %}
+{% set partition_recovery = partition_recovery|default(true) %}
+
+{# As there is only one boot.img generated for the x15 build #}
+{# by the lkft-android project, so here set the A/B partition variables #}
+{# with the same value as the boot partition, but they could be overriden #}
+{# if different values are used #}
+{# settings for the boot_a partition will be done via the boot partition #}
+{% set BOOT_LABEL = "boot_a" %}
+{% set BOOT_B_URL = BOOT_B_URL|default(BOOT_URL) %}
+{% set BOOT_B_URL_COMP = BOOT_B_URL_COMP|default(BOOT_URL_COMP) %}
+
+{# the same as boot_a and boot_b here for the vbmeta_a and vbmeta_b #}
+{% set VBMETA_A_URL = VBMETA_A_URL|default(VBMETA_URL) %}
+{% set VBMETA_A_URL_COMP = VBMETA_A_URL_COMP|default(VBMETA_URL_COMP) %}
+{% set VBMETA_B_URL = VBMETA_B_URL|default(VBMETA_URL) %}
+{% set VBMETA_B_URL_COMP = VBMETA_B_URL_COMP|default(VBMETA_URL_COMP) %}
+
+{% set download_postprocess_required = download_postprocess_required|default(false) %}
+
+{# override the boot_commands block defined in "devices/x15" #}
+{% block boot_commands %}
+{% endblock boot_commands %}
+
+{# override the test_target block defined in "devices/x15" #}
+{% block test_target %}
+{% include "include/test_target.jinja2" %}
+{% endblock test_target %}
