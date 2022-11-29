@@ -1,0 +1,4 @@
+[run]
+source = lava_test_plans
+omit = lava_test_plans/devices/*
+       lava_test_plans/*/*/devices/*
