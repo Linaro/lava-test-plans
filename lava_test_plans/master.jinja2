@@ -50,7 +50,21 @@ context:
 device_type: {% block device_type %}{% endblock %}
 job_name: {% block job_name %}{% endblock %}
 priority: {% block priority %}{{LAVA_JOB_PRIORITY}}{% endblock priority %}
-visibility: {% block visibility %}{{LAVA_JOB_VISIBILITY}}{% endblock visibility %}
+visibility:
+{% block visibility %}
+{% if LAVA_JOB_VISIBILITY == "group" %}
+  {{LAVA_JOB_VISIBILITY}}:
+{% if LAVA_JOB_VISIBILITY_GROUPS is defined and LAVA_JOB_VISIBILITY_GROUPS is sequence and LAVA_JOB_VISIBILITY_GROUPS is not string %}
+{% for group in LAVA_JOB_VISIBILITY_GROUPS %}
+{% if group|length %}
+  - {{ group }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% else %}
+  {{LAVA_JOB_VISIBILITY}}
+{% endif %}
+{% endblock visibility %}
 
 {# variables #}
 {% set rootfs = rootfs|default(true) %}
