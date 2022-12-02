@@ -22,6 +22,7 @@ jobs:
          pip install black
          pip install flit
          pip install tuxpkg
+         pip install py
          pip install pytest
          pip install pytest-cov
          pip install pytest-parallel
