@@ -35,4 +35,4 @@ jobs:
 
       - name: run unittest
         run: |
-         make test TUXPKG_MIN_COVERAGE=17
+         make test
