@@ -5,6 +5,7 @@ export PYBUILD_NAME = lava-test-plans
 export PYBUILD_TEST_PYTEST = 1
 export PYBUILD_TEST_ARGS = test/
 export LC_ALL = C.UTF-8
+export SKIP_TEST_LAVA_VALIDITY = 1
 
 # Support non-flit builds - requires setup.py to be present (which is the case
 # in pypi release tarballs)
