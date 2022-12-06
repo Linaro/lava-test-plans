@@ -5,7 +5,9 @@ import sys
 import glob
 import os
 import pytest
+import shlex
 
+test_lava_validity = "" if os.getenv("SKIP_TEST_LAVA_VALIDITY") else "--test-lava-validity"
 
 # all tests all devices
 devices = [os.path.basename(d) for d in glob.glob("lava_test_plans/devices/*")]
@@ -20,7 +22,7 @@ for device in devices:
 @pytest.mark.parametrize("param", tests)
 def test_call_lava_test_plan_testcases(param):
     variable_input_file, device, testcase = param
-    sys.argv = ["lava_test_plans", "--dry-run", "--variables", variable_input_file, "--device-type", device, "--test-case", testcase]
+    sys.argv = shlex.split(f'lava_test_plans --dry-run --variables "{variable_input_file}" --device-type "{device}" --test-case "{testcase}"')
     assert main() == 0
 
 
@@ -39,7 +41,7 @@ for device in armnn_devices:
 @pytest.mark.parametrize("param", tests)
 def test_call_lava_test_plan_testplans_armnn(param):
     variable_input_file, device, testplan = param
-    sys.argv = ["lava_test_plans", "--dry-run", "--variables", variable_input_file, "--device-type", device, "--test-plan", testplan, "--test-lava-validity"]
+    sys.argv = shlex.split(f'lava_test_plans --dry-run --variables "{variable_input_file}" --device-type "{device}" --test-plan "{testplan}" {test_lava_validity}')
     assert main() == 0
 
 
@@ -59,7 +61,7 @@ for device in lkft_devices:
 @pytest.mark.parametrize("param", tests)
 def test_call_lava_test_plan_testplans_project_lkft(param):
     variable_input_file, device, testplan, project_device_path = param
-    sys.argv = ["lava_test_plans", "--dry-run", "--variables", variable_input_file, "--testplan-device-path", project_device_path, "--device-type", device, "--test-plan", testplan, "--test-lava-validity"]
+    sys.argv = shlex.split(f'lava_test_plans --dry-run --variables "{variable_input_file}" --testplan-device-path "{project_device_path}" --device-type "{device}" --test-plan "{testplan}" {test_lava_validity}')
     assert main() == 0
 
 
@@ -78,7 +80,7 @@ for device in lt_qcom_devices:
 @pytest.mark.parametrize("param", tests)
 def test_call_lava_test_plan_testplans_project_lt_qcom(param):
     variable_input_file, device, testplan, project_device_path = param
-    sys.argv = ["lava_test_plans", "--dry-run", "--variables", variable_input_file, "--testplan-device-path", project_device_path, "--device-type", device, "--test-plan", testplan, "--test-lava-validity"]
+    sys.argv = shlex.split(f'lava_test_plans --dry-run --variables "{variable_input_file}" --testplan-device-path "{project_device_path}" --device-type "{device}" --test-plan "{testplan}" {test_lava_validity}')
     assert main() == 0
 
 
@@ -98,7 +100,7 @@ for device in tf_a_devices:
 @pytest.mark.parametrize("param", tests)
 def test_call_lava_test_plan_testplans_project_tf_a(param):
     variable_input_file, device, testplan, project_device_path = param
-    sys.argv = ["lava_test_plans", "--dry-run", "--variables", variable_input_file, "--testplan-device-path", project_device_path, "--device-type", device, "--test-plan", testplan, "--test-lava-validity"]
+    sys.argv = shlex.split(f'lava_test_plans --dry-run --variables "{variable_input_file}" --testplan-device-path "{project_device_path}" --device-type "{device}" --test-plan "{testplan}" {test_lava_validity}')
     assert main() == 0
 
 
@@ -117,5 +119,5 @@ for device in ti_devices:
 @pytest.mark.parametrize("param", tests)
 def test_call_lava_test_plan_testplans_ti(param):
     variable_input_file, device, testplan = param
-    sys.argv = ["lava_test_plans", "--dry-run", "--variables", variable_input_file, "--device-type", device, "--test-plan", testplan, "--test-lava-validity"]
+    sys.argv = shlex.split(f'lava_test_plans --dry-run --variables "{variable_input_file}" --device-type "{device}" --test-plan "{testplan}" {test_lava_validity}')
     assert main() == 0, f"fail: {sys.argv}"
