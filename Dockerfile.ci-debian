@@ -3,14 +3,15 @@ ARG EXTRA_PACKAGES
 
 COPY debian/control /tuxpkg/debian/control
 
-RUN apt-get update \
+RUN echo 'deb http://deb.debian.org/debian bullseye-backports main'>> /etc/apt/sources.list \
+    && apt-get update \
     && apt-get install -qy auto-apt-proxy \
     && apt-get build-dep -qy /tuxpkg \
     && apt-get install -q=2 \
         black \
         codespell \
         flake8 \
-        flit \
+        flit/bullseye-backports \
         git \
         make \
         mkdocs \
