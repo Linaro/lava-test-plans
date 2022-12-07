@@ -46,6 +46,7 @@ make run
 #make bash_completion
 
 %check
+export SKIP_TEST_LAVA_VALIDITY=1
 python3 -m pytest test/
 
 %install
