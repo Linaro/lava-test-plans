@@ -3,8 +3,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG version
 
 # hadolint ignore=DL3008
-RUN apt-get update \
-    && apt-get install --yes --no-install-recommends flit
+RUN echo 'deb http://deb.debian.org/debian bullseye-backports main'>> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install --yes --no-install-recommends flit/bullseye-backports
 
 COPY . /lava-test-plans
 RUN cd /lava-test-plans \
