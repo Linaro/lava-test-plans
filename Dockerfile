@@ -24,6 +24,6 @@ RUN apt-get update \
     && find /usr -depth -name __pycache__ -type d -exec rm -rf {} \;
 
 COPY --from=builder /lava-test-plans /tmp/lava-test-plans/
-RUN python3 -m pip install --no-cache-dir $(find /tmp/lava-test-plans/dist/ -name "lava_test_plans-*-py3-none-any.whl") \
+RUN python3 -m pip install --no-cache-dir $(find /tmp/lava-test-plans/dist/ -name "lava_test_plans-*py3-none-any.whl") \
     && rm -rf /tmp/lava-test-plans/ \
     && find /usr -depth -name __pycache__ -type d -exec rm -rf {} \;
