@@ -121,3 +121,22 @@ def test_call_lava_test_plan_testplans_ti(param):
     variable_input_file, device, testplan = param
     sys.argv = shlex.split(f'lava_test_plans --dry-run --variables "{variable_input_file}" --device-type "{device}" --test-plan "{testplan}" {test_lava_validity}')
     assert main() == 0, f"fail: {sys.argv}"
+
+# lkft-android tests
+
+lkft_android_project_device_path = "lava_test_plans/projects/lkft-android/devices"
+lkft_android_devices = [os.path.basename(d) for d in glob.glob("lava_test_plans/projects/lkft-android/devices/*")]
+assert len(lkft_android_devices) > 0
+lkft_android_testcases = [ "boot.yaml" ]
+assert len(lkft_android_testcases) > 0
+lkft_android_variable_input_file = "lava_test_plans/projects/lkft-android/variables.ini"
+tests = []
+for device in lkft_android_devices:
+    for testcase in lkft_android_testcases:
+        tests.append((lkft_android_variable_input_file, device, testcase, lkft_android_project_device_path))
+
+@pytest.mark.parametrize("param", tests)
+def test_call_lava_test_plan_testcase_lkft_android(param):
+    variable_input_file, device, testcase, project_device_path = param
+    sys.argv = shlex.split(f'lava_test_plans --dry-run --variables "{variable_input_file}"  --testplan-device-path "{project_device_path}" --device-type "{device}" --test-case "{testcase}" {test_lava_validity}')
+    assert main() == 0, f"fail: {sys.argv}"
