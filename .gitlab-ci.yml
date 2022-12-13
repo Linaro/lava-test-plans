@@ -4,6 +4,7 @@ include:
 variables:
   TUXPKG: python3 -m tuxpkg
   TUXPKG_PROJECT: lava-test-plans
+  SKIP_TEST_LAVA_VALIDITY: 1
 
 services:
   - docker:dind
