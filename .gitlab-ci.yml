@@ -6,6 +6,7 @@ variables:
   TUXPKG_PROJECT: lava-test-plans
   SKIP_TEST_LAVA_VALIDITY: 1
   NUM_WORKERS: ''
+  TUXPKG_MIN_COVERAGE: 52
 
 services:
   - docker:dind
