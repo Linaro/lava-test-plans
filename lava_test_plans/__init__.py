@@ -10,7 +10,7 @@
 Generate LAVA job definitions for different devices and tests
 """
 
-__version__ = "3.0"
+__version__ = "3.1.0"
 
 from functools import lru_cache
 from pathlib import Path

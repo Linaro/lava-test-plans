@@ -1,5 +1,5 @@
 Name:      lava-test-plans
-Version:   3.0
+Version:   3.1.0
 Release:   0%{?dist}
 Summary:   The lava-test-plans project makes it easier to generate LAVA job.
 License:   MIT
