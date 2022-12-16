@@ -8,18 +8,37 @@ It generates the LAVA job definition file from a set of templates.
 
 # Installation
 
+Install lava-test-plans from pip:
+
+    lava-test-plans -h
+
+or
+
+via podman/docker:
+
+    docker run -i -t lavasoftware/lava-test-plans /bin/bash
+
+lavasoftware/lava-test-plans:latest points to the latest released version.
+lavasoftware/lava-test-plans:master points to the latest development.
+
+If the above commands succeed, you can run to check that the program starts correctly
+
+    lava-test-plans -h
+
+## Developing
+
 To install the latest development version:
 
     git clone https://github.com/Linaro/lava-test-plans.git
     cd ./lava-test-plans
 
-You need to install Python dependencies:
-
-    pip3 install -r requirements.txt
+    pip3 install flit
+    flit install --symlink
 
 or
 
 You need to do if you have docker installed:
+
     docker run --volume $HOME/path/to/lava-test-plans:/xyz -i -t lavasoftware/lava-test-plans /bin/bash
     cd /xyz
 
