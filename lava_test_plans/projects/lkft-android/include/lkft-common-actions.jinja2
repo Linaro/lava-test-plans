@@ -1,0 +1,39 @@
+{% set post_boot_interactive_timeout = post_boot_interactive_timeout|default(5) %}
+{% set post_boot_adb_commands_timeout = post_boot_adb_commands_timeout|default(5) %}
+
+{# enable_tests is set to false in testcases/boot.yaml #}
+{# but here are common actions which will be used for that boot job as well, #}
+{# so need to override that and set to true explictly #}
+{% with enable_tests=true, test_timeout=post_boot_interactive_timeout, test_target_interactive=true, USE_DOCKER_IMAGE_FOR_TEST_TARGET=false %}
+{% include "include/test_target.jinja2" %}
+{% endwith %}
+    - name: sleep-to-wait-adb-available
+{% filter indent(width=2, first=True)%}
+{% include "include/boot_target/boot_os_prompt.jinja2" %}
+{% endfilter %}
+      script:
+      - command: echo ===========================
+      - command: while ! getprop sys.boot_completed|grep 1; do echo sleep 10s for sys.boot_completed; sleep 10; done
+      - command: echo ===========================
+      - command: while ! getprop init.svc.adbd|grep running; do echo sleep 10s for init.svc.adbd; sleep 10; done
+      - command: echo ===========================
+      - command: getprop | grep adb
+      - command: echo ===========================
+
+{% with enable_tests=true, test_timeout=post_boot_adb_commands_timeout %}
+{% include "include/test_target.jinja2" %}
+{% endwith %}
+    - from: inline
+      path: android-boot.yaml
+      name: android-boot
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: android-boot
+          description: "android-boot"
+        run:
+          steps:
+            - lava-test-case "android-boot-wait-for-device" --shell adb wait-for-device
+            - lava-test-case "android-boot-boot-completed" --shell "while ! adb shell getprop sys.boot_completed|grep 1; do sleep 2; done"
+            - lava-test-case "android-boot-set-power-stayon" --shell adb shell su 0 svc power stayon true
+            - lava-test-case "android-boot-screencap" --shell adb shell screencap -p /data/local/tmp/screencap.png

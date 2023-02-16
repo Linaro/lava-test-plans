@@ -94,3 +94,7 @@
 {% endblock deploy_fastboot %}
 {% endif %}
 {% endblock deploy_target %}
+
+{% block post_boot_command %}
+{% include PROJECT+"include/lkft-common-actions.jinja2" %}
+{% endblock post_boot_command %}
