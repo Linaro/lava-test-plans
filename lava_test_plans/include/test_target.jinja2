@@ -5,6 +5,7 @@
 {% if USE_DOCKER_IMAGE_TEST_TARGET == true %}
     docker:
       image: {{ DOCKER_IMAGE_TEST }}
+      local: true
 {% endif %}
 {% if lxc_project == true %}
     namespace: target

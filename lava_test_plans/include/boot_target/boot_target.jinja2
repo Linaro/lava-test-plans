@@ -28,4 +28,5 @@
 {% if DOCKER_IMAGE_BOOT is defined and boot_method == "fastboot" %}
     docker:
       image: {{DOCKER_IMAGE_BOOT}}
+      local: true
 {% endif %}
