@@ -295,6 +295,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
     postprocess:
       docker:
         image: {{DOCKER_IMAGE_POSTPROCESS}}
+        local: true
 {% endif %}
 {% endblock deploy_target %}
 

@@ -8,6 +8,7 @@
     to: fastboot
     docker:
       image: {{DOCKER_IMAGE_DEPLOY}}
+      local: true
     images:
 {% if ptable == true %}
       ptable:
