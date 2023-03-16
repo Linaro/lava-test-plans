@@ -1,6 +1,5 @@
 "PROJECT_NAME": "test"
 "BUILD_URL": "build-url"
-"KERNEL_ARCH_ARTIFACTS_PUB_DEST": "artifact-url"
 "BOOT_URL": "boot-url"
 "SYSTEM_URL": "system-url"
 "DEVICE_TYPE": "device-type"
