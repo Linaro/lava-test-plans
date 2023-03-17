@@ -36,6 +36,19 @@
 {% set partition_recovery = partition_recovery|default(false) %}
 {% set partition_userdata = partition_userdata|default(false) %}
 
+{% set partition_boot_with_postprocess = partition_boot_with_postprocess|default(boot) %}
+{% set partition_boot_b_with_postprocess = partition_boot_b_with_postprocess|default(partition_boot_b) %}
+{% set partition_super_with_postprocess = partition_super_with_postprocess|default(partition_super) %}
+{% set partition_system_with_postprocess = partition_system_with_postprocess|default(partition_system) %}
+{% set partition_vendor_with_postprocess = partition_vendor_with_postprocess|default(partition_vendor) %}
+{% set partition_vendor_boot_with_postprocess = partition_vendor_boot_with_postprocess|default(partition_vendor_boot) %}
+{% set partition_cache_with_postprocess = partition_cache_with_postprocess|default(partition_cache) %}
+{% set partition_vbmeta_with_postprocess = partition_vbmeta_with_postprocess|default(partition_vbmeta) %}
+{% set partition_vbmeta_a_with_postprocess = partition_vbmeta_a_with_postprocess|default(partition_vbmeta_a) %}
+{% set partition_vbmeta_b_with_postprocess = partition_vbmeta_b_with_postprocess|default(partition_vbmeta_b) %}
+{% set partition_recovery_with_postprocess = partition_recovery_with_postprocess|default(partition_recovery) %}
+{% set partition_userdata_with_postprocess = partition_userdata_with_postprocess|default(partition_userdata) %}
+
 {% block global_settings %}
 {{ super() }}
 reboot_to_fastboot: {{ reboot_to_fastboot }}
@@ -67,7 +80,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% endif %}
 {% endif %}
-{% if boot == true %}
+{% if boot == true and partition_boot_with_postprocess == true %}
       {{ BOOT_LABEL }}:
         url: {{BOOT_URL}}
 {% block kernel_extra_args %}
@@ -157,77 +170,77 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% endif %}
 {# partition_boot_a will be done with the boot partition block #}
-{% if partition_boot_b == true %}
+{% if partition_boot_b == true and partition_boot_b_with_postprocess == true %}
       boot_b:
         url: {{ BOOT_B_URL }}
 {% if BOOT_B_URL_COMP is defined %}
         compression: {{ BOOT_B_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_super == true %}
+{% if partition_super == true and partition_super_with_postprocess == true %}
       super:
         url: {{ SUPER_URL }}
 {% if SUPER_URL_COMP is defined %}
         compression: {{ SUPER_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_system == true %}
+{% if partition_system == true and partition_system_with_postprocess == true %}
       system:
         url: {{ SYSTEM_URL }}
 {% if SYSTEM_URL_COMP is defined %}
         compression: {{ SYSTEM_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_vendor == true %}
+{% if partition_vendor == true and partition_vendor_with_postprocess == true %}
       vendor:
         url: {{ VENDOR_URL }}
 {% if VENDOR_URL_COMP is defined %}
         compression: {{ VENDOR_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_vendor_boot == true %}
+{% if partition_vendor_boot == true and partition_vendor_boot_with_postprocess == true %}
       vendor_boot:
         url: {{ VENDOR_BOOT_URL }}
 {% if VENDOR_BOOT_URL_COMP is defined %}
         compression: {{ VENDOR_BOOT_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_cache == true %}
+{% if partition_cache == true and partition_cache_with_postprocess == true %}
       cache:
         url: {{ CACHE_URL }}
 {% if CACHE_URL_COMP is defined %}
         compression: {{ CACHE_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_vbmeta == true %}
+{% if partition_vbmeta == true and partition_vbmeta_with_postprocess == true %}
       vbmeta:
         url: {{ VBMETA_URL }}
 {% if VBMETA_URL_COMP is defined %}
         compression: {{ VBMETA_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_vbmeta_a == true %}
+{% if partition_vbmeta_a == true and partition_vbmeta_a_with_postprocess == true %}
       vbmeta_a:
         url: {{ VBMETA_A_URL }}
 {% if VBMETA_A_URL_COMP is defined %}
         compression: {{ VBMETA_A_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_vbmeta_b == true %}
+{% if partition_vbmeta_b == true and partition_vbmeta_b_with_postprocess == true %}
       vbmeta_b:
         url: {{ VBMETA_B_URL }}
 {% if VBMETA_B_URL_COMP is defined %}
         compression: {{ VBMETA_B_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_recovery == true %}
+{% if partition_recovery == true and partition_recovery_with_postprocess == true %}
       recovery:
         url: {{ RECOVERY_URL }}
 {% if RECOVERY_URL_COMP is defined %}
         compression: {{ RECOVERY_URL_COMP }}
 {% endif %}
 {% endif %}
-{% if partition_userdata == true %}
+{% if partition_userdata == true and partition_userdata_with_postprocess == true %}
       userdata:
         url: {{ USERDATA_URL }}
 {% if USERDATA_URL_COMP is defined %}
