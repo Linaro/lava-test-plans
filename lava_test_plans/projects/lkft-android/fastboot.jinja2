@@ -25,6 +25,16 @@
 {% set DOCKER_METADATA_FILE = DOCKER_METADATA_FILE|default("metadata.img") %}
 {% set DOCKER_RECOVERY_FILE = DOCKER_RECOVERY_FILE|default("recovery.img") %}
 {% set DOCKER_USERDATA_FILE = DOCKER_USERDATA_FILE|default("userdata.img") %}
+
+{# set variable values used by the include/fastboot.jinja2 postprocess, #}
+{# partition specific flags related to postprocess will be set #}
+{# in the device file accordingly #}
+{% set download_postprocess_required = download_postprocess_required|default(false) %}
+{% if TUXSUITE_BAKE_VENDOR_DOWNLOAD_URL is defined %}
+{% set download_postprocess_required = true %}
+{% set DOCKER_IMAGE_POSTPROCESS = DOCKER_IMAGE_POSTPROCESS|default("linaro/lava-android-postprocess:latest") %}
+{% endif %}
+
 {#################### job definitions ##########################}
 {% block metadata %}
 {% include PROJECT+"include/metadata.jinja2" %}
@@ -34,6 +44,15 @@
 {{ super() }}
 
 {% if DEPLOY_TARGET == "downloads" %}
+{% if TUXSUITE_BAKE_VENDOR_DOWNLOAD_URL is defined %}
+        steps:
+{% if BUILD_REFERENCE_IMAGE_GZ_URL is defined %}
+        - linaro-lkft-android.sh -g -k {{BUILD_REFERENCE_IMAGE_GZ_URL}} -v {{TUXSUITE_BAKE_VENDOR_DOWNLOAD_URL}} -c {{LKFT_BUILD_CONFIG}}
+{% else %}
+        - linaro-lkft-android.sh -g -v {{TUXSUITE_BAKE_VENDOR_DOWNLOAD_URL}} -c {{LKFT_BUILD_CONFIG}}
+{% endif %}
+{% endif %}
+
 {% block deploy_fastboot %}
 - deploy:
     timeout:
