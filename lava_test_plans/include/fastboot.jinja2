@@ -2,7 +2,8 @@
 
 {% set use_context = true %}
 
-{% set DOCKER_IMAGE = DOCKER_IMAGE|default("debian:buster") %}
+{% set DOCKER_IMAGE_DEPLOY = DOCKER_IMAGE_DEPLOY|default("debian:buster") %}
+{% set DOCKER_IMAGE_POSTPROCESS = DOCKER_IMAGE_POSTPROCESS|default("debian:buster") %}
 {% set ptable = ptable|default(false) %}
 {% set PTABLE_LABEL = PTABLE_LABEL|default("ptable") %}
 {% set reboot_reset = reboot_reset|default(false) %}
@@ -237,7 +238,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% if lxc_project == false and download_postprocess_required == true %}
     postprocess:
       docker:
-        image: {{DOCKER_IMAGE}}
+        image: {{DOCKER_IMAGE_POSTPROCESS}}
 {% endif %}
 {% endblock deploy_target %}
 

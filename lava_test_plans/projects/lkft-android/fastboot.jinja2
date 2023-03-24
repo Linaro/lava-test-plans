@@ -40,7 +40,7 @@
       minutes: {{ deploy_fastboot_timeout }}
     to: fastboot
     docker:
-      image: {{ DOCKER_IMAGE }}
+      image: {{ DOCKER_IMAGE_DEPLOY }}
     images:
 {% if ptable == true %}
       {{ PTABLE_LABEL }}:
