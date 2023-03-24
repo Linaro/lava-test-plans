@@ -4,7 +4,7 @@
 {# enable_tests is set to false in testcases/boot.yaml #}
 {# but here are common actions which will be used for that boot job as well, #}
 {# so need to override that and set to true explictly #}
-{% with enable_tests=true, test_timeout=post_boot_interactive_timeout, test_target_interactive=true, USE_DOCKER_IMAGE_FOR_TEST_TARGET=false %}
+{% with enable_tests=true, test_timeout=post_boot_interactive_timeout, test_target_interactive=true, USE_DOCKER_IMAGE_TEST_TARGET=false %}
 {% include "include/test_target.jinja2" %}
 {% endwith %}
     - name: sleep-to-wait-adb-available
