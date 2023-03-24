@@ -129,11 +129,16 @@ lkft_android_devices = [os.path.basename(d) for d in glob.glob("lava_test_plans/
 assert len(lkft_android_devices) > 0
 lkft_android_testcases = [ "boot.yaml" ]
 assert len(lkft_android_testcases) > 0
-lkft_android_variable_input_file = "lava_test_plans/projects/lkft-android/variables.ini"
+lkft_android_variable_input_files = [
+                         "lava_test_plans/projects/lkft-android/variables.ini",
+                         "test/variables-lkft-android-tuxsuite.ini",
+                       ]
+assert len(lkft_android_testcases) > 0
 tests = []
 for device in lkft_android_devices:
     for testcase in lkft_android_testcases:
-        tests.append((lkft_android_variable_input_file, device, testcase, lkft_android_project_device_path))
+        for variable_input_file in lkft_android_variable_input_files:
+            tests.append((variable_input_file, device, testcase, lkft_android_project_device_path))
 
 @pytest.mark.parametrize("param", tests)
 def test_call_lava_test_plan_testcase_lkft_android(param):
