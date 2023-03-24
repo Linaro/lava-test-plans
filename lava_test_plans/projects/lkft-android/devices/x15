@@ -21,8 +21,12 @@
 {# if different values are used #}
 {# settings for the boot_a partition will be done via the boot partition #}
 {% set BOOT_LABEL = "boot_a" %}
+{% if BOOT_URL is defined %}
 {% set BOOT_B_URL = BOOT_B_URL|default(BOOT_URL) %}
+{% endif %}
+{% if BOOT_URL_COMP is defined %}
 {% set BOOT_B_URL_COMP = BOOT_B_URL_COMP|default(BOOT_URL_COMP) %}
+{% endif %}
 
 {# the same as boot_a and boot_b here for the vbmeta_a and vbmeta_b #}
 {% set VBMETA_A_URL = VBMETA_A_URL|default(VBMETA_URL) %}
@@ -30,7 +34,20 @@
 {% set VBMETA_B_URL = VBMETA_B_URL|default(VBMETA_URL) %}
 {% set VBMETA_B_URL_COMP = VBMETA_B_URL_COMP|default(VBMETA_URL_COMP) %}
 
-{% set download_postprocess_required = download_postprocess_required|default(false) %}
+{## set partition specific flags for postprocess ##}
+{% if TUXSUITE_BAKE_VENDOR_DOWNLOAD_URL is defined %}
+{% set partition_boot_with_postprocess = false %}
+{% set partition_boot_b_with_postprocess = false %}
+{% set partition_vbmeta_with_postprocess = false %}
+{% set partition_vbmeta_a_with_postprocess = false %}
+{% set partition_vbmeta_b_with_postprocess = false %}
+{% set partition_super_with_postprocess = false %}
+{% set partition_recovery_with_postprocess = false %}
+{# Since the download action requires at least one file for downloading, #}
+{# set variables for the userdata partition to workaround this problem #}
+{% set USERDATA_URL = REFERENCE_BUILD_URL + "/userdata.img.xz" %}
+{% set USERDATA_URL_COMP = "xz" %}
+{% endif%}
 
 {# override the boot_commands block defined in "devices/x15" #}
 {% block boot_commands %}
