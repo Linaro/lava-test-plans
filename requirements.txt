@@ -1,0 +1,10 @@
+configobj
+docker
+Jinja2
+py
+pytest
+pytest-cov
+pytest-parallel
+requests
+ruamel_yaml
+tuxpkg
