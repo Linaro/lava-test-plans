@@ -8,6 +8,6 @@
 
 {% set ptable = true %}
 {% set rootfs_label = 'rootfs' %}
-{% set reboot_reset = true %}
+{% set reboot_reset = reboot_reset|default(true) %}
 
 {% block device_type %}dragonboard-845c{% endblock %}
