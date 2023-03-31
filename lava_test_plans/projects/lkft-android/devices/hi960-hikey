@@ -1,0 +1,37 @@
+{% extends "devices/hi960-hikey" %}
+
+{% set TAGS = TAGS|default(["old-firmware"]) %}
+
+{# to avoid overriding by the one definied in testcases #}
+{# like the one defined in testcases/boot.yaml is set to true by default #}
+{% set auto_login = false %}
+{% set boot_method = "fastboot" %}
+{% set pre_boot_command = false %}
+{% set pre_os_command = false %}
+{% set pre_power_command = false %}
+{% set post_boot_command = false %}
+{% set rootfs = false %}
+
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default(["console:/"]) %}
+{% set FASTBOOT_COMMANDS = FASTBOOT_COMMANDS|default(["format cache", "reboot bootloader"]) %}}
+
+{% set ptable = true %}
+{% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("prm_ptable.img") %}
+{% set PTABLE_URL = PRM_PTABLE_URL|default("http://testdata.linaro.org/lkft/aosp-stable/android/lkft/lkft-aosp-master-hikey960/555/prm_ptable.img") %}
+{% set DOCKER_PTABLE_FILE = DOCKER_PRM_PTABLE_FILE|default("prm_ptable.img") %}
+
+{% set partition_super = true %}
+{% set partition_userdata = true %}
+
+{% if TUXSUITE_BAKE_VENDOR_DOWNLOAD_URL is defined %}
+{% set download_postprocess_required = true %}
+{% set partition_boot_with_postprocess = false %}
+{% set partition_super_with_postprocess = false %}
+{% set partition_system_with_postprocess = false %}
+{% set partition_vendor_with_postprocess = false %}
+{% set partition_userdata_with_postprocess = false %}
+{% endif%}
+
+{# override the boot_commands block defined in "devices/hi960-hikey" #}
+{% block boot_commands %}
+{% endblock boot_commands %}
