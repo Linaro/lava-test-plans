@@ -1,0 +1,12 @@
+{% extends "testcases/master/template-android-xts.yaml.jinja2" %}
+
+{% set xts_test_url = TEST_CTS_URL %}
+{% set xts_version = TEST_CTS_VERSION %}
+{% set xts_test_suite_name = TEST_CTS_SUITE_NAME|default("cts") %}
+
+{% set xts_test_params = xts_test_params|default("cts") %}
+{% set test_name = test_name|default("cts") %}
+{% set xts_test_path = xts_test_path|default("android-cts") %}
+{% set xts_pkg_name = xts_pkg_name|default("android-cts.zip") %}
+{% set xts_metadata_prefix = xts_metadata_prefix|default("cts") %}
+{% set xts_expect_reboot = xts_expect_reboot|default(false) %}

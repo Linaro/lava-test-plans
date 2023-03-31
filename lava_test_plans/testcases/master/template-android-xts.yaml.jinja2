@@ -1,0 +1,30 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{## This template is not for generic use, please consider ##}
+{## to use the template-android-cts.yaml.jinja2 and ## }
+{## template-android-vts.yaml.jinja2 ##}
+
+{% set xts_result_format = xts_result_format|default("aggregated") %}
+{% set xts_test_definition_path = xts_test_definition_path|default("automated/android/noninteractive-tradefed/tradefed.yaml") %}
+
+{% block metadata %}
+  {{ super() }}
+  {{xts_metadata_prefix}}-url: "{{xts_test_url}}/{{xts_pkg_name}}"
+  {{xts_metadata_prefix}}-manifest: "{{xts_test_url}}/pinned-manifest.xml"
+  {{xts_metadata_prefix}}-version: "{{xts_version}}"
+{% endblock metadata %}
+
+{% block test_target %}
+  {{ super() }}
+    - repository: {{TEST_DEFINITIONS_REPOSITORY}}
+      from: git
+      path: {{xts_test_definition_path}}
+      params:
+        TEST_PARAMS: {% block xts_test_params %}{{xts_test_params}}{% endblock xts_test_params %}
+        TEST_URL: "{{xts_test_url}}/{{xts_pkg_name}}"
+        TEST_PATH: "{{xts_test_path}}"
+        RESULTS_FORMAT: "{{xts_result_format}}"
+        ANDROID_VERSION: "{{ANDROID_VERSION}}"
+        TEST_REBOOT_EXPECTED: "{{xts_expect_reboot}}"
+      name: "{{xts_test_suite_name}}"
+{% endblock test_target %}
