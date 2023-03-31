@@ -286,6 +286,10 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
         timeout:
           minutes: 2
 {% endif %}
+{% if DOCKER_IMAGE_BOOT is defined %}
+    docker:
+      image: {{DOCKER_IMAGE_BOOT}}
+{% endif %}
 {% endblock boot_target %}
 
 {% block post_boot_command %}
