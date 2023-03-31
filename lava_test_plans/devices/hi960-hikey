@@ -1,16 +1,16 @@
 {% set PROJECT = PROJECT|default("") %}
 {% extends PROJECT+"fastboot.jinja2" %}
 
-{% set auto_login = false %}
-{% set boot_method = "grub" %}
-{% set pre_boot_command = true %}
-{% set pre_os_command = true %}
-{% set pre_power_command = true %}
-{% set post_boot_command = true %}
-{% set ptable = false %}
-{% set reboot_reset = true %}
-{% set rootfs = true %}
-{% set rootfs_label = 'system' %}
+{% set auto_login = auto_login|default(false) %}
+{% set boot_method = boot_method|default("grub") %}
+{% set pre_boot_command = pre_boot_command|default(true) %}
+{% set pre_os_command = pre_os_command|default(true) %}
+{% set pre_power_command = pre_power_command|default(true) %}
+{% set post_boot_command = post_boot_command|default(true) %}
+{% set ptable = ptable|default(false) %}
+{% set reboot_reset = reboot_reset|default(true) %}
+{% set rootfs = rootfs|default(true) %}
+{% set rootfs_label = rootfs_label|default('system') %}
 
 {% block device_type %}hi960-hikey{% endblock %}
 
