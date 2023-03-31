@@ -1,0 +1,6 @@
+{% extends "testcases/master/template-android-vts.yaml.jinja2" %}
+
+{% set test_timeout = 480 %}
+{% set test_name = "vts-kernel-arm64-v8a" %}
+
+{% block xts_test_params %}vts-kernel --abi arm64-v8a{% endblock xts_test_params %}
