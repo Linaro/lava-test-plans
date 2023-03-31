@@ -1,0 +1,9 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"fastboot.jinja2" %}
+
+{% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+
+{% set ptable = ptable|default(true) %}
+{% set PTABLE_LABEL = PTABLE_LABEL|default("partition:0") %}
+
+{% block device_type %}qrb5165-rb5{% endblock %}
