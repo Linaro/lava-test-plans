@@ -36,6 +36,14 @@
 {% endif %}
 
 {#################### job definitions ##########################}
+{% block global_settings %}
+{{ super() }}
+{% block secrets %}
+secrets:
+  ARTIFACTORIAL_TOKEN: "{{ ARTIFACTORIAL_TOKEN }}"
+{% endblock secrets %}
+{% endblock global_settings %}
+
 {% block metadata %}
 {% include PROJECT+"include/metadata.jinja2" %}
 {% endblock metadata %}
