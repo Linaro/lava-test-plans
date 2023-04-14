@@ -5,6 +5,9 @@
 {% set target_deploy_timeout = target_deploy_timeout |default(35) %}
 {% set deploy_fastboot_timeout = deploy_fastboot_timeout|default(10) %}
 
+{% set LAVA_JOB_VISIBILITY = LAVA_JOB_VISIBILITY|default("group") %}
+{% set LAVA_JOB_VISIBILITY_GROUPS = LAVA_JOB_VISIBILITY_GROUPS|default(["lkft"]) %}
+
 {# force all the lkft-android jobs to be run with the docker method #}
 {% set USE_DOCKER_IMAGE_TEST_TARGET = true %}
 
