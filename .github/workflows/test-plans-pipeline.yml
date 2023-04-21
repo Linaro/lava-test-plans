@@ -31,7 +31,7 @@ jobs:
 
       - name: Linting
         run: |
-         black --check lava_test_plans
+         make style
 
       - name: run unittest
         run: |
