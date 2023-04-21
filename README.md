@@ -69,6 +69,9 @@ Lines starting with *#* are omited. Variables can also be set using
  * *OS_INFO*: used in test job name
  * *LAVA_JOB_PRIORITY*: priority of the LAVA job, used by LAVA scheduler
  * *LAVA_JOB_VISIBILITY*: defaults to *public*. This block can be used to restrict job visibility to user or group.
+ * *LAVA_JOB_VISIBILITY_GROUPS*: variable should contain groups required by job. Formtatting is important and this variable should be
+ formatted comma separated list. Example: group1, group2. In case of using just one group, end string with comma. Example:
+ group1,
  * *AUTO_LOGIN_*: default *PROMPT='login:', *USERNAME='root' and *PASSWORD=''.
  * *BOOT_LABEL*: default BOOT_LABEL='boot'.
  * *TAGS*: variable should contain tags required by job. Formtatting is important and this variable should be
