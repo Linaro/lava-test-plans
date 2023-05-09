@@ -21,7 +21,7 @@ protocols:
     name: lxc-target
     template: debian
     distribution: debian
-    release: stretch
+    release: bullseye
     arch: amd64
     mirror: http://deb.debian.org/debian
 {% endblock protocols %}
@@ -42,7 +42,7 @@ protocols:
     - gzip
     - cpio
     - git
-    - mktemp
+    - coreutils
     - abootimg
 {% endif %}
     os: debian
