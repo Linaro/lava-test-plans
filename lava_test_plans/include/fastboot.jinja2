@@ -68,7 +68,6 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
       minutes: {{ target_deploy_timeout }}
     to: {{ DEPLOY_TARGET }}
     images:
-{% if rootfs == true %}
 {% if ptable == true %}
       {{ PTABLE_LABEL }}:
         url: {{PTABLE_URL}}
@@ -77,7 +76,6 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% if reboot_reset == true and DEPLOY_TARGET == "fastboot" %}
         reboot: hard-reset
-{% endif %}
 {% endif %}
 {% endif %}
 {% if boot == true and partition_boot_with_postprocess == true %}
@@ -287,6 +285,10 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
         request: pre-os-command
         timeout:
           minutes: 2
+{% endif %}
+{% if DOCKER_IMAGE_BOOT is defined %}
+    docker:
+      image: {{DOCKER_IMAGE_BOOT}}
 {% endif %}
 {% endblock boot_target %}
 

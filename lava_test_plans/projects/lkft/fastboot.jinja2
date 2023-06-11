@@ -25,13 +25,11 @@
     docker:
       image: {{DOCKER_IMAGE_DEPLOY}}
     images:
-{% if rootfs == true %}
 {% if ptable == true %}
       {{ PTABLE_LABEL }}:
         url: downloads://{{DOCKER_PTABLE_FILE}}
 {% if reboot_reset == true %}
         reboot: hard-reset
-{% endif %}
 {% endif %}
 {% endif %}
 {% if boot == true and BOOT_LABEL != "kernel" or BOOT_LABEL_OVERRIDE == true %}

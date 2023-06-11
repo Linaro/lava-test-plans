@@ -5,6 +5,9 @@
 {% set target_deploy_timeout = target_deploy_timeout |default(35) %}
 {% set deploy_fastboot_timeout = deploy_fastboot_timeout|default(10) %}
 
+{% set LAVA_JOB_VISIBILITY = LAVA_JOB_VISIBILITY|default("group") %}
+{% set LAVA_JOB_VISIBILITY_GROUPS = LAVA_JOB_VISIBILITY_GROUPS|default(["lkft"]) %}
+
 {# force all the lkft-android jobs to be run with the docker method #}
 {% set USE_DOCKER_IMAGE_TEST_TARGET = true %}
 
@@ -35,7 +38,18 @@
 {% set DOCKER_IMAGE_POSTPROCESS = DOCKER_IMAGE_POSTPROCESS|default("linaro/lava-android-postprocess:latest") %}
 {% endif %}
 
+{% set DOCKER_IMAGE_TEST = DOCKER_IMAGE_TEST|default("linaro/lava-android-test:latest") %}
+{% set DOCKER_IMAGE_DEPLOY = DOCKER_IMAGE_DEPLOY|default("linaro/lava-android-test:latest") %}
+{% set DOCKER_IMAGE_BOOT = DOCKER_IMAGE_BOOT|default("linaro/lava-android-test:latest") %}
 {#################### job definitions ##########################}
+{% block global_settings %}
+{{ super() }}
+{% block secrets %}
+secrets:
+  ARTIFACTORIAL_TOKEN: "{{ ARTIFACTORIAL_TOKEN }}"
+{% endblock secrets %}
+{% endblock global_settings %}
+
 {% block metadata %}
 {% include PROJECT+"include/metadata.jinja2" %}
 {% endblock metadata %}
