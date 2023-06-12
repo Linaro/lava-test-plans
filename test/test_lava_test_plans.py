@@ -17,6 +17,8 @@ testcases = [os.path.basename(d) for d in glob.glob("lava_test_plans/testcases/*
 variable_input_file = "variables.ini"
 tests = []
 for device in devices:
+    if device == "variables":
+        continue
     for testcase in testcases:
         tests.append((variable_input_file, device, testcase))
 
@@ -68,6 +70,8 @@ assert len(lkft_testplans) > 0
 lkft_variable_input_file = "projects/lkft/variables.ini"
 tests = []
 for device in lkft_devices:
+    if device == "variables":
+        continue
     for testplan in lkft_testplans:
         tests.append(
             (lkft_variable_input_file, device, testplan, lkft_project_device_path)

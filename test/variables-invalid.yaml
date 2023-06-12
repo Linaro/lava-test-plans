@@ -1,0 +1,7 @@
+DEVICE_TYPE: x15
+KERNEL_URL: https://storage.tuxsuite.com/public/linaro/lkft/builds/2QpEF31VyXftGwaDktiZPokVm62/zImage
+BOOT_URL: https://storage.tuxsuite.com/public/linaro/lkft/builds/2QpEF31VyXftGwaDktiZPokVm62/zImage
+MODULES_URL: https://storage.tuxsuite.com/public/linaro/lkft/builds/2QpEF31VyXftGwaDktiZPokVm62/modules.tar.xz
+ROOTFS_URL: https://storage.tuxsuite.com/public/linaro/lkft/oebuilds/2QYtrjk7ljZosmSAhFbSSmw8mPv/images/am57xx-evm/lkft-console-image-am57xx-evm-20230531144250.rootfs.ext4.gz
+LAVA_JOB_PRIORITY: 25
+PROJECT: projects/lkft/

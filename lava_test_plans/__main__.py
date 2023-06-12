@@ -35,7 +35,7 @@ from ruamel.yaml.parser import ParserError
 from ruamel.yaml.composer import ComposerError
 
 from lava_test_plans import __version__
-
+from lava_test_plans.utils import get_context, validate_variables
 
 FORMAT = "[%(funcName)16s() ] %(message)s"
 logging.basicConfig(level=logging.INFO, format=FORMAT)
@@ -217,6 +217,12 @@ def main():
         default=[],
     )
     parser.add_argument(
+        "--validate-variables",
+        help="Validate the provided variables to find the missing required variables.",
+        action="store_true",
+        dest="validate_variables",
+    )
+    parser.add_argument(
         "--device-type", help="Device type in LAVA", dest="device_type", required=True
     )
     parser.add_argument(
@@ -310,6 +316,20 @@ def main():
                 script_dirname, args.testplan_device_path
             )
 
+    exit_after_validate = 0
+    if args.validate_variables:
+        if not args.lava_token and not args.qa_token:
+            exit_after_validate = 1
+        exit_code = validate_variables(
+            script_dirname,
+            args.device_type,
+            args.testplan_device_path,
+            args.variables,
+            args.overwrite_variables,
+        )
+    if exit_code or exit_after_validate:
+        return exit_code
+
     if args.qa_server_project:
         if "/" in args.qa_server_project:
             logger.error("--qa-server-project can not contain of a slash in the name")
@@ -337,27 +357,7 @@ def main():
         if args.dryrun
         else StrictUndefined,
     )
-    context = {}
-    for variables in args.variables:
-        if not os.path.exists(variables):
-            variables = os.path.join(script_dirname, variables)
-        try:
-            context.update(ConfigObj(variables).dict())
-        except ConfigObjError:
-            logger.info("Unable to parse .ini file")
-            logger.info("Trying YAML")
-            with open(variables, "r") as vars_file:
-                try:
-                    yaml = YAML(typ="safe")
-                    context.update(yaml.load(vars_file))
-                except ParserError as e:
-                    logger.error(e)
-                except ComposerError as e:
-                    logger.error(e)
-
-    for variable in args.overwrite_variables:
-        key, value = variable.split("=")
-        context.update({key: value})
+    context = get_context(script_dirname, args.variables, args.overwrite_variables)
     context.update({"device_type": args.device_type})
     test_list = []
     if args.test_plan:
