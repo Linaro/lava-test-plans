@@ -298,6 +298,18 @@ def main():
 
     output_path = os.path.abspath(os.path.join(script_dirname, "..", "tmp"))
 
+    if not os.path.isabs(args.testplan_path):
+        if not os.path.isdir(args.testplan_path):
+            args.testplan_path = os.path.join(script_dirname, args.testplan_path)
+    if not os.path.isabs(args.testcase_path):
+        if not os.path.isdir(args.testcase_path):
+            args.testcase_path = os.path.join(script_dirname, args.testcase_path)
+    if not os.path.isabs(args.testplan_device_path):
+        if not os.path.isdir(args.testplan_device_path):
+            args.testplan_device_path = os.path.join(
+                script_dirname, args.testplan_device_path
+            )
+
     if args.qa_server_project:
         if "/" in args.qa_server_project:
             logger.error("--qa-server-project can not contain of a slash in the name")
