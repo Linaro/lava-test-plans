@@ -1,0 +1,26 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 480 %}
+{% set test_name = "cts-lkft" %}
+
+{% block xts_test_params %}cts
+                --include-filter CtsAslrMallocTestCases
+                --include-filter CtsBionicTestCases
+                --include-filter CtsBluetoothTestCases
+                --include-filter CtsCameraTestCases
+                --include-filter CtsDisplayTestCases
+                --include-filter CtsDramTestCases
+                --include-filter CtsDrmTestCases
+                --include-filter CtsGraphicsTestCases
+                --include-filter CtsHardwareTestCases
+                --include-filter CtsJankDeviceTestCases
+                --include-filter CtsJniTestCases
+                --include-filter CtsLibcoreLegacy22TestCases
+                --include-filter CtsLibcoreTestCases
+                --include-filter CtsMonkeyTestCases
+                --include-filter CtsOsTestCases
+                --include-filter CtsSystemUiTestCases
+                --include-filter CtsSystemUiRenderingTestCases
+                --include-filter CtsUsbTests
+                --disable-reboot
+{% endblock xts_test_params %}
