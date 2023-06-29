@@ -5,9 +5,7 @@
 {# to avoid overriding by the one definied in testcases #}
 {# like the one definied in testcases/boot.yaml is true by default #}
 {% set auto_login = false %}
-{% set boot_method = boot_method|default("fastboot") %}
-{% set BOOT_OS_PROMPT = ["console:/"] %}
-{% set ptable = true %}
+{% set boot_method = "fastboot" %}
 {% set pre_boot_command = false %}
 {% set pre_os_command = false %}
 {% set pre_power_command = false %}
@@ -15,13 +13,14 @@
 {% set reboot_reset = false %}
 {% set rootfs = false %}
 
-{% set FASTBOOT_COMMANDS = [ "format:ext4 metadata", "oem select-display-panel hdmi", "reboot bootloader", "oem select-display-panel hdmi", "reboot bootloader", "oem select-display-panel hdmi", "reboot" ] %}}
-
-{% set PTABLE_LABEL = PTABLE_LABEL|default("partition:0") %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default(["console:/"]) %}
+{% set FASTBOOT_COMMANDS = FASTBOOT_COMMANDS|default(["format:ext4 metadata", "oem select-display-panel hdmi", "reboot bootloader", "oem select-display-panel hdmi", "reboot bootloader", "oem select-display-panel hdmi", "reboot"]) %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("gpt_both0.bin") %}
 {% set PTABLE_URL = PTABLE_URL|default("https://images.validation.linaro.org/snapshots.linaro.org/96boards/dragonboard845c/linaro/rescue/101/dragonboard-845c-bootloader-ufs-aosp-101/gpt_both0.bin") %}
-{% set partition_super = partition_super|default(true) %}
-{% set partition_userdata = partition_userdata|default(true) %}
+
+{% set partition_super = true %}
+{% set partition_userdata = true %}
+
 {% if IMAGE_SUPPORTED_VENDOR_BOOT is defined and IMAGE_SUPPORTED_VENDOR_BOOT == "true" %}
     {% set partition_vendor_boot = true %}
 {% endif%}
