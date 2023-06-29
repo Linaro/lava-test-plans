@@ -13,7 +13,7 @@
 {% set rootfs = false %}
 
 {% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default(["console:/"]) %}
-{% set FASTBOOT_COMMANDS = FASTBOOT_COMMANDS|default(["format cache", "reboot bootloader"]) %}}
+{% set FASTBOOT_COMMANDS = FASTBOOT_COMMANDS|default(["format cache", "reboot bootloader"]) %}
 
 {% set ptable = true %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("prm_ptable.img") %}

@@ -12,7 +12,7 @@
 {% set rootfs = false %}
 
 {% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default(["console:/"]) %}
-{% set FASTBOOT_COMMANDS = FASTBOOT_COMMANDS|default(["format:ext4 metadata", "oem select-display-panel hdmi", "reboot bootloader", "oem select-display-panel hdmi", "reboot bootloader", "oem select-display-panel hdmi", "reboot"]) %}}
+{% set FASTBOOT_COMMANDS = FASTBOOT_COMMANDS|default(["format:ext4 metadata", "oem select-display-panel hdmi", "reboot bootloader", "oem select-display-panel hdmi", "reboot bootloader", "oem select-display-panel hdmi", "reboot"]) %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("gpt_both0.bin") %}
 {% set PTABLE_URL = PTABLE_URL|default("https://images.validation.linaro.org/snapshots.linaro.org/96boards/qrb5165-rb5/linaro/rescue/27/rb5-bootloader-ufs-aosp-27/gpt_both0.bin") %}
 
