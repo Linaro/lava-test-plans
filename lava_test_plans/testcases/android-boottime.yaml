@@ -1,0 +1,39 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set test_timeout = 210 %}
+{% set boottime_timeout = 15 %}
+{% set test_name = "boottime" %}
+
+{% block test_target %}
+
+{% with test_timeout=boottime_timeout %}
+{% include "include/test_target.jinja2" %}
+{% endwith %}
+
+{% with testname="fresh-install", test_operation="COLLECT", test_index="0" %}
+{% include "include/android-boottime-definition.jinja2" %}
+{% endwith %}
+{% with testname="boottime-fresh-install", test_operation="ANALYZE", test_index="0" %}
+{% include "include/android-boottime-definition.jinja2" %}
+{% endwith %}
+
+{% for index in range(1,8)  %}
+{% with FASTBOOT_COMMANDS=Null %}
+- boot:
+{% include "include/boot_target/boot_target.jinja2" %}
+{% endwith %}
+{% with test_timeout=boottime_timeout %}
+{% include "include/test_target.jinja2" %}
+{% endwith %}
+
+{% with testname="boottime-" + index|string, test_operation="COLLECT", test_index=index %}
+{% include "include/android-boottime-definition.jinja2" %}
+{% endwith %}
+{% if index == 7 %}
+{% with testname="boottime-reboot", test_operation="ANALYZE", test_index=index %}
+{% include "include/android-boottime-definition.jinja2" %}
+{% endwith %}
+{% endif %}
+{% endfor %}
+
+{% endblock test_target %}
