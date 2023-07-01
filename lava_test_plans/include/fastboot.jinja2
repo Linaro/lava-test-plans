@@ -158,7 +158,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% if OVERLAY_KSELFTEST_URL is defined %}
           kselftest:
             url: {{OVERLAY_KSELFTEST_URL}}
-            path: {{KSELFTEST_PATH|default("/opt/kselftest_intree")}}
+            path: {{KSELFTEST_PATH|default("/opt/kselftests/default-in-kernel")}}
 {% if OVERLAY_KSELFTEST_URL_FORMAT is defined %}
             format: {{OVERLAY_KSELFTEST_URL_FORMAT}}
 {% endif %}
