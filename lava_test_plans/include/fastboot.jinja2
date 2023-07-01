@@ -130,8 +130,19 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
-{% if OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
+{% if OVERLAY_URL is defined or OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
         overlays:
+{% endif %}
+{% if OVERLAY_URL is defined %}
+          over:
+            url: {{OVERLAY_URL}}
+            path: {{OVERLAY_PATH|default("/")}}
+{% if OVERLAY_URL_FORMAT is defined %}
+            format: {{OVERLAY_URL_FORMAT}}
+{% endif %}
+{% if OVERLAY_URL_COMP is defined %}
+            compression: {{OVERLAY_URL_COMP}}
+{% endif %}
 {% endif %}
 {% if OVERLAY_MODULES_URL is defined %}
           modules:
