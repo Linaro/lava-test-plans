@@ -1,5 +1,6 @@
 {% extends "master.jinja2" %}
 
+{% set apply_overlay = apply_overlay|default("rootfs") %}
 {% set deploy_timeout = 0 %}
 {% set boot_timeout = 0 %}
 {% set install_fastboot_timeout = 0 %}
@@ -61,6 +62,9 @@
 {% endif %}
 {% if ROOTFS_URL_COMP is defined %}
       compression: {{ROOTFS_URL_COMP}}
+{% endif %}
+{% if apply_overlay == "rootfs" %}
+      apply-overlay: true
 {% endif %}
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
