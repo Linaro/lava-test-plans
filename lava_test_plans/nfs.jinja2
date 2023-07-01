@@ -68,8 +68,21 @@
 {% endif %}
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
-{% if OVERLAY_MODULES_URL is defined %}
+{% if OVERLAY_URL is defined or OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
       overlays:
+{% endif %}
+{% if OVERLAY_URL is defined %}
+        over:
+          url: {{OVERLAY_URL}}
+          path: {{OVERLAY_PATH|default("/")}}
+{% if OVERLAY_URL_FORMAT is defined %}
+          format: {{OVERLAY_URL_FORMAT}}
+{% endif %}
+{% if OVERLAY_URL_COMP is defined %}
+          compression: {{OVERLAY_URL_COMP}}
+{% endif %}
+{% endif %}
+{% if OVERLAY_MODULES_URL is defined %}
         modules:
           url: {{OVERLAY_MODULES_URL}}
           path: /
@@ -78,6 +91,28 @@
 {% endif %}
 {% if OVERLAY_MODULES_URL_COMP is defined %}
           compression: {{OVERLAY_MODULES_URL_COMP}}
+{% endif %}
+{% endif %}
+{% if OVERLAY_KSELFTEST_URL is defined %}
+        kselftest:
+          url: {{OVERLAY_KSELFTEST_URL}}
+          path: {{KSELFTEST_PATH|default("/opt/kselftest")}}
+{% if OVERLAY_KSELFTEST_URL_FORMAT is defined %}
+          format: {{OVERLAY_KSELFTEST_URL_FORMAT}}
+{% endif %}
+{% if OVERLAY_KSELFTEST_URL_COMP is defined %}
+          compression: {{OVERLAY_KSELFTEST_URL_COMP}}
+{% endif %}
+{% endif %}
+{% if OVERLAY_PERF_URL is defined %}
+        perf:
+          url: {{OVERLAY_PERF_URL}}
+          path: {{PERF_PATH|default("/")}}
+{% if OVERLAY_PERF_URL_FORMAT is defined %}
+          format: {{OVERLAY_PERF_URL_FORMAT}}
+{% endif %}
+{% if OVERLAY_PERF_URL_COMP is defined %}
+          compression: {{OVERLAY_PERF_URL_COMP}}
 {% endif %}
 {% endif %}
 {% endif %}
