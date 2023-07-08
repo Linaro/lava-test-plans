@@ -9,6 +9,8 @@
 {% set OVERLAY_MODULES_URL_COMP = OVERLAY_MODULES_URL_COMP|default("xz") %}
 {% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
 {% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
+{% set OVERLAY_URL_FORMAT = OVERLAY_URL_FORMAT|default("tar") %}
+{% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
 
 {% block test_target %}
 {% if enable_tests is defined and enable_tests %}
