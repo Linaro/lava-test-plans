@@ -1,3 +1,7 @@
+{% if DEPLOY_OS == "debian" %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+{% endif %}
+
 {% extends "devices/x15" %}
 
 {% set BOOT_LABEL = BOOT_LABEL|default("kernel") %}
