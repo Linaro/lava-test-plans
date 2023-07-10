@@ -1,3 +1,7 @@
+{% if DEPLOY_OS == "debian" %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+{% endif %}
+
 {% extends "devices/dragonboard-845c" %}
 
 {% set BOOT_LABEL = "kernel" %}
