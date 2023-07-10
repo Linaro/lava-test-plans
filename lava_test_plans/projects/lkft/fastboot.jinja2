@@ -16,7 +16,7 @@
 {{ super() }}
 {% if DEPLOY_TARGET == "downloads" %}
         steps:
-        - /kir/lava/board_setup.sh {{DEVICE_TYPE}}
+        - /kir/lava/board_setup.sh {{DEVICE_TYPE}}{% if DEPLOY_OS == "debian" %} rootfs{% endif %}
 
 - deploy:
     timeout:
