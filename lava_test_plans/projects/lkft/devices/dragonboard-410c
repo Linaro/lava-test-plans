@@ -1,3 +1,7 @@
+{% if DEPLOY_OS == "debian" %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+{% endif %}
+
 {% extends "devices/dragonboard-410c" %}
 
 {% set BOOT_URL = BOOT_URL|default("http://images.validation.linaro.org/releases.linaro.org/96boards/dragonboard410c/linaro/debian/18.01/boot-linaro-buster-dragonboard-410c-359.img.gz") %}
