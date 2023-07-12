@@ -1,0 +1,16 @@
+{% if DEPLOY_OS == "debian" %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+{% endif %}
+
+{% extends "devices/e850-96" %}
+
+{% set BOOT_URL = BOOT_URL|default("http://images.validation.linaro.org/releases.linaro.org/96boards/dragonboard410c/linaro/debian/18.01/boot-linaro-buster-dragonboard-410c-359.img.gz") %}
+{% set DOCKER_IMAGE_BOOT = DOCKER_IMAGE_BOOT|default("linaro/kir:master") %}
+{% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
+{% set OVERLAY_KSELFTEST_URL_COMP = OVERLAY_KSELFTEST_URL_COMP|default("xz") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
+{% set OVERLAY_URL_FORMAT = OVERLAY_URL_FORMAT|default("tar") %}
+{% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
+{% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("ext4") %}
