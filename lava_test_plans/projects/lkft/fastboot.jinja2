@@ -10,7 +10,7 @@
 {% set DOCKER_IMAGE_POSTPROCESS = DOCKER_IMAGE_POSTPROCESS|default("linaro/kir:master") %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("ptable-linux-8g.img") %}
 {% set DOCKER_BOOT_FILE = DOCKER_BOOT_FILE|default("boot.img") %}
-{% set DOCKER_ROOTFS_FILE = DOCKER_ROOTFS_FILE|default("rpb-console-image-lkft.rootfs.img") %}
+{% set DOCKER_ROOTFS_FILE = DOCKER_ROOTFS_FILE|default("rootfs.img") %}
 
 {% block deploy_target %}
 {{ super() }}
