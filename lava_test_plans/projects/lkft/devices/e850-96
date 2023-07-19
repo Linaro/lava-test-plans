@@ -1,5 +1,7 @@
 {% extends "devices/e850-96" %}
 
+{% set kernel_start_message = '\'Android BootImage version:\'' %}
+
 {% if DEPLOY_OS == "debian" %}
 {% set ROOTFS_URL_COMP = "xz" %}
 {% endif %}
