@@ -270,6 +270,10 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 
 {% block boot_target %}
 - boot:
+{% if kernel_start_message is defined and kernel_start_message %}
+    parameters:
+      kernel-start-message: {{ kernel_start_message }}
+{% endif %}
 {% if lxc_project == true %}
     namespace: target
 {% endif %}
