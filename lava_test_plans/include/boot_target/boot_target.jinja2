@@ -1,0 +1,31 @@
+{## NOTE: PLEASE DON'T ADD BLOCK HERE, AS ONLY THE RENDERED CONTENTS  ##}
+{## WILL BE RETURNED WHEN INCLUDED, WHICH DOES NOT HAVE THE BLOCK     ##}
+{## DEFINITION THEN, THE OVERRIDING CALLED AT OTHER PLACES WON'T WORK ##}
+
+{% if kernel_start_message is defined and kernel_start_message %}
+    parameters:
+      kernel-start-message: {{ kernel_start_message }}
+{% endif %}
+{% if lxc_project == true %}
+    namespace: target
+{% endif %}
+{% include "include/boot_target/boot_os_prompt.jinja2" %}
+{% include "include/boot_target/timeout_and_method.jinja2" %}
+{% if FASTBOOT_COMMANDS is defined %}
+    commands:
+{% for fcmd in FASTBOOT_COMMANDS %}
+      - {{ fcmd }}
+{% endfor %}
+{% endif %}
+{% if lxc_project == true and pre_os_command is defined and pre_os_command == true %}
+    protocols:
+      lava-lxc:
+      - action: auto-login-action
+        request: pre-os-command
+        timeout:
+          minutes: 2
+{% endif %}
+{% if DOCKER_IMAGE_BOOT is defined %}
+    docker:
+      image: {{DOCKER_IMAGE_BOOT}}
+{% endif %}
