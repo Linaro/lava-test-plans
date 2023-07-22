@@ -5,7 +5,7 @@
 
 {% set auto_login = true %}
 {% set boot_method = "u-boot" %}
-{% set extra_kernel_args = '8250.nr_uarts=1 cma=64M ' + extra_kernel_args|default("") %}
+{% set extra_kernel_args = '8250.nr_uarts=1 cma=64M rootwait' + extra_kernel_args|default("") %}
 {% set rootfs_label="nfsrootfs" %}
 {% set use_context = true %}
 
