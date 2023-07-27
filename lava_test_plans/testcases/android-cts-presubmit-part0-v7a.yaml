@@ -1,0 +1,12 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 720 %}
+{% set test_name = "cts-presubmit-part0-v7a" %}
+
+{% block xts_test_params %}cts-presubmit --abi armeabi-v7a
+                --exclude-filter CtsDeqpTestCases
+                --exclude-filter CtsLibcoreOjTestCases
+                --exclude-filter CtsKeystoreTestCases
+                --exclude-filter CtsWindowManagerDeviceTestCases
+                --disable-reboot
+{% endblock xts_test_params %}

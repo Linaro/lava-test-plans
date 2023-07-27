@@ -1,0 +1,7 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 360 %}
+{% set test_name = "cts-presubmit-CtsLibcoreOjTestCases" %}
+
+{% block xts_test_params %}cts-presubmit -m CtsLibcoreOjTestCases --disable-reboot
+{% endblock xts_test_params %}
