@@ -1,0 +1,6 @@
+{% extends "testcases/master/template-android-vts.yaml.jinja2" %}
+
+{% set test_timeout = 60 %}
+{% set test_name = "vts-VtsHalAudioV4_0TargetTest" %}
+
+{% block xts_test_params %}vts -m VtsHalAudioV4_0TargetTest{% endblock xts_test_params %}

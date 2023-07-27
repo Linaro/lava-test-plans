@@ -1,0 +1,6 @@
+{% extends "testcases/master/template-android-vts.yaml.jinja2" %}
+
+{% set test_timeout = 360 %}
+{% set test_name = "vts-part0" %}
+
+{% block xts_test_params %}vts --exclude-filter FastbootVerifyUserspaceTest --exclude-filter VtsHalAudioV4_0TargetTest{% endblock xts_test_params %}
