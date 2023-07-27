@@ -1,0 +1,7 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 500 %}
+{% set test_name = "cts-CtsMediaPlayerTestCases" %}
+
+{% block xts_test_params %}cts -m CtsMediaPlayerTestCases --disable-reboot
+{% endblock xts_test_params %}

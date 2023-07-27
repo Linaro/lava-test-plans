@@ -1,0 +1,20 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 480 %}
+{% set test_name = "cts-part2-v7a" %}
+
+{% block xts_test_params %}cts --abi armeabi-v7a
+                --include-filter CtsVideoTestCases
+                --include-filter CtsWidgetTestCases[instant]
+                --include-filter CtsThemeHostTestCases
+                --include-filter CtsViewTestCases
+                --include-filter vm-tests-tf
+                --include-filter CtsWidgetTestCases
+                --include-filter CtsTelephonyTestCases
+                --include-filter CtsStatsdAtomHostTestCases[instant]
+                --include-filter CtsStatsdAtomHostTestCases
+                --include-filter CtsSystemUiTestCases[instant]
+                --include-filter CtsSystemUiTestCases
+                --include-filter CtsWifiTestCases
+                --disable-reboot
+{% endblock xts_test_params %}

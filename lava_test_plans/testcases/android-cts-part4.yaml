@@ -1,0 +1,32 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 1200 %}
+{% set test_name = "cts-part4" %}
+
+{% block xts_test_params %}cts
+                --include-filter CtsKeystoreTestCases
+                --include-filter CtsWindowManagerDeviceTestCases
+                --include-filter CtsDevicePolicyManagerTestCases
+                --include-filter CtsIdentityTestCases
+                --include-filter CtsJobSchedulerTestCases
+                --include-filter CtsIncidentHostTestCases
+                --include-filter CtsIncidentHostTestCases[instant]
+                --include-filter CtsStatsdHostTestCases[instant]
+                --include-filter CtsStatsdHostTestCases
+                --include-filter CtsPrintTestCases
+                --include-filter CtsPrintTestCases[instant]
+                --include-filter CtsFileSystemTestCases
+                --include-filter CtsFileSystemTestCases[instant]
+                --include-filter CtsUsageStatsTestCases
+                --include-filter CtsTrustedVoiceHostTestCases
+                --include-filter CtsPerfettoTestCases
+                --include-filter CtsShortcutHostTestCases
+                --include-filter CtsNativeHardwareTestCases
+                --include-filter CtsNativeMidiTestCases
+                --include-filter CtsAutoFillServiceTestCases[instant]
+                --include-filter CtsAutoFillServiceTestCases
+                --include-filter CtsBackupHostTestCases
+                --include-filter CtsBackupTestCases
+                --include-filter CtsSecurityBulletinHostTestCases
+                --disable-reboot
+{% endblock xts_test_params %}

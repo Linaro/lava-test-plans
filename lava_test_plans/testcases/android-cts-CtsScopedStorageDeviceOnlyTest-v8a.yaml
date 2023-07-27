@@ -1,0 +1,7 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 240 %}
+{% set test_name = "cts-CtsScopedStorageDeviceOnlyTest-v8a" %}
+
+{% block xts_test_params %}cts --abi arm64-v8a -m CtsScopedStorageDeviceOnlyTest --disable-reboot
+{% endblock xts_test_params %}

@@ -1,0 +1,34 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 480 %}
+{% set test_name = "cts-part3-v8a" %}
+
+{% block xts_test_params %}cts --abi arm64-v8a
+                --include-filter CtsMediaDrmTestCases[instant]
+                --include-filter CtsMediaDrmTestCases
+                --include-filter CtsMediaBitstreamsTestCases
+                --include-filter CtsInstallHostTestCases
+                --include-filter CtsContactsProviderTestCases
+                --include-filter CtsNetTestCases
+                --include-filter CtsSecurityHostTestCases
+                --include-filter CtsStagedInstallHostTestCases
+                --include-filter CtsPermission3TestCases
+                --include-filter CtsPdfTestCases
+                --include-filter CtsPdfTestCases[instant]
+                --include-filter CtsBlobStoreTestCases
+                --include-filter CtsSensorTestCases[instant]
+                --include-filter CtsSensorTestCases
+                --include-filter CtsExtractNativeLibsHostTestCases
+                --include-filter CtsMediaProviderTranscodeTests
+                --include-filter CtsWebkitTestCases
+                --include-filter CtsTextTestCases
+                --include-filter CtsPermissionTestCases
+                --include-filter CtsTextTestCases[instant]
+                --include-filter CtsBugreportTestCases
+                --include-filter CtsCameraTestCases
+                --include-filter CtsCameraTestCases[instant]
+                --include-filter CtsAppExitTestCases[instant]
+                --include-filter CtsLibcoreFileIOTestCases
+                --include-filter CtsSimpleperfTestCases
+                --disable-reboot
+{% endblock xts_test_params %}

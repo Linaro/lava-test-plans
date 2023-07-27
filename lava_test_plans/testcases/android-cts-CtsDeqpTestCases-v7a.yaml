@@ -1,0 +1,7 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 900 %}
+{% set test_name = "cts-CtsDeqpTestCases-v7a" %}
+
+{% block xts_test_params %}cts --abi armeabi-v7a -m CtsDeqpTestCases --disable-reboot
+{% endblock xts_test_params %}

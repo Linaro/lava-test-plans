@@ -1,0 +1,11 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 600 %}
+{% set test_name = "cts-libcore" %}
+
+{% block xts_test_params %}cts
+                -m CtsLibcoreTestCases
+                -m CtsLibcoreOjTestCases
+                -m CtsIcuTestCases
+                --disable-reboot
+{% endblock xts_test_params %}

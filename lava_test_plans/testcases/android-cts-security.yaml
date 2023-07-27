@@ -1,0 +1,11 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 600 %}
+{% set test_name = "cts-security" %}
+
+{% block xts_test_params %}cts
+                -m CtsSecurityTestCases
+                -m CtsSecurityTestCases[instant]
+                -m CtsAppSecurityHostTestCases
+                --disable-reboot
+{% endblock xts_test_params %}

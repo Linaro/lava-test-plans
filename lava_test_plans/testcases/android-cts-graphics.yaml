@@ -1,0 +1,10 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 1200 %}
+{% set test_name = "cts-graphics" %}
+
+{% block xts_test_params %}cts
+                --include-filter CtsGraphicsTestCases
+                --include-filter CtsGraphicsTestCases[instant]
+                --disable-reboot
+{% endblock xts_test_params %}

@@ -1,0 +1,8 @@
+{% extends "testcases/master/template-android-cts.yaml.jinja2" %}
+
+{% set test_timeout = 240 %}
+{% set test_name = "cts-CtsIncrementalInstallHostTestCases" %}
+{% set cts_expect_reboot = true %}
+
+{% block xts_test_params %}cts -m CtsIncrementalInstallHostTestCases --disable-reboot
+{% endblock xts_test_params %}
