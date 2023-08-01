@@ -49,7 +49,7 @@ context:
 {% set LAVA_JOB_VISIBILITY = LAVA_JOB_VISIBILITY|default("public") %}
 device_type: {% block device_type %}{% endblock %}
 job_name: {% block job_name %}{% endblock %}
-priority: {% block priority %}{{LAVA_JOB_PRIORITY}}{% endblock priority %}
+priority: {% block priority %}{{LAVA_JOB_PRIORITY|default(10)}}{% endblock priority %}
 visibility:
 {% block visibility %}
 {% if LAVA_JOB_VISIBILITY == "group" %}
