@@ -1,5 +1,5 @@
 {% extends "master/template-kselftest.yaml.jinja2" %}
 
 {% set guestfs_size = 1024 %}
-{% set testnames = ['lib', 'membarrier', 'memfd', 'memory-hotplug', 'mincore', 'mount', 'mqueue'] %}
+{% set testnames = ['cgroup', 'cpufreq', 'efivarfs', 'filesystems',  'filesystems.binderfs', 'filesystems.epoll', 'firmware', 'ftrace'] %}
 {% set test_timeout = 45 %}

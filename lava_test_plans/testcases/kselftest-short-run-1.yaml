@@ -1,5 +1,5 @@
 {% extends "master/template-kselftest.yaml.jinja2" %}
 
 {% set guestfs_size = 1024 %}
-{% set testnames = ['breakpoints', 'capabilities', 'cgroup', 'clone3', 'core', 'cpufreq', 'cpu-hotplug'] %}
+{% set testnames = ['breakpoints', 'capabilities', 'clone3', 'core', 'cpu-hotplug', 'fpu', 'futex', 'kcmp', 'membarrier', 'mincore', 'mqueue'] %}
 {% set test_timeout = 40 %}
