@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bullseye AS builder
+FROM python:3.11-slim-bookworm AS builder
 ARG DEBIAN_FRONTEND=noninteractive
 ARG version
 
@@ -13,7 +13,7 @@ RUN cd /lava-test-plans \
     && rm -rf .git \
     && FLIT_ALLOW_INVALID=1 flit build
 
-FROM python:3.9-slim-bullseye
+FROM python:3.11-slim-slim
 ARG DEBIAN_FRONTEND=noninteractive
 
 # hadolint ignore=DL3008
