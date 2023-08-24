@@ -4,7 +4,7 @@
 {%- if vsyscall_mode is defined %}
   {%- set vsyscall_suffix = "-vsyscall-mode-"+vsyscall_mode %}
 {%- endif -%}
-{% set test_name = "kselftests-" + testnames|join('-') + vsyscall_suffix %}
+{% set test_name = "kselftest-" + testnames|join('-') + vsyscall_suffix %}
 {% set use_context = true %}
 {% if vsyscall_mode is defined %}
 {% set extra_kernel_args = 'vsyscall={{vsyscall_mode}} ' + extra_kernel_args|default("") %}
