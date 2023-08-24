@@ -1,6 +1,7 @@
 {% extends "devices/bcm2711-rpi-4-b" %}
 
 {% set DEPLOY_OS = DEPLOY_OS|default("oe") %}
+{% set KERNEL_URL_COMP = KERNEL_URL_COMP|default("gz") %}
 {% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
 {% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
 {% set OVERLAY_KSELFTEST_URL_COMP = OVERLAY_KSELFTEST_URL_COMP|default("xz") %}
