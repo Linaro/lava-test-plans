@@ -13,7 +13,7 @@ RUN cd /lava-test-plans \
     && rm -rf .git \
     && FLIT_ALLOW_INVALID=1 flit build
 
-FROM python:3.11-slim-slim
+FROM python:3.11-slim-bookworm
 ARG DEBIAN_FRONTEND=noninteractive
 
 # hadolint ignore=DL3008
