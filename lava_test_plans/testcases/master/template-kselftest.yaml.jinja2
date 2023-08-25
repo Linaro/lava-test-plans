@@ -37,7 +37,9 @@
 {% for testname in testnames %}
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
-      revision: '{{ TDEFINITIONS_REVISION }}'
+{% if TDEFINITIONS_REVISION is defined %}
+      revision: '{{ TDEFINITIONS_REVISION}}'
+{% endif %}
       path: automated/linux/kselftest/kselftest.yaml
       name: kselftest-{{testname|replace('.', '-')}}{{vsyscall_suffix}}
       parameters:
