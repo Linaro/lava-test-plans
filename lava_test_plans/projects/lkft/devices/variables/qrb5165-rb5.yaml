@@ -1,0 +1,8 @@
+DEVICE_TYPE: qrb5165-rb5
+KERNEL_URL: unknown
+DTB_URL: unknown
+BOOT_URL: unknown
+MODULES_URL: unknown
+ROOTFS_URL: unknown
+LAVA_JOB_PRIORITY: 25
+PROJECT: projects/lkft/

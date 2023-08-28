@@ -1,0 +1,22 @@
+{% if DEPLOY_OS == "debian" %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+{% endif %}
+
+{% extends "devices/qrb5165-rb5" %}
+
+{% set pre_os_command = false %}
+{% set post_boot_command = true %}
+{% set rootfs_label = 'rootfs' %}
+{% set BOOT_LABEL = "kernel" %}
+{% set BOOT_LABEL_OVERRIDE = true %}
+{% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("gpt_both0.bin") %}
+{% set PTABLE_URL = PTABLE_URL|default("https://people.linaro.org/~anders.roxell/rb5-bootloader-ufs-linux-21/gpt_both0.bin") %}
+{% set DOCKER_IMAGE_BOOT = DOCKER_IMAGE_BOOT|default("linaro/kir:master") %}
+{% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
+{% set OVERLAY_KSELFTEST_URL_COMP = OVERLAY_KSELFTEST_URL_COMP|default("xz") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
+{% set OVERLAY_URL_FORMAT = OVERLAY_URL_FORMAT|default("tar") %}
+{% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
+{% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("ext4") %}
