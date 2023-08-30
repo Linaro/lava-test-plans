@@ -10,6 +10,8 @@
 {% set extra_kernel_args = 'vsyscall={{vsyscall_mode}} ' + extra_kernel_args|default("") %}
 {% endif %}
 
+{% set KSELFTEST_PATH = KSELFTEST_PATH|default('/opt/kselftests/default-in-kernel') %}
+
 {% extends "testcases/master/template-master.jinja2" %}
 
 {% block metadata %}
