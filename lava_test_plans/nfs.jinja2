@@ -96,7 +96,7 @@
 {% if OVERLAY_KSELFTEST_URL is defined %}
         kselftest:
           url: {{OVERLAY_KSELFTEST_URL}}
-          path: {{KSELFTEST_PATH|default("/opt/kselftest")}}
+          path: {{KSELFTEST_PATH}}
 {% if OVERLAY_KSELFTEST_URL_FORMAT is defined %}
           format: {{OVERLAY_KSELFTEST_URL_FORMAT}}
 {% endif %}
