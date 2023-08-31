@@ -22,6 +22,16 @@
 {% set fastboot_deploy_timeout = fastboot_deploy_timeout|default(40) %}
 {% set download_postprocess_required = download_postprocess_required|default(true) %}
 
+{% if KSELFTEST is defined %}
+{% set OVERLAY_KSELFTEST_URL = KSELFTEST %}
+{% if KSELFTEST_FORMAT is defined %}
+{% set OVERLAY_KSELFTEST_URL_FORMAT = KSELFTEST_FORMAT %}
+{% endif %}
+{% if KSELFTEST_COMP is defined %}
+{% set OVERLAY_KSELFTEST_URL_COMP = KSELFTEST_COMP %}
+{% endif %}
+{% endif %}
+
 {# partitions for android jobs #}
 {# boot_a partition would be set via boot_label #}
 {% set partition_boot_b = partition_boot_b|default(false) %}
