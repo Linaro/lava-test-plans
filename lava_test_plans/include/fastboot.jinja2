@@ -32,6 +32,16 @@
 {% endif %}
 {% endif %}
 
+{% if PERF is defined %}
+{% set OVERLAY_PERF_URL = PERF %}
+{% if PERF_FORMAT is defined %}
+{% set OVERLAY_PERF_URL_FORMAT = PERF_FORMAT %}
+{% endif %}
+{% if PERF_COMP is defined %}
+{% set OVERLAY_PERF_URL_COMP = PERF_COMP %}
+{% endif %}
+{% endif %}
+
 {# partitions for android jobs #}
 {# boot_a partition would be set via boot_label #}
 {% set partition_boot_b = partition_boot_b|default(false) %}
