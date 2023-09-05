@@ -182,6 +182,8 @@ lkft_android_variable_input_files = [
 ]
 tests = []
 for device in lkft_android_devices:
+    if device == "variables":
+        continue
     for testcase in lkft_android_boot_testcases:
         for variable_input_file in lkft_android_variable_input_files:
             tests.append(
@@ -198,6 +200,8 @@ lkft_android_nonboot_testcases = [
 ]
 assert len(lkft_android_nonboot_testcases) > 0
 for device in lkft_android_devices:
+    if device == "variables":
+        continue
     for testcase in lkft_android_nonboot_testcases:
         tests.append(
             (
