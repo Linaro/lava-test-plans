@@ -1,0 +1,33 @@
+{% extends "devices/qemu_x86_64" %}
+
+{% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("ext4") %}
+{% set OVERLAY_MODULES_URL_FORMAT = OVERLAY_MODULES_URL_FORMAT|default("tar") %}
+{% set OVERLAY_MODULES_URL_COMP = OVERLAY_MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
+{% set OVERLAY_URL_FORMAT = OVERLAY_URL_FORMAT|default("tar") %}
+{% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
+
+{% block test_target %}
+{% if enable_tests is defined and enable_tests %}
+{% if DEPLOY_OS is defined and DEPLOY_OS == "oe" %}
+- test:
+    timeout:
+      minutes: 5
+    definitions:
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: prep-tests
+          description: "Device preparation"
+        run:
+          steps:
+          # Tests expecting /lib64
+          - ln -sf /lib /lib64
+      name: prep-inline
+      path: inline/prep.yaml
+{% endif %}
+  {{ super() }}
+{% endif %}
+{% endblock test_target %}

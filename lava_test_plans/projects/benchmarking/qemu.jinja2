@@ -1,0 +1,39 @@
+{% extends "qemu.jinja2" %}
+
+{% block metadata %}
+{% include PROJECT+"include/metadata.jinja2" %}
+{% endblock metadata %}
+
+{% if DEVICE_TYPE == 'qemu_arm' %}
+{# libhugetlbfs_word_size variable is required for libhugetlbfs.yaml test template #}
+{% set libhuggetlbfs_word_size = 32 %}
+{% set AUTO_LOGIN_PROMPT = AUTO_LOGIN_PROMPT|default("am57xx-evm login:") %}
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@am57xx-evm:") %}
+{% set TARGET_BOOT_TIMEOUT = TARGET_BOOT_TIMEOUT|default(15) %}
+{% set smp_core_count = "2" %}
+{% endif %}
+
+{% set smp_core_count = smp_core_count|default(4) %}
+
+{% block rootfs_extra_args %}
+        {{ super() }}
+        image_arg: -hda {rootfs} -m 4096 -smp {{ smp_core_count }} -nographic
+{% endblock rootfs_extra_args %}
+
+{% block test_target %}
+{% if enable_tests is defined and enable_tests %}
+  {{ super() }}
+    - from: inline
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: prep-tmp-disk
+          description: "Link /scratch to /tmp"
+        run:
+          steps:
+            - df -h
+            - ln -s /tmp /scratch
+      name: prep-tmp-disk
+      path: inline/prep.yaml
+{% endif %}
+{% endblock test_target %}

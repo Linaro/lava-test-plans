@@ -1,0 +1,49 @@
+{% extends "include/fastboot.jinja2" %}
+
+{% block metadata %}
+{% include PROJECT+"include/metadata.jinja2" %}
+{% endblock metadata %}
+
+{% set BOOT_LABEL_OVERRIDE = BOOT_LABEL_OVERRIDE|default(false) %}
+{% set DEPLOY_TARGET = DEPLOY_TARGET|default("downloads") %}
+{% set DOCKER_IMAGE_DEPLOY = DOCKER_IMAGE_DEPLOY|default("linaro/kir:master") %}
+{% set DOCKER_IMAGE_POSTPROCESS = DOCKER_IMAGE_POSTPROCESS|default("linaro/kir:master") %}
+{% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("ptable-linux-8g.img") %}
+{% set DOCKER_BOOT_FILE = DOCKER_BOOT_FILE|default("boot.img") %}
+{% set DOCKER_ROOTFS_FILE = DOCKER_ROOTFS_FILE|default("rootfs.img") %}
+
+{% block deploy_target %}
+{{ super() }}
+{% if DEPLOY_TARGET == "downloads" %}
+        steps:
+        - /kir/lava/board_setup.sh {{DEVICE_TYPE}}{% if DEPLOY_OS == "debian" %} rootfs{% endif %}
+
+- deploy:
+    timeout:
+      minutes: {{ fastboot_deploy_timeout }}
+    to: fastboot
+    docker:
+      image: {{DOCKER_IMAGE_DEPLOY}}
+    images:
+{% if ptable == true %}
+      {{ PTABLE_LABEL }}:
+        url: downloads://{{DOCKER_PTABLE_FILE}}
+{% if reboot_reset == true %}
+        reboot: hard-reset
+{% endif %}
+{% endif %}
+{% if boot == true and BOOT_LABEL != "kernel" or BOOT_LABEL_OVERRIDE == true %}
+      boot:
+        url: downloads://{{DOCKER_BOOT_FILE}}
+{% if reboot_reset == true %}
+        reboot: hard-reset
+{% endif %}
+{% endif %}
+{% if rootfs == true %}
+      {{ rootfs_label }}:
+        url: downloads://{{DOCKER_ROOTFS_FILE}}
+        apply-overlay: true
+{% endif %}
+    os: {{DEPLOY_OS}}
+{% endif %}
+{% endblock deploy_target %}

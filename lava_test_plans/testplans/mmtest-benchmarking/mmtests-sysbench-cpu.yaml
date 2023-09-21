@@ -1,0 +1,6 @@
+{% extends "testcases/master/template-sysbench.jinja2" %}
+
+{% set testname = 'sysbenchcpu' %}
+{% set testnames = ['cpu'] %}
+{% set configfile = 'configs/config-scheduler-sysbench-cpu' %}
+{% set test_timeout = 45 %}

@@ -1,0 +1,14 @@
+{% extends "devices/qemu_arm64" %}
+
+{% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("ext4") %}
+{% set OVERLAY_MODULES_URL_FORMAT = OVERLAY_MODULES_URL_FORMAT|default("tar") %}
+{% set OVERLAY_MODULES_URL_COMP = OVERLAY_MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
+{% set OVERLAY_URL_FORMAT = OVERLAY_URL_FORMAT|default("tar") %}
+{% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
+{% if DEVICE_TYPE == 'qemu_arm' %}
+{% set GS_MACHINE = "virt-2.10,accel=kvm" %}
+{% else %}
+{% set QEMU_CPU_VARIABLES = QEMU_CPU_VARIABLES|default("max,pauth-impdef=on") %}
+{% endif %}

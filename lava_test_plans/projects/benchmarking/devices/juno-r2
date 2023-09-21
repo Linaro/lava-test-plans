@@ -1,0 +1,17 @@
+{% extends "devices/juno-r2" %}
+
+{% set KERNEL_URL_COMP = KERNEL_URL_COMP|default("gz") %}
+{% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
+{% set OVERLAY_PERF_URL_FORMAT = OVERLAY_PERF_URL_FORMAT|default("tar") %}
+{% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
+{% set OVERLAY_URL_FORMAT = OVERLAY_URL_FORMAT|default("tar") %}
+{% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
+{% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("tar") %}
+
+{% set extra_kernel_args = 'default_hugepagesz=2M hugepages=256 ' + extra_kernel_args|default("") %}
+
+{% block context %}
+  {{ super() }}
+  booti_dtb_addr: "0x88000000"
+  extra_nfsroot_args: ',wsize=65536'
+{% endblock context %}

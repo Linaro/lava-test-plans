@@ -1,0 +1,21 @@
+{% extends "testcases/master/template-master.jinja2" %}
+
+{% set KERNEL_BRANCH = KERNEL_BRANCH|default("") %}
+{% set OS_INFO = OS_INFO|default("") %}
+
+{% set test_name = "mmtests-" + testname|join('-') %}
+
+{% block test_target %}
+  {{ super() }}
+{% block test_target_prep %}
+{% endblock test_target_prep %}
+    - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
+      from: git
+      path: automated/linux/mmtests/mmtests.yaml
+      parameters:
+        SKIP_INSTALL: 'false'
+        TEST_PROG_VERSION: 'a5c1da9c8996'
+        MMTESTS_TYPE_NAME: '{{testname}}'
+        MMTESTS_CONFIG_FILE: '{{configfile}}'
+      name: mmtests-{{testname}}-tests
+{% endblock test_target %}

@@ -1,0 +1,11 @@
+  git_ref: {{KERNEL_BRANCH | default('unknown')}}
+  git_repo: {{KERNEL_REPO_URL | default('unknown')}}
+  git_sha: {{KERNEL_COMMIT | default('unknown')}}
+  git_describe: {{KERNEL_DESCRIBE | default('unknown')}}
+  kernel_version: "{{MAKE_KERNELVERSION | default('unknown')}}"
+  kernel-config: {{KERNEL_CONFIG_URL | default('unknown')}}
+  build-url: {{BUILD_URL | default('unknown')}}
+  artifact-location: {{KERNEL_ARCH_ARTIFACTS_PUB_DEST | default('unknown')}}
+  toolchain: {{TOOLCHAIN | default('unknown')}}
+  email-notification: {{CI_MAIL_RECIPIENTS | default('unknown')}}
+  build_name: {{BUILD_NAME | default('unknown')}}
