@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-sysbench.jinja2" %}
+{% extends "testcases/master/template-mmtests.jinja2" %}
 
 {% set testname = 'sysbenchcpu' %}
 {% set testnames = ['cpu'] %}
