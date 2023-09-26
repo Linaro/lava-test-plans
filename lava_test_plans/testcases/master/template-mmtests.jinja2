@@ -3,7 +3,7 @@
 {% set KERNEL_BRANCH = KERNEL_BRANCH|default("") %}
 {% set OS_INFO = OS_INFO|default("") %}
 
-{% set test_name = "mmtests-" + testname|join('-') %}
+{% set test_name = "mmtests-" + testname %}
 
 {% block test_target %}
   {{ super() }}
