@@ -2,7 +2,7 @@
 
 {% set use_context = true %}
 
-{% set extra_kernel_args = ' kvm.enable_vmware_backdoor=1 kvm.force_emulation_prefix=1 ' + extra_kernel_args|default("") %}
+{% set EXTRA_KERNEL_ARGS = ' kvm.enable_vmware_backdoor=1 kvm.force_emulation_prefix=1 ' + EXTRA_KERNEL_ARGS|default("") %}
 
 {% set test_timeout = 25 %}
 {% block metadata %}

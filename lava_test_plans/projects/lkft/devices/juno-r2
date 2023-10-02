@@ -10,7 +10,7 @@
 {% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
 {% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("tar") %}
 
-{% set extra_kernel_args = 'default_hugepagesz=2M hugepages=256 ' + extra_kernel_args|default("") %}
+{% set EXTRA_KERNEL_ARGS = 'default_hugepagesz=2M hugepages=256 ' + EXTRA_KERNEL_ARGS|default("") %}
 
 {% block context %}
   {{ super() }}

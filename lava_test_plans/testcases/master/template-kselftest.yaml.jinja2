@@ -7,7 +7,7 @@
 {% set test_name = "kselftest-" + testnames|join('-') + vsyscall_suffix %}
 {% set use_context = true %}
 {% if vsyscall_mode is defined %}
-{% set extra_kernel_args = 'vsyscall={{vsyscall_mode}} ' + extra_kernel_args|default("") %}
+{% set EXTRA_KERNEL_ARGS = 'vsyscall={{vsyscall_mode}} ' + EXTRA_KERNEL_ARGS|default("") %}
 {% endif %}
 
 {% set KSELFTEST_PATH = KSELFTEST_PATH|default('/opt/kselftests/default-in-kernel') %}
