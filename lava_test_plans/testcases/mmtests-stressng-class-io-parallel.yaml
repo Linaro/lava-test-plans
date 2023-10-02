@@ -1,0 +1,6 @@
+{% extends "testcases/master/template-mmtests.jinja2" %}
+
+{% set testname = 'stressng' %}
+{% set configfile = 'configs/config-workload-stressng-class-io-parallel' %}
+{% set mmtests_iterations = 10 %}
+{% set test_timeout = 45 %}
