@@ -1,0 +1,6 @@
+{% extends "testcases/master/template-mmtests.jinja2" %}
+
+{% set testname = 'hackbench' %}
+{% set configfile = 'configs/config-workload-cyclictest-fine-hackbench' %}
+{% set mmtests_iterations = 15 %}
+{% set test_timeout = 45 %}
