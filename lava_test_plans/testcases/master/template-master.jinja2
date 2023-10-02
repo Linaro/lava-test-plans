@@ -12,7 +12,7 @@
 
 {% block context %}
 {{ super() }}
-  {%- if extra_kernel_args is defined %}
-  extra_kernel_args: '{{extra_kernel_args}}'
+  {%- if EXTRA_KERNEL_ARGS is defined %}
+  extra_kernel_args: '{{EXTRA_KERNEL_ARGS}}'
   {%- endif %}
 {% endblock context %}
