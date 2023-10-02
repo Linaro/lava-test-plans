@@ -1,0 +1,6 @@
+{% extends "testcases/master/template-mmtests.jinja2" %}
+
+{% set testname = 'redis' %}
+{% set configfile = 'configs/config-memdb-redis-benchmark-small' %}
+{% set mmtests_iterations = 20 %}
+{% set test_timeout = 45 %}
