@@ -13,9 +13,10 @@
       from: git
       path: automated/linux/mmtests/mmtests.yaml
       parameters:
-        SKIP_INSTALL: 'false'
+        SKIP_INSTALL: 'true'
         TEST_PROG_VERSION: 'a5c1da9c8996'
-        MMTESTS_TYPE_NAME: '{{testname}}'
-        MMTESTS_CONFIG_FILE: '{{configfile}}'
-      name: mmtests-{{testname}}-tests
+        MMTESTS_TYPE_NAME: '{{ testname }}'
+        MMTESTS_CONFIG_FILE: '{{ configfile }}'
+        MMTESTS_ITERATIONS: '{{ mmtests_iterations }}'
+      name: mmtests-{{ testname }}
 {% endblock test_target %}
