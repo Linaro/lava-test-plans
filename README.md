@@ -52,30 +52,27 @@ __main__.py, 7c588ece
 External variables are set in the *variables.ini* file. Each line in this file
 is in the `key=value` form.
 
-Lines starting with `#` are omitted. 
+Lines starting with `#` will be omitted.
 
-Variables can also be set using
-`--overwrite-variables` parameter.
+Variables can also be set using `--overwrite-variables` CLI option.
 
 List of used variables:
 
- * `PROJECT_NAME`: used as the first part in the test job name. Can be set to differentiate LAVA test jobs between different teams/projects.
- * `BUILD_NUMBER`: used as last part in the test job name.
+ * `PROJECT_NAME`: used as the first part in the LAVA test job name. Can be set to differentiate test jobs between different teams/projects.
+ * `BUILD_NUMBER`: used as the last part in test job's name.
  * `KERNEL_BRANCH`: used in test job name.
  * `OS_INFO`: used in test job name.
- * `LAVA_JOB_PRIORITY`: priority of the LAVA job, used by LAVA scheduler.
- * `LAVA_JOB_VISIBILITY`: defaults to *public*. This block can be used to restrict job visibility to user or group.
- * `LAVA_JOB_VISIBILITY_GROUPS`: variable should contain groups required by job. Formatting is important and this variable should be formatted as comma separated list. For example: `group1, group2`. In case of using just one group, end string with comma - `group1,`.
+ * `LAVA_JOB_PRIORITY`: priority of a job, used by LAVA scheduler.
+ * `LAVA_JOB_VISIBILITY`: defaults to *public*. This variable can be used to restrict job visibility to user or group.
+ * `LAVA_JOB_VISIBILITY_GROUPS`: variable should contain groups required by the job. Formatting is important and this variable - must be formatted as comma separated list. For example: `group1, group2`. In case of using just one group, end string with comma - `group1,`.
  * `AUTO_LOGIN_`: default *PROMPT='login:', *USERNAME='root' and *PASSWORD=''.
  * `BOOT_LABEL`: default is `boot`.
- * `TAGS`: variable should contain tags required by job. Formatting is important and this variable should be
- formatted comma separated list. For example: `tag1, tag2`. In case of using just one tag, end string with comma - 
- `tag1,`.
+ * `TAGS`: variable should contain tags required by a job. Formatting is important and this variable must be formatted comma separated list. For example: `tag1, tag2`. In case of using just one tag, end string with comma - `tag1,`.
  * `UBOOT_VERSION_STRING`: string that is matched in the U-Boot shell after command `version`.
- * `OVERLAY_MODULES_`: overlays modules into the rootfs.
- * `TEST_DEFINITIONS_REPOSITORY`: points to the test repository to use, default: https://github.com/Linaro/test-definitions.git
+ * `OVERLAY_MODULES_`: overlays modules.
+ * `TEST_DEFINITIONS_REPOSITORY`: points to the test definitions repository, default: https://github.com/Linaro/test-definitions.git
 
-Variables can also be stored in YAML-formatted file - `variables.yaml`
+Variables can also be stored in YAML-formatted file - `variables.yaml`.
 
 # Timeouts
 Overall job timeout is a sum of action timeouts. There are several components:
@@ -88,7 +85,7 @@ Overall job timeout is a sum of action timeouts. There are several components:
  * `test_timeout`, is defined for each test template.
 
 ### Notes
-1. When LXC is not in use all `lxc_*` timeouts are set to 0. 
+1. When LXC is not in use all `lxc_*` timeouts are set to 0.
 2. `target_*` timeouts can be set separately for each device.
 
 # CI for Docker multi-arch builds
