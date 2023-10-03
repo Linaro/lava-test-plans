@@ -2,4 +2,5 @@
 
 {% set testname = 'sysbenchcpu' %}
 {% set configfile = 'configs/config-scheduler-sysbench-cpu' %}
+{% set mmtests_iterations = 10 %}
 {% set test_timeout = 45 %}
