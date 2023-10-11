@@ -143,7 +143,29 @@ def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_
 
 
 def _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token):
-    pass
+    try:
+        headers = {"Authorization": f"Token {lava_token}"}
+        data = {
+            "definition": lava_job,
+            "backend": urlsplit(
+                lava_url_base
+            ).netloc,  # backends are named as lava instances
+        }
+        logger.info("Submit to: %s" % lava_url_base)
+        response = requests.post(
+            f"{lava_url_base}/api/v0.2/jobs/",
+            headers=headers,
+            data=data,
+            timeout=31,
+        )
+        logger.info(response.status_code)
+        logger.info(response.text)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as err:
+        logger.error("LAVA job submission failed")
+        logger.info("offending job definition:")
+        logger.info(lava_job)
+        return 1
 
 
 def main():
