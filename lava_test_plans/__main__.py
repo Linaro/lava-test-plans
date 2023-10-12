@@ -7,7 +7,6 @@
 # SPDX-License-Identifier: MIT
 
 import argparse
-from configobj import ConfigObj, ConfigObjError
 import fnmatch
 from io import StringIO
 import itertools
@@ -16,6 +15,7 @@ import os
 import re
 import requests
 import sys
+from urllib.parse import urlsplit
 
 from jinja2 import (
     Environment,
@@ -23,7 +23,7 @@ from jinja2 import (
     StrictUndefined,
     make_logging_undefined,
 )
-from jinja2.exceptions import UndefinedError, TemplateSyntaxError
+from jinja2.exceptions import UndefinedError, TemplateSyntaxError, TemplateNotFound
 from ruamel.yaml import YAML
 from ruamel.yaml.constructor import (
     DuplicateKeyError,
@@ -32,20 +32,13 @@ from ruamel.yaml.constructor import (
 )
 from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.parser import ParserError
-from ruamel.yaml.composer import ComposerError
-
+import docker
 from lava_test_plans import __version__
 from lava_test_plans.utils import get_context, validate_variables
 
 FORMAT = "[%(funcName)16s() ] %(message)s"
 logging.basicConfig(level=logging.INFO, format=FORMAT)
 logger = logging.getLogger(__name__)
-
-
-try:
-    from urllib.parse import urlsplit
-except ImportError:
-    from urlparse import urlsplit
 
 
 # Templates base path
@@ -57,17 +50,14 @@ testplan_device_path = os.path.join(script_dirname, "devices/")
 
 
 def parse_template(yaml_string):
-    """
-    Round trip lava_job through ruamel to test parsing and
-    improve formatting. Comments are preserved.
-
-    In: yaml-formatted string
-    Out: validated yaml-formatted string
+    """Test LAVA job parsing and enhance formatting via ruamel, while keeping comments intact.
+    :param yaml_string: YAML string
+    :returns: Valid YAML string
     """
     logger.debug(yaml_string)
     yaml = YAML()
-    # ruamel does not provide a mechanism to dump to string, so use StringIO
-    # to catch it
+    # ruamel does not provide a mechanism to dump to string,
+    # so use StringIO to catch it
     output = StringIO()
     yaml.dump(yaml.load(yaml_string), output)
     # strip empty lines from output
@@ -75,9 +65,9 @@ def parse_template(yaml_string):
 
 
 def get_job_name(lava_job_string):
-    """
-    In: yaml-formatted string
-    Out: LAVA job's name
+    """Get job name from LAVA job definition
+    :param lava_job_string: YAML-formatted string
+    :returns: LAVA job's name
     """
     yaml = YAML()
     lava_job = yaml.load(lava_job_string)
@@ -103,9 +93,9 @@ def _load_template(template_name, template_path, device_type):
 
 
 def _get_test_plan_list(test_plan_path):
-    """
-    Returns list of all .yaml files in the directory
-    specified as parameter
+    """Get list of all .yaml files in the directory
+    :param test_plan_path: path to directory containing test plan files
+    :returns: list of test plan files
     """
     logger.debug("Checking for files in %s" % test_plan_path)
     ret_list = []
@@ -117,6 +107,13 @@ def _get_test_plan_list(test_plan_path):
 
 
 def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_token):
+    """Submit LAVA job to SQAUD server using qa-reports API
+    :param lava_job: LAVA job definition
+    :param lava_url_base: LAVA server URL
+    :param qa_server_api: qa-reports API URL
+    :param qa_server_base: qa-reports server URL
+    :param qa_token: qa-reports API token
+    """
     headers = {"Auth-Token": qa_token}
 
     try:
@@ -357,9 +354,11 @@ def main():
         if args.dryrun
         else StrictUndefined,
     )
+
     context = get_context(script_dirname, args.variables, args.overwrite_variables)
     context.update({"device_type": args.device_type})
     test_list = []
+
     if args.test_plan:
         for test_plan in args.test_plan:
             test_plan_path = os.path.abspath(
@@ -425,8 +424,6 @@ def main():
                 f.write(lava_job)
 
     if args.test_lava_validity:
-        import docker
-
         client = docker.from_env(version="1.38")
         logger.debug("Checking for LAVA validity")
         for test in set(test_list):
@@ -494,7 +491,7 @@ def main():
         )
 
         for lava_job in lava_jobs:
-            """Submit lava jobs"""
+            # Submit LAVA job to QA Reports
             if args.qa_token:
                 _submit_to_squad(
                     lava_job,
