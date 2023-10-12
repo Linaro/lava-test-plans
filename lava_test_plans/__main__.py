@@ -458,10 +458,7 @@ def main():
             return exit_code
 
         qa_server_base = args.qa_server
-        if not (
-            qa_server_base.startswith("http://")
-            or qa_server_base.startswith("https://")
-        ):
+        if not qa_server_base.startswith(("http://", "https://")):
             qa_server_base = "https://" + qa_server_base
         qa_server_team = args.qa_server_team
         qa_server_project = args.qa_server_project
@@ -484,9 +481,7 @@ def main():
             qa_server_env,
         )
         lava_server = args.lava_server
-        if not (
-            lava_server.startswith("http://") or lava_server.startswith("https://")
-        ):
+        if not lava_server.startswith(("http://", "https://")):
             lava_server = "https://" + lava_server
         lava_url_base = "%s://%s/" % (
             urlsplit(lava_server).scheme,
