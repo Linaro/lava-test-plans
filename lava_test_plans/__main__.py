@@ -416,15 +416,19 @@ def main():
             testpath = os.path.join(output_path, args.device_type, test)
             logger.error(f"Trying to render: {testpath}\n\tissue: {e.message}")
             exit_code = 1
-        if args.dryrun and lava_job is not None:
-            testpath = os.path.join(
-                output_path, args.device_type, os.path.basename(test)
-            )
-            logger.info(testpath)
-            if not os.path.exists(os.path.dirname(testpath)):
-                os.makedirs(os.path.dirname(testpath), exist_ok=True)
-            with open(os.path.join(testpath), "w") as f:
-                f.write(lava_job)
+
+        if args.dryrun:
+            if 'lava_job' in locals():
+                testpath = os.path.join(
+                    output_path, args.device_type, os.path.basename(test)
+                )
+                logger.info(f'Writing LAVA job in: {os.path.join(testpath)}')
+                if not os.path.exists(os.path.dirname(testpath)):
+                    os.makedirs(os.path.dirname(testpath), exist_ok=True)
+                with open(os.path.join(testpath), "w") as f:
+                    f.write(lava_job)
+            else:
+                logger.error("LAVA job is not defined")
 
     if args.test_lava_validity:
         client = docker.from_env(version="1.38")
