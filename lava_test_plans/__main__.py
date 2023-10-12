@@ -379,25 +379,26 @@ def main():
         return 1
 
     # convert test_list to set to remove potential duplicates
+    exit_code = 0
     for test in set(test_list):
-        """Prepare lava jobs"""
-        lava_job = None
+        # Prepare LAVA jobs
         try:
-            lava_job = j2_env.get_template(test).render(context)
+            template = j2_env.get_template(test)
+        except TemplateNotFound as e:
+            logger.error("Template not found: %s", e)
+            return 1
+
+        try:
+            lava_job = template.render(context)
             lava_job = parse_template(lava_job)
             lava_jobs.append(lava_job)
-
             logger.debug(lava_job)
-        except DuplicateKeyError as e:
-            logger.error(e)
-            exit_code = 1
-        except ConstructorError as e:
-            logger.error(e)
-            exit_code = 1
-        except DuplicateKeyFutureWarning as e:
-            logger.error(e)
-            exit_code = 1
-        except ScannerError as e:
+        except (
+            DuplicateKeyError,
+            ConstructorError,
+            DuplicateKeyFutureWarning,
+            ScannerError,
+        ) as e:
             logger.error(e)
             exit_code = 1
         except ParserError as e:
