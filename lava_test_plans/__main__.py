@@ -132,10 +132,10 @@ def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_
         logger.info(response.status_code)
         logger.info(response.text)
         response.raise_for_status()
-    except requests.exceptions.RequestException as err:
-        logger.error("QA Reports submission failed")
-        logger.info("offending job definition:")
-        logger.info(lava_job)
+    except requests.exceptions.RequestException:
+        logger.error(
+            "QA Reports submission failed. Offending job definition: %s", lava_job
+        )
         return 1
 
 
@@ -329,7 +329,9 @@ def main():
 
     if args.qa_server_project:
         if "/" in args.qa_server_project:
-            logger.error("--qa-server-project can not contain of a slash in the name")
+            logger.error(
+                "--qa-server-project parameter cannot include a slash in its name."
+            )
             return 1
 
     if args.dryrun:
@@ -350,9 +352,11 @@ def main():
     # prevent creating templates when variables are missing
     j2_env = Environment(
         loader=FileSystemLoader(template_dirs, followlinks=True),
-        undefined=make_logging_undefined(logger=logger, base=StrictUndefined)
-        if args.dryrun
-        else StrictUndefined,
+        undefined=(
+            make_logging_undefined(logger=logger, base=StrictUndefined)
+            if args.dryrun
+            else StrictUndefined
+        ),
     )
 
     context = get_context(script_dirname, args.variables, args.overwrite_variables)
@@ -403,15 +407,14 @@ def main():
             exit_code = 1
         except TemplateSyntaxError as e:
             testpath = os.path.join(output_path, args.device_type, test)
-            logger.error("Trying to render: %s" % testpath)
-            logger.error("Error in file: %s" % e.name)
-            logger.error("\tline: %s" % e.lineno)
-            logger.error("\tissue: %s" % e.message)
+            logger.error(
+                f"Trying to render: {testpath}\nError in file: {e.name}\n\tline:"
+                f" {e.lineno}\n\tissue: {e.message}"
+            )
             exit_code = 1
         except UndefinedError as e:
             testpath = os.path.join(output_path, args.device_type, test)
-            logger.error("Trying to render: %s" % testpath)
-            logger.error("\tissue: %s" % e.message)
+            logger.error(f"Trying to render: {testpath}\n\tissue: {e.message}")
             exit_code = 1
         if args.dryrun and lava_job is not None:
             testpath = os.path.join(
