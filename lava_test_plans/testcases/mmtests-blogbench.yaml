@@ -1,0 +1,6 @@
+{% extends "testcases/master/template-mmtests.jinja2" %}
+
+{% set testname = 'blogbench' %}
+{% set configfile = 'configs/config-io-blogbench' %}
+{% set mmtests_iterations = 30 %}
+{% set test_timeout = 45 %}
