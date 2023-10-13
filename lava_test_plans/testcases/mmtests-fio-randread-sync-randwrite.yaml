@@ -1,0 +1,5 @@
+{% extends "testcases/master/template-mmtests.jinja2" %}
+
+{% set configfile = 'configs/config-io-fio-randread-sync-randwrite' %}
+{% set mmtests_iterations = 10 %}
+{% set test_timeout = 45 %}
