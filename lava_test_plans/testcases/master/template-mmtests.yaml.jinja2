@@ -1,0 +1,25 @@
+{#
+    Template for MMTests 'test' action can be used to add benchmarking step in
+    test scenario with MMTests framework.
+    It's possible to specify MMTests configuration file (see MMTests repo)
+    with MMTESTS_CONFIG_FILE variable and number of iterations with
+    MMTEST_ITERATIONS variable.
+    Current template assumes that MMTests-specialized root filesystem used
+    with MMTests-overlay, otherwise it's necessary to set SKIP_INSTALL=true.
+#}
+{% extends "testcases/master/template-test.jinja2" %}
+{# config_name comes from testcase spec #}
+{% set test_name = config_file|replace('configs/config-', 'mmtests-') %}
+{# Path to test definition in TEST_DEFINITIONS_REPOSITORY #}
+{% set test_path_file = 'automated/linux/mmtests/mmtests.yaml' %}
+{% set MMTESTS_PATH = MMTESTS_PATH|default('/mmtests') %}
+{% block test_target %}
+  {{ super() }}
+      parameters:
+        SKIP_INSTALL: 'true'
+        MMTESTS_CONFIG_FILE: '{{ config_file }}'
+        {# mmtests_iterations comes from testcase spec.
+           Individual for each case. #}
+        MMTEST_ITERATIONS: '{{ mmtest_iterations }}'
+        TEST_DIR: '{{ MMTESTS_PATH }}'
+{% endblock test_target %}
