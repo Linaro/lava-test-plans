@@ -1,5 +1,7 @@
 {% extends "testcases/master/template-master.jinja2" %}
 
+{% set test_target_redirect_to_kmsg = test_target_redirect_to_kmsg|default(true) %}
+
 {% block test_target %}
   {{ super() }}
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
