@@ -17,5 +17,5 @@
 {% block device_type %}qemu{% endblock %}
 
 {% block boot_extra_args %}
-        image_arg: -kernel {kernel} --append "root=/dev/sda  rootwait console=ttyS0,115200"
+        image_arg: -kernel {kernel} --append "root=/dev/sda rw rootwait console=ttyS0,115200"
 {% endblock boot_extra_args %}
