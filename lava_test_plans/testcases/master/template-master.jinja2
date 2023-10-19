@@ -4,6 +4,7 @@
 {% set BUILD_NUMBER = BUILD_NUMBER|default("") %}
 {% set KERNEL_BRANCH = KERNEL_BRANCH|default("unknown") %}
 {% set OS_INFO = OS_INFO|default("") %}
+{% set EXTRA_KERNEL_ARGS = ' systemd.log_level=warning ' + EXTRA_KERNEL_ARGS|default("") %}
 
 {# with the BUILD_NUMBER in the middle, it's possible to get #}
 {# the sub job name(which is the test_name here) #}
