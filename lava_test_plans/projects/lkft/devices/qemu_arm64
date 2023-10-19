@@ -9,6 +9,9 @@
 {% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
 {% set OVERLAY_URL_FORMAT = OVERLAY_URL_FORMAT|default("tar") %}
 {% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
+{% set OVERLAY_MMTESTS_URL_COMP = OVERLAY_MMTESTS_URL_COMP|default("xz") %}
+{% set OVERLAY_MMTESTS_URL_FORMAT = OVERLAY_MMTESTS_URL_FORMAT|default("tar") %}
+
 {% if DEVICE_TYPE == 'qemu_arm' %}
 {% set GS_MACHINE = "virt-2.10,accel=kvm" %}
 {% else %}
