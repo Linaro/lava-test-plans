@@ -1,4 +1,4 @@
-{% extends "devices/hi6220-hikey" %}
+{% extends "devices/hi6220-hikey-r2" %}
 
 {# to avoid overriding by the one definied in testcases #}
 {# like the one defined in testcases/boot.yaml is set to true by default #}
