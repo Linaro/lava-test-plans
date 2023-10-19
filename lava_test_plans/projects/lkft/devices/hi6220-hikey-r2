@@ -1,4 +1,4 @@
-{% extends "devices/hi6220-hikey" %}
+{% extends "devices/hi6220-hikey-r2" %}
 
 {% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
 {% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
