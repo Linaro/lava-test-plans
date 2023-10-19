@@ -5,6 +5,7 @@
 {% set LAVA_TEST_NAME_SUFFIX = LAVA_TEST_NAME_SUFFIX|default("") %}
 
 {% set test_name = "sysbench-" + testnames|join('-') + LAVA_TEST_NAME_SUFFIX %}
+{% set test_target_redirect_to_kmsg = test_target_redirect_to_kmsg|default(true) %}
 
 {% block test_target %}
   {{ super() }}
@@ -13,6 +14,9 @@
 {% for testname in testnames %}
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
       from: git
+{% if test_target_redirect_to_kmsg is defined and test_target_redirect_to_kmsg %}
+      lava-signal: kmsg
+{% endif %}
       path: automated/linux/sysbench/sysbench.yaml
       parameters:
         SKIP_INSTALL: 'false'
