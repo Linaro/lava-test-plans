@@ -12,6 +12,8 @@
 
 {% set KSELFTEST_PATH = KSELFTEST_PATH|default('/opt/kselftests/default-in-kernel') %}
 
+{% set test_target_redirect_to_kmsg = test_target_redirect_to_kmsg|default(true) %}
+
 {% extends "testcases/master/template-master.jinja2" %}
 
 {% block metadata %}
@@ -41,6 +43,9 @@
       from: git
 {% if TDEFINITIONS_REVISION is defined %}
       revision: '{{ TDEFINITIONS_REVISION}}'
+{% endif %}
+{% if test_target_redirect_to_kmsg is defined and test_target_redirect_to_kmsg %}
+      lava-signal: kmsg
 {% endif %}
       path: automated/linux/kselftest/kselftest.yaml
       name: kselftest-{{testname|replace('.', '-')}}{{vsyscall_suffix}}
