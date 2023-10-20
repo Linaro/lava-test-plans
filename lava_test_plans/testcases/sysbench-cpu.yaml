@@ -1,4 +1,4 @@
-{% extends "testcases/templates/template-sysbench.yaml.jinja2" %}
+{% extends "testcases/templates/sysbench.yaml.jinja2" %}
 
 {% set testnames = 'cpu' %}
 {% set test_timeout = 60 %}

@@ -1,4 +1,4 @@
-{% extends "testcases/templates/template-ssuite.yaml.jinja2" %}
+{% extends "testcases/templates/ssuite.yaml.jinja2" %}
 
 {% set num_repetitions = '3' %}
 {% set testnames = 'throughput replayed-gnome-term-startup' %}

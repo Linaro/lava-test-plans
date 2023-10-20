@@ -1,4 +1,4 @@
-{% extends "testcases/templates/template-mmtests.yaml.jinja2" %}
+{% extends "testcases/templates/mmtests.yaml.jinja2" %}
 {# We use template's file name to calculate config name to keep them in sync #}
 {# By default MMTests keeps all actual configs in it's "config" subdir #}
 {% set config_file = 'configs/' + self._TemplateReference__context.name|replace('mmtests', 'config')|replace('.yaml', '') %}

@@ -1,4 +1,4 @@
-{% extends "testcases/templates/template-android-benchmarks.yaml.jinja2" %}
+{% extends "testcases/templates/android-benchmarks.yaml.jinja2" %}
 
 {% set test_timeout = 30 %}
 {% set benchmark_name = "vellamo3" %}

@@ -1,4 +1,4 @@
-{% extends "templates/template-kselftest.yaml.jinja2" %}
+{% extends "testcases/templates/kselftest.yaml.jinja2" %}
 
 {% set testnames = ['net'] %}
 {% set test_timeout = 60 %}

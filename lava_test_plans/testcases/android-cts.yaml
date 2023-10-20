@@ -1,1 +1,1 @@
-{% extends "testcases/templates/template-android-cts.yaml.jinja2" %}
+{% extends "testcases/templates/android-cts.yaml.jinja2" %}
