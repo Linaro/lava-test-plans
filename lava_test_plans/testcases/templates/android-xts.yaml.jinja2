@@ -1,8 +1,8 @@
-{% extends "testcases/templates/template-master.jinja2" %}
+{% extends "testcases/templates/master.jinja2" %}
 
 {## This template is not for generic use, please consider ##}
-{## to use the template-android-cts.yaml.jinja2 and ## }
-{## template-android-vts.yaml.jinja2 ##}
+{## to use the android-cts.yaml.jinja2 and ## }
+{## android-vts.yaml.jinja2 ##}
 
 {% set xts_result_format = xts_result_format|default("aggregated") %}
 {% set xts_test_definition_path = xts_test_definition_path|default("automated/android/noninteractive-tradefed/tradefed.yaml") %}

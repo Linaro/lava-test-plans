@@ -7,7 +7,7 @@
     Current template assumes that MMTests-specialized root filesystem used
     with MMTests-overlay, otherwise it's necessary to set SKIP_INSTALL=true.
 #}
-{% extends "testcases/templates/template-test.jinja2" %}
+{% extends "testcases/templates/test.jinja2" %}
 {# config_name comes from testcase spec #}
 {% set test_name = config_file|replace('configs/config-', 'mmtests-') %}
 {# Path to test definition in TEST_DEFINITIONS_REPOSITORY #}

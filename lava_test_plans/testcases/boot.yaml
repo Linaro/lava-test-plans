@@ -1,4 +1,4 @@
-{% extends "testcases/templates/template-master.jinja2" %}
+{% extends "testcases/templates/master.jinja2" %}
 
 {# Empty test case to only cover boot test on target #}
 

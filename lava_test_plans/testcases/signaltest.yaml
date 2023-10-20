@@ -1,4 +1,4 @@
-{% extends "testcases/templates/template-test.jinja2" %}
+{% extends "testcases/templates/test.jinja2" %}
 
 {% set test_name = test_name | default("signaltest") %}
 {% set test_path_file = 'automated/linux/signaltest/signaltest.yaml' %}
