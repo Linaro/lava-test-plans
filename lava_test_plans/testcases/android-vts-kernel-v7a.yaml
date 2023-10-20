@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-android-vts.yaml.jinja2" %}
+{% extends "testcases/templates/template-android-vts.yaml.jinja2" %}
 
 {% set test_timeout = 480 %}
 {% set test_name = "vts-kernel-armeabi-v7a" %}
