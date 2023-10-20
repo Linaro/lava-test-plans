@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-test.jinja2" %}
+{% extends "testcases/templates/template-test.jinja2" %}
 
 {% set test_name = test_name | default("pi-stress") %}
 {% set test_path_file = 'automated/linux/pi-stress/pi-stress.yaml' %}

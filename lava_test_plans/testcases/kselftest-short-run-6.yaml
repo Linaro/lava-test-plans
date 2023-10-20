@@ -1,4 +1,4 @@
-{% extends "master/template-kselftest.yaml.jinja2" %}
+{% extends "templates/template-kselftest.yaml.jinja2" %}
 
 {% set guestfs_size = 1024 %}
 {% set testnames = ['ir', 'kexec', 'pidfd', 'pid_namespace', 'pstore', 'proc'] %}

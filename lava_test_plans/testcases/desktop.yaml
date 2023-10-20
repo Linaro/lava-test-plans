@@ -1,4 +1,4 @@
-{% extends "testcases/master/template-master.jinja2" %}
+{% extends "testcases/templates/template-master.jinja2" %}
 
 {% set test_timeout = 190 %}
 
