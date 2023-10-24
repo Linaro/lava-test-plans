@@ -98,7 +98,11 @@
 {% endif %}
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
-{% if OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
+{# Process the following block if any overlays provided #}
+{% if OVERLAY_MODULES_URL is defined or
+      OVERLAY_KSELFTEST_URL is defined or
+      OVERLAY_PERF_URL is defined or
+      OVERLAY_MMTESTS_URL is defined %}
         overlays:
 {% endif %}
 {% if OVERLAY_MODULES_URL is defined %}
@@ -112,6 +116,20 @@
             compression: {{OVERLAY_MODULES_URL_COMP}}
 {% endif %}
 {% endif %}
+
+{# MMTest-specific overlay settings  #}
+{% if OVERLAY_MMTESTS_URL is defined %}
+          mmtests:
+            url: {{ OVERLAY_MMTESTS_URL }}
+            path: {{ MMTESTS_PATH }}
+{% if OVERLAY_MMTESTS_URL_FORMAT is defined %}
+            format: {{ OVERLAY_MMTESTS_URL_FORMAT }}
+{% endif %}
+{% if OVERLAY_MMTESTS_URL_COMP is defined %}
+            compression: {{ OVERLAY_MMTESTS_URL_COMP }}
+{% endif %}
+{% endif %}
+
 {% if OVERLAY_KSELFTEST_URL is defined %}
           kselftest:
             url: {{OVERLAY_KSELFTEST_URL}}
