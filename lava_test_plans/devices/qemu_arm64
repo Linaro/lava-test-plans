@@ -26,6 +26,6 @@
 {% endblock rootfs_extra_args %}
 
 {% block boot_extra_args %}
-        image_arg: -kernel {kernel} --append "console=ttyAMA0 root=/dev/vda rw"
+        image_arg: -kernel {kernel} --append "console=ttyAMA0 root=/dev/vda rw {{ EXTRA_KERNEL_ARGS }}"
         type: image
 {% endblock boot_extra_args %}
