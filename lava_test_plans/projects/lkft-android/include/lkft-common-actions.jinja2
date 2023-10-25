@@ -24,13 +24,13 @@
 {% include "include/test_target.jinja2" %}
 {% endwith %}
     - from: inline
-      path: android-boot.yaml
-      name: android-boot
+      path: boot.yaml
+      name: boot
       repository:
         metadata:
           format: Lava-Test Test Definition 1.0
-          name: android-boot
-          description: "android-boot"
+          name: boot
+          description: "boot"
         run:
           steps:
             - lava-test-case "android-boot-wait-for-device" --shell adb wait-for-device
