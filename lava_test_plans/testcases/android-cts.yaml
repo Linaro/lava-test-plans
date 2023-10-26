@@ -1,1 +1,2 @@
 {% extends "testcases/templates/android-cts.yaml.jinja2" %}
+{% set test_name = "android-cts" %}

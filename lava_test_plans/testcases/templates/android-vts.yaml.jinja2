@@ -2,10 +2,8 @@
 
 {% set xts_test_url = TEST_VTS_URL %}
 {% set xts_version = TEST_VTS_VERSION %}
-{% set xts_test_suite_name = TEST_VTS_SUITE_NAME|default("vts") %}
 
 {% set xts_test_params = xts_test_params|default("vts") %}
-{% set test_name = test_name|default("vts") %}
 {% set xts_test_path = xts_test_path|default("android-vts") %}
 {% set xts_pkg_name = xts_pkg_name|default("android-vts.zip") %}
 {% set xts_metadata_prefix = xts_metadata_prefix|default("vts") %}
