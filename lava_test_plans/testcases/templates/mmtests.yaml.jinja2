@@ -13,6 +13,10 @@
 {# Path to test definition in TEST_DEFINITIONS_REPOSITORY #}
 {% set test_path_file = 'automated/linux/mmtests/mmtests.yaml' %}
 {% set MMTESTS_PATH = MMTESTS_PATH|default('/mmtests') %}
+{# Set SQUAD server URL #}
+{% set QA_SERVER = QA_SERVER|default('qa-reports.linaro.org') %}
+{# Set SQUAD group name #}
+{% set QA_TEAM = QA_TEAM|default('lkft-performance') %}
 {% block test_target %}
   {{ super() }}
       parameters:
@@ -22,4 +26,15 @@
            Individual for each case. #}
         MMTEST_ITERATIONS: '{{ mmtest_iterations }}'
         TEST_DIR: '{{ MMTESTS_PATH }}'
+        # Reporting parameters
+        # SQUAD server URL
+        QA_SERVER: qa-reports.linaro.org
+        # SQUAD group name
+        QA_TEAM: lkft-performance
+        # SQUAD project name
+        QA_PROJECT: {{ QA_PROJECT }}
+        # SQUAD environment name
+        QA_ENVIRONMENT: {{ QA_ENVIRONMENT }}
+        # SQUAD build name
+        BUILD_ID: {{ BUILD_ID }}
 {% endblock test_target %}
