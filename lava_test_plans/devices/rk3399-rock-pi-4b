@@ -1,0 +1,24 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"nfs.jinja2" %}
+
+{% set DEPLOY_OS = DEPLOY_OS|default("debian") %}
+
+{% set auto_login = true %}
+{% set boot_method = "u-boot" %}
+{% set EXTRA_KERNEL_ARGS = 'console=ttyFIQ0,1500000n8 rootwait' + EXTRA_KERNEL_ARGS|default("") %}
+{% set rootfs_label="nfsrootfs" %}
+{% set use_context = true %}
+
+{% block context %}
+  arch: arm64
+{% endblock context %}
+
+{% block device_type %}rk3399-rock-pi-4b{% endblock %}
+
+{% block boot_commands %}
+    commands: nfs
+{% endblock boot_commands %}
+
+{% block kernel_extra_args %}
+      type: image
+{% endblock kernel_extra_args %}
