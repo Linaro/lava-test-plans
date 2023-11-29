@@ -1,0 +1,5 @@
+{% extends "testcases/templates/mmtests.yaml.jinja2" %}
+
+{% set config_file = 'configs/' + self._TemplateReference__context.name|replace('mmtests', 'config')|replace('.yaml', '') %}
+{% set mmtest_iterations = 10 %}
+{% set test_timeout = 90 %}
