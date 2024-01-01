@@ -1,7 +1,7 @@
-  android.build: "{{ BUILD_NUMBER }}"
-  android.name: "{{ JOB_NAME }}"
-  android.url: "{{ REFERENCE_BUILD_URL }}"
-  android.version: "{{ ANDROID_VERSION }}"
+  android.build: "{{ BUILD_NUMBER | default('unknown')}}"
+  android.name: "{{ JOB_NAME | default('unknown')}}"
+  android.url: "{{ REFERENCE_BUILD_URL | default('unknown')}}"
+  android.version: "{{ ANDROID_VERSION | default('unknown')}}"
 {% if ANDROID_VENDOR_FINGERPRINT is defined %}
   android.build.vendor.fingerprint: "{{ ANDROID_VENDOR_FINGERPRINT }}"
 {% endif %}
@@ -12,9 +12,9 @@
 {% if TUXSUITE_DOWNLOAD_URL is defined %}
   tuxsuite.download.url: "{{ TUXSUITE_DOWNLOAD_URL }}"
 {% endif %}
-  lkft.build.config: "{{ LKFT_BUILD_CONFIG }}"
-  git branch: "{{ KERNEL_BRANCH }}"
-  git repo: "{{ KERNEL_REPO }}"
-  git commit: "{{ KERNEL_COMMIT }}"
-  git describe: "{{ KERNEL_DESCRIBE }}"
-  build-url: "{{ BUILD_URL }}"
+  lkft.build.config: "{{ LKFT_BUILD_CONFIG | default('unknown')}}"
+  git branch: "{{ KERNEL_BRANCH | default('unknown')}}"
+  git repo: "{{ KERNEL_REPO | default('unknown')}}"
+  git commit: "{{ KERNEL_COMMIT | default('unknown')}}"
+  git describe: "{{ KERNEL_DESCRIBE | default('unknown')}}"
+  build-url: "{{ BUILD_URL | default('unknown')}}"
