@@ -1,3 +1,7 @@
+{% if DEPLOY_OS == "debian" %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
+{% endif %}
+
 {% extends "devices/qemu_i386" %}
 
 {% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("ext4") %}
