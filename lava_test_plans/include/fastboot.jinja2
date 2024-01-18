@@ -10,6 +10,7 @@
 {% set reboot_to_fastboot = reboot_to_fastboot|default("false") %}
 {% set boot = boot|default(true) %}
 {% set BOOT_LABEL = BOOT_LABEL|default("boot") %}
+{% set ramdisk = ramdisk|default(false) %}
 {% set rootfs = rootfs|default(true) %}
 {% set rootfs_label = rootfs_label|default("rootfs") %}
 {% set apply_overlay = apply_overlay|default("rootfs") %}
@@ -134,6 +135,16 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% if MODULES_URL_COMP is defined %}
         compression: {{MODULES_URL_COMP}}
+{% endif %}
+{% endif %}
+{% if ramdisk == true %}
+      ramdisk:
+        url: {{RAMDISK_URL}}
+{% if RAMDISK_URL_FORMAT is defined %}
+        format: {{RAMDISK_URL_FORMAT}}
+{% endif %}
+{% if RAMDISK_URL_COMP is defined %}
+        compression: {{RAMDISK_URL_COMP}}
 {% endif %}
 {% endif %}
 {% if rootfs == true %}
