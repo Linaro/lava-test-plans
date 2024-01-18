@@ -13,9 +13,9 @@
 {% endfilter %}
       script:
       - command: echo ===========================
-      - command: while ! getprop sys.boot_completed|grep 1; do echo sleep 10s for sys.boot_completed; sleep 10; done
+      - command: i=0 && while ! getprop sys.boot_completed|grep 1 && [ $i -le 30 ]; do let i=i+1; echo sleep $i*10s for sys.boot_completed; sleep 10; done; echo "for prompt";
       - command: echo ===========================
-      - command: while ! getprop init.svc.adbd|grep running; do echo sleep 10s for init.svc.adbd; sleep 10; done
+      - command: i=0 && while ! getprop init.svc.adbd|grep running && [ $i -le 15 ]; do let i=i+1; echo sleep $i*10s for init.svc.adbd; sleep 10; done; echo "for prompt";
       - command: echo ===========================
       - command: getprop | grep adb
       - command: echo ===========================
