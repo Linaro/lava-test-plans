@@ -35,12 +35,12 @@
 {% set download_postprocess_required = download_postprocess_required|default(false) %}
 {% if TUXSUITE_BAKE_VENDOR_DOWNLOAD_URL is defined %}
 {% set download_postprocess_required = true %}
-{% set DOCKER_IMAGE_POSTPROCESS = DOCKER_IMAGE_POSTPROCESS|default("linaro/lava-android-postprocess:latest") %}
+{% set DOCKER_IMAGE_POSTPROCESS = DOCKER_IMAGE_POSTPROCESS|default("linaro/lava-android-postprocess:bulleye-2023.09.14-01") %}
 {% endif %}
 
-{% set DOCKER_IMAGE_TEST = DOCKER_IMAGE_TEST|default("linaro/lava-android-test:latest") %}
-{% set DOCKER_IMAGE_DEPLOY = DOCKER_IMAGE_DEPLOY|default("linaro/lava-android-test:latest") %}
-{% set DOCKER_IMAGE_BOOT = DOCKER_IMAGE_BOOT|default("linaro/lava-android-test:latest") %}
+{% set DOCKER_IMAGE_TEST = DOCKER_IMAGE_TEST|default("linaro/lava-android-test:focal-2023.10.18-01") %}
+{% set DOCKER_IMAGE_DEPLOY = DOCKER_IMAGE_DEPLOY|default("linaro/lava-android-test:focal-2023.10.18-01") %}
+{% set DOCKER_IMAGE_BOOT = DOCKER_IMAGE_BOOT|default("linaro/lava-android-test:focal-2023.10.18-01") %}
 {#################### job definitions ##########################}
 {% block global_settings %}
 {{ super() }}
