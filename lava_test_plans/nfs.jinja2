@@ -6,6 +6,10 @@
 {% set install_fastboot_timeout = 0 %}
 {% set target_deploy_to = target_deploy_to|default("tftp") %}
 
+{% if apply_overlay == "rootfs" and OVERLAY_URL is defined or OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
+{% set apply_overlay = "overlays" %}
+{% endif %}
+
 {% block actions %}
 
 {% block deploy_target %}
@@ -68,7 +72,7 @@
 {% endif %}
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
-{% if OVERLAY_URL is defined or OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
+{% if apply_overlay == "overlays" %}
       overlays:
 {% endif %}
 {% if OVERLAY_URL is defined %}
