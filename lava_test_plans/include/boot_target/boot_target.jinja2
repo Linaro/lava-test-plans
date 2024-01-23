@@ -25,7 +25,7 @@
         timeout:
           minutes: 2
 {% endif %}
-{% if DOCKER_IMAGE_BOOT is defined %}
+{% if DOCKER_IMAGE_BOOT is defined and boot_method == "fastboot" %}
     docker:
       image: {{DOCKER_IMAGE_BOOT}}
 {% endif %}
