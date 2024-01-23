@@ -42,6 +42,9 @@
 {% set OVERLAY_PERF_URL_COMP = PERF_COMP %}
 {% endif %}
 {% endif %}
+{% if apply_overlay == "rootfs" and OVERLAY_URL is defined or OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
+{% set apply_overlay = "overlays" %}
+{% endif %}
 
 {# partitions for android jobs #}
 {# boot_a partition would be set via boot_label #}
@@ -161,7 +164,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% endif %}
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
-{% if OVERLAY_URL is defined or OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
+{% if apply_overlay == "overlays" %}
         overlays:
 {% endif %}
 {% if OVERLAY_URL is defined %}
