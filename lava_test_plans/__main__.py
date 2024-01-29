@@ -353,9 +353,11 @@ def main():
     # prevent creating templates when variables are missing
     j2_env = Environment(
         loader=FileSystemLoader(template_dirs, followlinks=True),
-        undefined=make_logging_undefined(logger=logger, base=StrictUndefined)
-        if args.dryrun
-        else StrictUndefined,
+        undefined=(
+            make_logging_undefined(logger=logger, base=StrictUndefined)
+            if args.dryrun
+            else StrictUndefined
+        ),
     )
     context = get_context(script_dirname, args.variables, args.overwrite_variables)
     context.update({"device_type": args.device_type})
