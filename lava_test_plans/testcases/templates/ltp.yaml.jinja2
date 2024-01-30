@@ -34,6 +34,8 @@
         ENVIRONMENT: '{{ ENVIRONMENT|default('production') }}'
         TIMEOUT_MULTIPLIER: '{{ TIMEOUT_MULTIPLIER|default('10') }}'
         LTP_TMPDIR: '/scratch'
+        SHARD_NUMBER: '{{ SHARD_NUMBER|default(1) }}'
+        SHARD_INDEX: '{{ SHARD_INDEX|default(1) }}'
       name: ltp-{{testname|replace('.','-')}}{{LAVA_TEST_NAME_SUFFIX}}
 {% endfor %}
 {% endblock test_target %}
