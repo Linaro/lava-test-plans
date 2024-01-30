@@ -56,5 +56,7 @@
         BOARD: '{{ DEVICE_TYPE }}'
         BRANCH: '{{ SKIPGEN_KERNEL_VERSION|default('default') }}'
         ENVIRONMENT: '{{ ENVIRONMENT|default("production") }}'
+        SHARD_NUMBER: '{{ SHARD_NUMBER|default(1) }}'
+        SHARD_INDEX: '{{ SHARD_INDEX|default(1) }}'
 {% endfor %}
 {% endblock test_target %}
