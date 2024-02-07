@@ -4,6 +4,8 @@
 
 {% extends "devices/dragonboard-845c" %}
 
+{% set test_target_redirect_to_kmsg = false %}
+
 {% set ramdisk = ramdisk|default(true) %}
 {% set BOOT_LABEL = "kernel" %}
 {% set BOOT_LABEL_OVERRIDE = true %}
