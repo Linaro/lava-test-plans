@@ -6,6 +6,16 @@
 {% set install_fastboot_timeout = 0 %}
 {% set target_deploy_to = target_deploy_to|default("tftp") %}
 
+{% if KSELFTEST is defined %}
+{% set OVERLAY_KSELFTEST_URL = KSELFTEST %}
+{% if KSELFTEST_FORMAT is defined %}
+{% set OVERLAY_KSELFTEST_URL_FORMAT = KSELFTEST_FORMAT %}
+{% endif %}
+{% if KSELFTEST_COMP is defined %}
+{% set OVERLAY_KSELFTEST_URL_COMP = KSELFTEST_COMP %}
+{% endif %}
+{% endif %}
+
 {% if apply_overlay == "rootfs" and OVERLAY_URL is defined or OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
 {% set apply_overlay = "overlays" %}
 {% endif %}
