@@ -16,6 +16,16 @@
 {% endif %}
 {% endif %}
 
+{% if PERF is defined %}
+{% set OVERLAY_PERF_URL = PERF %}
+{% if PERF_FORMAT is defined %}
+{% set OVERLAY_PERF_URL_FORMAT = PERF_FORMAT %}
+{% endif %}
+{% if PERF_COMP is defined %}
+{% set OVERLAY_PERF_URL_COMP = PERF_COMP %}
+{% endif %}
+{% endif %}
+
 {% if apply_overlay == "rootfs" and OVERLAY_URL is defined or OVERLAY_MODULES_URL is defined or OVERLAY_KSELFTEST_URL is defined or OVERLAY_PERF_URL is defined %}
 {% set apply_overlay = "overlays" %}
 {% endif %}
