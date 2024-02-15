@@ -1,0 +1,4 @@
+{% extends "testcases/templates/kselftest.yaml.jinja2" %}
+
+{% set testnames = ['mm'] %}
+{% set test_timeout = 10 %}
