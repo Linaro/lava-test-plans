@@ -1,5 +1,5 @@
 {% extends "testcases/templates/kselftest.yaml.jinja2" %}
 
 {% set guestfs_size = 1024 %}
-{% set testnames = ['timens', 'user', 'vm', 'zram'] %}
+{% set testnames = ['timens', 'user', 'mm', 'zram'] %}
 {% set test_timeout = 40 %}
