@@ -23,7 +23,7 @@ jobs:
          pip install flit
          pip install tuxpkg
          pip install py
-         pip install pytest
+         pip install pytest==8.0.0
          pip install pytest-cov
          pip install pytest-parallel
          export FLIT_ROOT_INSTALL=1
