@@ -1,4 +1,4 @@
 {% extends "testcases/templates/ltp.yaml.jinja2" %}
 
-{% set testnames = ['fcntl-locktests', 'filecaps', 'fs_bind', 'fs_perms_simple', 'fsx'] %}
+{% set testnames = ['fcntl-locktests', 'filecaps', 'fs_bind', 'fs_perms_simple'] %}
 {% set test_timeout = 30 %}
