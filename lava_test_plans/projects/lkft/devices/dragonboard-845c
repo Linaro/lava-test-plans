@@ -20,3 +20,4 @@
 {% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
 {% set RAMDISK_URL = RAMDISK_URL|default("https://snapshots.linaro.org/member-builds/qcomlt/boards/qcom-armv8a/openembedded/master/56008/rpb/initramfs-rootfs-image-qcom-armv8a.rootfs-20240118001247-92260.cpio.gz") %}
 {% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("ext4") %}
+{% set TAGS = TAGS|default(["lts"]) %}
