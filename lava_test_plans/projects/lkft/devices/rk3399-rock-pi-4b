@@ -12,6 +12,7 @@
 {% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("tar") %}
 {% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("xz") %}
 
+{% set EXTRA_KERNEL_ARGS = ' earlycon ' + EXTRA_KERNEL_ARGS|default("") %}
 {% block context %}
   {{ super() }}
   extra_nfsroot_args: ',vers=3'
