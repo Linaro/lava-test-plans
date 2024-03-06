@@ -15,4 +15,8 @@
             SET_GOVERNOR_POLICY: "{{set_governor_policy}}"
             TEST_NAME: {{benchmark_name}}
             LOOPS: {{loopcount}}
+{% if SQUAD_URL is defined %}
+            SQUAD_UPLOAD_URL: "{{SQUAD_URL}}/{{device_type}}"
+{% endif %}
+
 {% endblock test_target %}
