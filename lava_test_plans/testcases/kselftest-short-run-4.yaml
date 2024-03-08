@@ -1,5 +1,5 @@
 {% extends "testcases/templates/kselftest.yaml.jinja2" %}
 
 {% set guestfs_size = 1024 %}
-{% set testnames = ['lib', 'memory-hotplug', 'mount', 'seccomp', 'splice', 'static_keys', 'sync', 'sysctl'] %}
+{% set testnames = ['lib', 'memory-hotplug', 'mount', 'splice', 'static_keys', 'sync', 'sysctl'] %}
 {% set test_timeout = 45 %}

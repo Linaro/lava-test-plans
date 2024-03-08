@@ -1,5 +1,5 @@
 {% extends "testcases/templates/kselftest.yaml.jinja2" %}
 
 {% set guestfs_size = 1024 %}
-{% set testnames = ['net', 'net.mptcp', 'tc-testing'] %}
-{% set test_timeout = 40 %}
+{% set testnames = ['net', 'net.mptcp', 'seccomp', 'tc-testing'] %}
+{% set test_timeout = 90 %}
