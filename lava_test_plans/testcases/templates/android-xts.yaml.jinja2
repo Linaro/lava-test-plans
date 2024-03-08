@@ -26,5 +26,8 @@
         RESULTS_FORMAT: "{{xts_result_format}}"
         ANDROID_VERSION: "{{ANDROID_VERSION}}"
         TEST_REBOOT_EXPECTED: "{{xts_expect_reboot}}"
+{% if SQUAD_URL is defined %}
+        SQUAD_UPLOAD_URL: "{{SQUAD_URL}}/{{device_type}}"
+{% endif %}
       name: "{{test_name}}"
 {% endblock test_target %}

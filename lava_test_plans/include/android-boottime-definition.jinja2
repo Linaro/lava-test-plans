@@ -7,4 +7,7 @@
             ANDROID_VERSION: master
             OPERATION: {{ test_operation }}
             COLLECT_NO: "{{ test_index }}"
+{% if test_operation == "ANALYZE" and SQUAD_URL is defined %}
+            SQUAD_UPLOAD_URL: "{{SQUAD_URL}}/{{device_type}}"
+{% endif %}
 {% endif %}
