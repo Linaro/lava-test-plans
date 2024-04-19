@@ -133,6 +133,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% if MODULES_URL is defined %}
       modules:
         url: {{MODULES_URL}}
+        path: {{MODULES_PATH|default("/")}}
 {% if MODULES_URL_FORMAT is defined %}
         format: {{MODULES_URL_FORMAT}}
 {% endif %}
@@ -181,7 +182,7 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% if OVERLAY_MODULES_URL is defined %}
           modules:
             url: {{OVERLAY_MODULES_URL}}
-            path: /
+            path: {{OVERLAY_MODULES_PATH|default("/")}}
 {% if OVERLAY_MODULES_URL_FORMAT is defined %}
             format: {{OVERLAY_MODULES_URL_FORMAT}}
 {% endif %}
