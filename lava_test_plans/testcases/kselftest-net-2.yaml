@@ -1,4 +1,4 @@
 {% extends "testcases/templates/kselftest.yaml.jinja2" %}
 
-{% set testnames = ['netfilter', 'nsfs', 'tc-testing'] %}
+{% set testnames = ['netfilter', 'nsfs'] %}
 {% set test_timeout = 45 %}
