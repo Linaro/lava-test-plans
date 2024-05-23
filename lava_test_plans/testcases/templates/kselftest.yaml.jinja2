@@ -36,7 +36,7 @@
         run:
           steps:
           - systemctl stop systemd-timesyncd || true
-      name: timesync-off
+      name: kselftest-timesync-off
       path: inline/timesync-off.yaml
 {% for testname in testnames %}
     - repository: {{ TEST_DEFINITIONS_REPOSITORY }}
