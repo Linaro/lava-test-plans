@@ -6,8 +6,8 @@
 
 {% set BOOT_LABEL_OVERRIDE = BOOT_LABEL_OVERRIDE|default(false) %}
 {% set DEPLOY_TARGET = DEPLOY_TARGET|default("downloads") %}
-{% set DOCKER_IMAGE_DEPLOY = DOCKER_IMAGE_DEPLOY|default("linaro/kir:20240124") %}
-{% set DOCKER_IMAGE_BOOT = DOCKER_IMAGE_BOOT|default("linaro/kir:20240124") %}
+{% set DOCKER_IMAGE_DEPLOY = DOCKER_IMAGE_DEPLOY|default("linaro/kir:20240605") %}
+{% set DOCKER_IMAGE_BOOT = DOCKER_IMAGE_BOOT|default("linaro/kir:20240605") %}
 {% set DOCKER_IMAGE_POSTPROCESS = DOCKER_IMAGE_POSTPROCESS|default("linaro/kir:20240124") %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("ptable-linux-8g.img") %}
 {% set DOCKER_BOOT_FILE = DOCKER_BOOT_FILE|default("boot.img") %}
@@ -17,7 +17,7 @@
 {{ super() }}
 {% if DEPLOY_TARGET == "downloads" %}
         steps:
-        - /kir/lava/board_setup.sh {{DEVICE_TYPE}}{% if DEPLOY_OS == "debian" %} rootfs{% endif %}
+        - /kir/lava/board_setup.sh {{DEVICE_TYPE}}{% if DEPLOY_OS == "debian" %} rootfs "/usr/"{% endif %}
 
 - deploy:
     timeout:
