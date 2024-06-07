@@ -18,7 +18,7 @@ BuildRequires: python3-pytest-mock
 BuildRequires: python3-configobj
 BuildRequires: python3-docker
 BuildRequires: python3-jinja2
-BuildRequires: python3-requests == 2.31
+BuildRequires: python3-requests
 BuildRequires: python3-ruamel-yaml
 
 BuildArch: noarch
@@ -27,7 +27,7 @@ Requires: python3 >= 3.6
 Requires: python3-configobj
 Requires: python3-docker
 Requires: python3-jinja2
-Requires: python3-requests == 2.31
+Requires: python3-requests
 Requires: python3-ruamel-yaml
 
 %global debug_package %{nil}

@@ -13,7 +13,7 @@ dependencies = [
     "configobj",
     "docker",
     "jinja2",
-    "requests==2.31",
+    "requests",
     "ruamel.yaml",
 ]
 
