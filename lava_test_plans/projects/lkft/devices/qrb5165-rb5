@@ -11,7 +11,7 @@
 {% set BOOT_LABEL = "kernel" %}
 {% set BOOT_LABEL_OVERRIDE = true %}
 {% set DOCKER_PTABLE_FILE = DOCKER_PTABLE_FILE|default("gpt_both0.bin") %}
-{% set PTABLE_URL = PTABLE_URL|default("https://people.linaro.org/~anders.roxell/rb5-bootloader-ufs-linux-21/gpt_both0.bin") %}
+{% set PTABLE_URL = PTABLE_URL|default("https://images.validation.linaro.org/snapshots.linaro.org/96boards/qrb5165-rb5/linaro/rescue/27/rb5-bootloader-ufs-linux-27/gpt_both0.bin") %}
 {% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
 {% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
 {% set OVERLAY_KSELFTEST_URL_COMP = OVERLAY_KSELFTEST_URL_COMP|default("xz") %}
