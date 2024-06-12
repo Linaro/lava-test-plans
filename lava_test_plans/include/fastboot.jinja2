@@ -168,6 +168,20 @@ reboot_to_fastboot: {{ reboot_to_fastboot }}
 {% if apply_overlay == "overlays" %}
         overlays:
 {% endif %}
+{% if overlays %}
+        overlays:
+{% endif %}
+{% for name, overlay, dst in overlays %}
+          {{ name }}:
+            url: "{{ overlay }}"
+            format: {{ compression(overlay)[0] }}
+{% if compression(overlay)[1] is not none %}
+            compression: {{ compression(overlay)[1] }}
+            path: "{{ dst }}"
+{% else %}
+            path: "{{ dst }}{{ overlay.split('/')[-1] }}"
+{% endif %}
+{% endfor %}
 {% if OVERLAY_URL is defined %}
           over:
             url: {{OVERLAY_URL}}

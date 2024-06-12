@@ -100,6 +100,20 @@
 {% block rootfs_extra_args %}
 {% endblock rootfs_extra_args %}
 {# Process the following block if any overlays provided #}
+{% if overlays %}
+        overlays:
+{% endif %}
+{% for name, overlay, dst in overlays %}
+          {{ name }}:
+            url: "{{ overlay }}"
+            format: {{ compression(overlay)[0] }}
+{% if compression(overlay)[1] is not none %}
+            compression: {{ compression(overlay)[1] }}
+            path: "{{ dst }}"
+{% else %}
+            path: "{{ dst }}{{ overlay.split('/')[-1] }}"
+{% endif %}
+{% endfor %}
 {% if OVERLAY_MODULES_URL is defined or
       OVERLAY_KSELFTEST_URL is defined or
       OVERLAY_PERF_URL is defined or
