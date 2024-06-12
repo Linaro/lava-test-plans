@@ -35,7 +35,12 @@ from ruamel.yaml.parser import ParserError
 from ruamel.yaml.composer import ComposerError
 
 from lava_test_plans import __version__
-from lava_test_plans.utils import get_context, validate_variables
+from lava_test_plans.utils import (
+    compression,
+    get_context,
+    overlay_action,
+    validate_variables,
+)
 
 FORMAT = "[%(funcName)16s() ] %(message)s"
 logging.basicConfig(level=logging.INFO, format=FORMAT)
@@ -297,6 +302,19 @@ def main():
         type=int,
         default=logging.INFO,
     )
+    parser.add_argument(
+        "--overlay",
+        default=[],
+        metavar="URL/String",
+        type=str,
+        help=(
+            "Tarball with overlay and optionally PATH to extract the tarball,"
+            " default PATH '/'. Overlay can be specified multiple times"
+        ),
+        action=overlay_action,
+        nargs="+",
+        dest="overlays",
+    )
 
     args = parser.parse_args()
     logger.setLevel(args.verbose)
@@ -342,6 +360,11 @@ def main():
         logger.error("QA_REPORTS_TOKEN and LAVA_TOKEN are missing")
         return 1
 
+    overlays = []
+    if args.overlays:
+        for index, item in enumerate(args.overlays):
+            overlays.append((f"overlay-{index:02}", item[0], item[1]))
+
     lava_jobs = []
 
     template_dirs = [
@@ -359,8 +382,10 @@ def main():
             else StrictUndefined
         ),
     )
+    j2_env.globals["compression"] = compression
     context = get_context(script_dirname, args.variables, args.overwrite_variables)
     context.update({"device_type": args.device_type})
+    context.update({"overlays": overlays})
     test_list = []
     if args.test_plan:
         for test_plan in args.test_plan:

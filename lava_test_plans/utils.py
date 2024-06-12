@@ -8,6 +8,7 @@
 
 
 import os
+import argparse
 import logging
 from configobj import ConfigObj, ConfigObjError
 from ruamel.yaml import YAML
@@ -61,3 +62,40 @@ def validate_variables(
         logger.error(f"Mandatory variables missing: {var_diff}")
         return 1
     return 0
+
+
+class overlay_action(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        entries = len(values)
+
+        pairs = getattr(namespace, self.dest, [])
+
+        if entries > 2:
+            parser.error(
+                f"More than 2 arguments passed for {self.dest} options. Please check help options"
+            )
+
+        if entries == 1:
+            pairs.append([values[0], "/"])
+        else:
+            pairs.append([values[0], values[1]])
+        setattr(namespace, self.dest, pairs)
+
+
+COMPRESSIONS = {
+    ".tar.xz": ("tar", "xz"),
+    ".tar.gz": ("tar", "gz"),
+    ".tgz": ("tar", "gz"),
+    ".gz": (None, "gz"),
+    ".xz": (None, "xz"),
+    ".zst": (None, "zstd"),
+    ".py": ("file", None),
+    ".sh": ("file", None),
+}
+
+
+def compression(path):
+    for ext, ret in COMPRESSIONS.items():
+        if path.endswith(ext):
+            return ret
+    return (None, None)
