@@ -1,5 +1,7 @@
 {% extends "testcases/templates/test.jinja2" %}
 
+{% set LIBHUGETLBFS_PATH = LIBHUGETLBFS_PATH|default('/opt/libhugetlbfs') %}
+
 {% set test_timeout = 45 %}
 {% block metadata %}
   {{ super() }}
@@ -15,4 +17,6 @@
   {{ super() }}
       parameters:
         WORD_SIZE: {% if libhuggetlbfs_word_size is defined %}{{libhuggetlbfs_word_size|int|abs}}{% else %}64{% endif %}
+        SKIP_INSTALL: True
+        LIBHUGETLBFS_PATH: '{{ LIBHUGETLBFS_PATH }}'
 {% endblock test_target %}
