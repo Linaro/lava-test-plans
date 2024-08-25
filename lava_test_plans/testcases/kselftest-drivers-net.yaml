@@ -1,0 +1,5 @@
+{% extends "testcases/templates/kselftest.yaml.jinja2" %}
+
+{% set guestfs_size = 1024 %}
+{% set testnames = ['drivers.net'] %}
+{% set test_timeout = 30 %}
