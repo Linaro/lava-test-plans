@@ -1,0 +1,25 @@
+{% extends "testcases/templates/test.jinja2" %}
+
+{% set test_name = test_name | default("xfstests") %}
+{% set test_path_file = 'automated/linux/xfstests/xfstests.yaml' %}
+{% set test_timeout = test_timeout | default(60) %}
+{% set test_dev = test_dev | default("/dev/loop0") %}
+{% set scratch_dev = scratch_dev | default("/dev/loop1") %}
+{% set test_dir = test_dir | default("/mnt/test") %}
+{% set scratch_dir = scratch_dir | default("/mnt/scratch") %}
+{% set filesystem = filesystem | default("ext4") %}
+{% set t_size = t_size | default("5G") %}
+{% set s_size = s_size | default("8G") %}
+
+{% block test_target %}
+  {{ super() }}
+      parameters:
+        SKIP_INSTALL: 'true'
+        TEST_DEV: '{{test_dev}}'
+        SCRATCH_DEV: '{{scratch_dev}}'
+        TEST_DIR: '{{test_dir}}'
+        SCRATCH_DIR: '{{scratch_dir}}'
+        FILESYSTEM: '{{filesystem}}'
+        T_SIZE: '{{t_size}}'
+        S_SIZE: '{{s_size}}'
+{% endblock test_target %}
