@@ -4,6 +4,7 @@
 
 {% extends "devices/dragonboard-410c" %}
 
+{% set ramdisk = ramdisk|default(true) %}
 {% set BOOT_URL = BOOT_URL|default("http://images.validation.linaro.org/releases.linaro.org/96boards/dragonboard410c/linaro/debian/18.01/boot-linaro-buster-dragonboard-410c-359.img.gz") %}
 {% set MODULES_URL_COMP = MODULES_URL_COMP|default("xz") %}
 {% set OVERLAY_KSELFTEST_URL_FORMAT = OVERLAY_KSELFTEST_URL_FORMAT|default("tar") %}
@@ -12,4 +13,5 @@
 {% set OVERLAY_PERF_URL_COMP = OVERLAY_PERF_URL_COMP|default("xz") %}
 {% set OVERLAY_URL_FORMAT = OVERLAY_URL_FORMAT|default("tar") %}
 {% set OVERLAY_URL_COMP = OVERLAY_URL_COMP|default("xz") %}
+{% set RAMDISK_URL = RAMDISK_URL|default("https://snapshots.linaro.org/member-builds/qcomlt/boards/qcom-armv8a/openembedded/master/56008/rpb/initramfs-rootfs-image-qcom-armv8a.rootfs-20240118001247-92260.cpio.gz") %}
 {% set ROOTFS_URL_FORMAT = ROOTFS_URL_FORMAT|default("ext4") %}
