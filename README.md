@@ -10,7 +10,7 @@ It generates the LAVA job definition file from a set of templates.
 
 Install lava-test-plans from pip:
 
-    lava-test-plans -h
+    pip install lava-test-plans
 
 or
 
