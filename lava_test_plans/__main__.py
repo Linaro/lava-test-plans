@@ -149,7 +149,24 @@ def _submit_to_squad(lava_job, lava_url_base, qa_server_api, qa_server_base, qa_
 
 
 def _submit_to_lava(lava_job, lava_url_base, lava_username, lava_token):
-    pass
+    if not (
+        lava_url_base.startswith("http://")
+        or lava_url_base.startswith("https://")
+    ):
+        lava_url_base = "https://" + lava_url_base
+
+    auth = {"Authorization": f"Token {lava_token}"}
+    data = {"definition": lava_job}
+    api_url = f"{lava_url_base}/api/v0.2/jobs/"
+    try:
+        response = requests.post(api_url, data=data, headers=auth)
+        response.raise_for_status()
+    except requests.exceptions.ConnectionError as err:
+        pass
+    except requests.exceptions.HTTPError as err:
+        pass
+    finally:
+        logger.info(response.text)
 
 
 def main():
