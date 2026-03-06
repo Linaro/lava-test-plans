@@ -16,7 +16,13 @@
 ] %}
 
 {% block test_target %}
+  {% for test in all_tests %}
+  {% if (test.name not in EXCLUDED_TESTS) and (test.include|default(true)) %}
   {{ super() }}
+  {# include the super block once if any tests are included #}
+  {% break %}
+  {% endif %}
+  {% endfor %}
     {% for test in all_tests %}
     {# Check if test should be included (not excluded AND condition met if specified) #}
     {% if (test.name not in EXCLUDED_TESTS) and (test.include|default(true)) %}
