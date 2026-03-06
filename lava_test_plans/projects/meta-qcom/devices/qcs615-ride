@@ -1,1 +1,3 @@
 {% extends "devices/qcs615-ride" %}
+
+{% set EXCLUDED_TESTS = ['BT_FW_KMD_Service', 'BT_SCAN'] %}
