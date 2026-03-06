@@ -23,6 +23,7 @@ from jinja2 import (
     StrictUndefined,
     make_logging_undefined,
 )
+from jinja2.ext import loopcontrols
 from jinja2.exceptions import UndefinedError, TemplateSyntaxError, TemplateNotFound
 from ruamel.yaml import YAML
 from ruamel.yaml.constructor import (
@@ -406,6 +407,7 @@ def main():
             if args.dryrun
             else StrictUndefined
         ),
+        extensions=['jinja2.ext.loopcontrols']
     )
     j2_env.globals["compression"] = compression
     context = get_context(script_dirname, args.variables, args.overwrite_variables)
