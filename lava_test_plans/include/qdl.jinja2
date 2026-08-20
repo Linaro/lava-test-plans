@@ -20,6 +20,10 @@
 {% set patch = patch|default("patch0.xml") %}
 {% set qdl_debug = qdl_debug|default(true) %}
 
+{# ramdump #}
+{% set qdl_ramdump_enable = qdl_ramdump_enable|default(true) %}
+{% set qdl_ramdump_timeout = qdl_ramdump_timeout|default(1800) %}
+
 {# multistage flashing: ordered list of stages, each flashed via a qdl boot. #}
 {# "path" is appended to qdl_image_dir; an empty path uses qdl_image_dir.     #}
 {% set qdl_stages = qdl_stages|default([
@@ -60,6 +64,10 @@
     path: "{{ qdl_image_dir }}{% if stage.path %}/{{ stage.path }}{% endif %}"
     storage: "{{ stage.storage }}"
     debug: {{ qdl_debug | lower }}
+    {% if qdl_enable_ramdump %}
+    ramdump: true
+    ramdump_timeout: {{ qdl_ramdump_timeout }}
+    {% endif %}
     timeout:
       minutes: {{ qdl_boot_timeout }}
     method: qdl
