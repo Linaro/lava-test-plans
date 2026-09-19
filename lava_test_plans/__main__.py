@@ -59,6 +59,7 @@ template_base_path = script_dirname
 testplan_base_path = os.path.join(script_dirname, "testplans/")
 testcase_base_path = os.path.join(script_dirname, "testcases/")
 testplan_device_path = os.path.join(script_dirname, "devices/")
+output_path = os.path.abspath(os.path.join(script_dirname, "..", "tmp"))
 
 
 def parse_template(yaml_string):
@@ -255,6 +256,12 @@ def main():
         default=testplan_device_path,
     )
     parser.add_argument(
+        "--output-path",
+        help="Path to directory to store rendered lava job files",
+        dest="output_path",
+        default=output_path,
+    )
+    parser.add_argument(
         "--test-plan",
         help="""Directories containing Jinja2 templates to submit for testing.
                         It is assumed that the templates produce valid LAVA job
@@ -320,7 +327,6 @@ def main():
     logger.setLevel(args.verbose)
     exit_code = 0
 
-    output_path = os.path.abspath(os.path.join(script_dirname, "..", "tmp"))
 
     if not os.path.isabs(args.testplan_path):
         if not os.path.isdir(args.testplan_path):
@@ -354,8 +360,8 @@ def main():
             return 1
 
     if args.dryrun:
-        if not os.path.exists(output_path):
-            os.makedirs(output_path, exist_ok=True)
+        if not os.path.exists(args.output_path):
+            os.makedirs(args.output_path, exist_ok=True)
     if args.qa_token is None and args.lava_token is None and not args.dryrun:
         logger.error("QA_REPORTS_TOKEN and LAVA_TOKEN are missing")
         return 1
@@ -425,25 +431,25 @@ def main():
             logger.error(e)
             exit_code = 1
         except ParserError as e:
-            testpath = os.path.join(output_path, args.device_type, test)
+            testpath = os.path.join(args.output_path, args.device_type, test)
             logger.error("Failed to parse: %s" % testpath)
             logger.error(e)
             exit_code = 1
         except TemplateSyntaxError as e:
-            testpath = os.path.join(output_path, args.device_type, test)
+            testpath = os.path.join(args.output_path, args.device_type, test)
             logger.error("Trying to render: %s" % testpath)
             logger.error("Error in file: %s" % e.name)
             logger.error("\tline: %s" % e.lineno)
             logger.error("\tissue: %s" % e.message)
             exit_code = 1
         except UndefinedError as e:
-            testpath = os.path.join(output_path, args.device_type, test)
+            testpath = os.path.join(args.output_path, args.device_type, test)
             logger.error("Trying to render: %s" % testpath)
             logger.error("\tissue: %s" % e.message)
             exit_code = 1
         if args.dryrun and lava_job is not None:
             testpath = os.path.join(
-                output_path, args.device_type, os.path.basename(test)
+                args.output_path, args.device_type, os.path.basename(test)
             )
             logger.info(testpath)
             if not os.path.exists(os.path.dirname(testpath)):
@@ -457,7 +463,7 @@ def main():
         client = docker.from_env(version="1.38")
         logger.debug("Checking for LAVA validity")
         for test in set(test_list):
-            testpath = os.path.join(os.getcwd(), output_path, args.device_type)
+            testpath = os.path.join(os.getcwd(), args.output_path, args.device_type)
             logger.debug(testpath)
             logger.debug(test)
             container = client.containers.run(
