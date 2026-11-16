@@ -1,0 +1,12 @@
+{% extends "devices/mahua-crd" %}
+
+{# spinor + nvme flashing stages come from the common device #}
+{% set qdl_image_dir = "flash_mahua-crd_nvme" %}
+{% set qdl_rootfs_image = "disk-sdcard.img2" %}
+{% set qdl_tarball = "flash-emmc.tar.gz" %}
+
+{# exclusions are tracked in                                     #}
+{# https://github.com/qualcomm-linux/qcom-deb-images/issues/647 #}
+{% import "projects/qcom-deb-images/include/excluded-tests.jinja2" as excluded %}
+{% set EXCLUDED_TESTS = excluded.EXCLUDED_TESTS %}
+{% set EXCLUDED_TESTPLANS = excluded.EXCLUDED_TESTPLANS %}
