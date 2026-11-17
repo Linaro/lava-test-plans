@@ -1,0 +1,17 @@
+{% set PROJECT = PROJECT|default("") %}
+{% extends PROJECT+"qdl.jinja2" %}
+
+{% set BOOT_OS_PROMPT = BOOT_OS_PROMPT|default("root@hawi-mtp") %}
+{% set ROOTFS_URL_COMP = ROOTFS_URL_COMP|default("gz") %}
+
+{# qdl deployment - device specific flashing parameters #}
+{% set firehose_program = firehose_program|default("qsahara_device_programmer.xml") %}
+{% set rawprogram = rawprogram|default("rawprogram0.xml rawprogram1.xml rawprogram2.xml rawprogram3.xml rawprogram4.xml rawprogram5.xml") %}
+{% set patch = patch|default("patch0.xml patch1.xml patch2.xml patch3.xml patch4.xml patch5.xml") %}
+{% set qdl_stages = qdl_stages|default([
+    {"storage": "ufs", "path": "", "rawprogram": rawprogram, "patch": patch}
+]) %}
+
+{% set rootfs_label = 'rootfs' %}
+
+{% block device_type %}hawi-mtp{% endblock %}
