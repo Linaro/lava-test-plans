@@ -5,5 +5,8 @@
     "FASTRPC_DOMAINS": ['adsp', 'cdsp', 'gdsp0']
 } %}
 
+{# Device-specific test exclusions for meta-qcom project #}
+{% set EXCLUDED_TESTS = ['AudioRecord_Config06', 'AudioRecord_Config07', 'AudioRecord_Config08', 'AudioRecord_Config09', 'AudioRecord_Config10'] %}
+
 {# Exclude unsupported testplans for this device #}
 {% set EXCLUDED_TESTPLANS = ['pre-merge-camera.yaml'] %}
