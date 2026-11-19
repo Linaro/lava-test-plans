@@ -299,3 +299,30 @@ def test_fastrpc_variants_per_device(device_name, expected_domains, tmp_path):
     assert rendered.count(
         "path: Runner/suites/Multimedia/CDSP/fastrpc_test/fastrpc_test.yaml"
     ) == len(expected_domains)
+
+
+def test_fastrpc_without_domains(tmp_path):
+    """Render a single unsuffixed FastRPC testcase when no domains are set."""
+    temp_output = tmp_path / "test_output"
+    device = "projects/qcom-deb-images/devices/qcs6490-rb3gen2"
+
+    sys.argv = shlex.split(
+        f'lava_test_plans --dry-run --variables "variables.ini" '
+        f'--testplan-device-path "lava_test_plans/projects/qcom-deb-images/devices" '
+        f'--device-type "{device}" '
+        f'--test-case "pre-merge-basic.yaml" '
+        f'--dry-run-path "{temp_output}"'
+    )
+
+    assert main() == 0
+
+    rendered = (temp_output / f"{device}/pre-merge-basic.yaml").read_text()
+
+    assert (
+        rendered.count(
+            "path: Runner/suites/Multimedia/CDSP/fastrpc_test/fastrpc_test.yaml"
+        )
+        == 1
+    )
+    assert "name: fastrpc_test\n" in rendered
+    assert "DOMAIN_NAME" not in rendered
