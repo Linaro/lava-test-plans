@@ -1,0 +1,5 @@
+{% extends "devices/nord-ride-embedded" %}
+
+{# Device-specific test exclusions for meta-qcom project #}
+
+{# Exclude unsupported testplans for this device #}
