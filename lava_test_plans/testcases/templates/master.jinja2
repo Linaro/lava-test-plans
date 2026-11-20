@@ -29,9 +29,10 @@
 {% block test_target %}
 {% if all_tests is defined %}
   {# A test is rendered once per variant it declares. A test that declares #}
-  {# no variants renders a single entry, so plain test lists are unchanged. #}
+  {# no variants, or an empty list of them, renders a single entry, so #}
+  {# plain test lists are unchanged. #}
   {% for test in all_tests %}
-    {% if (test.name not in EXCLUDED_TESTS) and (test.include|default(true)) and (test.variants|default([{}])) %}
+    {% if (test.name not in EXCLUDED_TESTS) and (test.include|default(true)) and (test.variants|default([{}], true)) %}
   {{ super() }}
       {# include the super block once if any tests are included #}
       {% break %}
@@ -45,7 +46,7 @@
     {% if (test.name in EXCLUDED_TESTS) or (not test.include|default(true)) %}
       {% continue %}
     {% endif %}
-    {% for variant in test.variants|default([{}]) %}
+    {% for variant in test.variants|default([{}], true) %}
       {# A variant names its entry either directly or through a suffix #}
       {% if variant.name is defined %}
         {% set entry_name = variant.name %}
