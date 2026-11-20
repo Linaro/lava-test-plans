@@ -1,0 +1,20 @@
+{% extends "devices/eliza-evk-emmc" %}
+
+{# ptool describes two physical partitions for eliza-evk/emmc and emits a   #}
+{# rawprogram/patch pair for each: 0 is the main storage, 1 is the JEDEC    #}
+{# boot area holding just the CDT. Flash both, so the board also gets the   #}
+{# CDT this build was generated against. The common device flashes 0 alone. #}
+{% set qdl_stages = [
+    {"storage": "emmc", "path": "",
+     "rawprogram": "rawprogram0.xml rawprogram1.xml",
+     "patch": "patch0.xml patch1.xml"}
+] %}
+{% set qdl_image_dir = "flash_eliza-cqs-evk-emmc_emmc" %}
+{% set qdl_rootfs_image = "disk-sdcard.img2" %}
+{% set qdl_tarball = "flash-emmc.tar.gz" %}
+
+{# exclusions are tracked in                                     #}
+{# https://github.com/qualcomm-linux/qcom-deb-images/issues/647 #}
+{% import "projects/qcom-deb-images/include/excluded-tests.jinja2" as excluded %}
+{% set EXCLUDED_TESTS = excluded.EXCLUDED_TESTS %}
+{% set EXCLUDED_TESTPLANS = excluded.EXCLUDED_TESTPLANS %}
