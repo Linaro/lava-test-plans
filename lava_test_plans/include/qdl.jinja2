@@ -37,9 +37,9 @@
 {# Feed the qdl action timeouts into the job timeout computed by master.jinja2 #}
 {# (deploy + one boot per flashing stage) so no action can exceed the job.     #}
 {% set target_deploy_timeout = qdl_deploy_timeout %}
-{# the qdl path downloads inside 'to: qdl'; it emits no 'to: downloads' #}
-{# action, so don't charge the job timeout for one.                     #}
-{% set target_downloads_timeout = 0 %}
+{# the qdl path downloads inside 'to: qdl'; unless a test case adds a #}
+{# 'to: downloads' action, don't charge the job timeout for one.       #}
+{% set target_downloads_timeout = target_downloads_timeout|default(0) %}
 {% set TARGET_BOOT_TIMEOUT = qdl_boot_timeout * (qdl_stages|length) %}
 
 {% block deploy_target %}

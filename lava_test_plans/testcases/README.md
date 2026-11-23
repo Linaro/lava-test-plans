@@ -1,7 +1,7 @@
 # Test cases
 
 Each file in this directory renders one LAVA job. Files whose name is not
-`boot.yaml` or `u-boot.yaml` group test definitions from
+`boot.yaml`, `boot-fastboot.yaml` or `u-boot.yaml` group test definitions from
 [qcom-linux-testkit](https://github.com/qualcomm-linux/qcom-linux-testkit) by
 functional area, so that one area maps to one LAVA job and one result suite per
 test definition.

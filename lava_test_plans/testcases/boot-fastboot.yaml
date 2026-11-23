@@ -1,0 +1,54 @@
+{% extends "testcases/templates/master.jinja2" %}
+
+{# Boot test of the fastboot implementation in the flashed image: a kernel, #}
+{# DTB and ramdisk are packed into a boot image and booted with "fastboot  #}
+{# boot" instead of the flashed OS.                                        #}
+
+{% set enable_tests = false %}
+{% set test_name = "fastboot boot test" %}
+{% set apply_overlay = false %}
+{% set target_downloads_timeout = 20 %}
+{% set use_download_headers = use_download_headers|default(false) %}
+{% set FASTBOOT_KERNEL_URL = FASTBOOT_KERNEL_URL|default("") %}
+{% set FASTBOOT_DTB_URL = FASTBOOT_DTB_URL|default("") %}
+{% set FASTBOOT_RAMDISK_URL = FASTBOOT_RAMDISK_URL|default("") %}
+{% set FASTBOOT_CMDLINE = FASTBOOT_CMDLINE|default("earlycon clk_ignore_unused pd_ignore_unused audit=0") %}
+{% set DOCKER_IMAGE_MKBOOTIMG = DOCKER_IMAGE_MKBOOTIMG|default("ghcr.io/mwasilew/docker-mkbootimage:master") %}
+
+{% block deploy_target %}
+{{ super() }}
+- deploy:
+    images:
+{% for name, url in [("image", FASTBOOT_KERNEL_URL), ("dtb", FASTBOOT_DTB_URL), ("ramdisk", FASTBOOT_RAMDISK_URL)] %}
+      {{ name }}:
+{% if use_download_headers %}
+        headers:
+          {{ AUTH_HEADER_NAME }}: {{ AUTH_HEADER_TOKEN }}
+{% endif %}
+        url: '{{ url }}'
+{% endfor %}
+    timeout:
+      minutes: {{ target_downloads_timeout }}
+    to: downloads
+    postprocess:
+      docker:
+        image: {{ DOCKER_IMAGE_MKBOOTIMG }}
+        steps:
+        - mkbootimg --header_version 2 --kernel {{ FASTBOOT_KERNEL_URL.split("/")|last }} --dtb {{ FASTBOOT_DTB_URL.split("/")|last }} --cmdline "{{ FASTBOOT_CMDLINE }}" --ramdisk {{ FASTBOOT_RAMDISK_URL.split("/")|last }} --output boot.img
+- deploy:
+    images:
+      boot:
+        url: 'downloads://boot.img'
+    timeout:
+      minutes: {{ target_downloads_timeout }}
+    to: download
+{% endblock deploy_target %}
+
+{% block boot_target %}
+- boot:
+    prompts:
+    - 'root@(.*):[/~]#'
+    timeout:
+      minutes: {{ TARGET_BOOT_TIMEOUT }}
+    method: fastboot
+{% endblock boot_target %}
