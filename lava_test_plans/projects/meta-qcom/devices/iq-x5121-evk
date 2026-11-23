@@ -4,4 +4,4 @@
 {% set EXCLUDED_TESTS = [] %}
 
 {# Exclude unsupported testplan for this device #}
-{% set EXCLUDED_TESTPLANS = [] %}
+{% set EXCLUDED_TESTPLANS = ['pre-merge-bt.yaml', 'pre-merge-camera.yaml', 'pre-merge-display-gfx.yaml'] %}
