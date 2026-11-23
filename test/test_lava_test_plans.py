@@ -48,6 +48,7 @@ meta_qcom_devices = [
 assert len(meta_qcom_devices) > 0
 meta_qcom_testplans = [
     "meta-qcom/nodistro/boot",
+    "meta-qcom/nodistro/fastboot-efi",
     "meta-qcom/poky-altcfg/boot",
     "meta-qcom/qcom-distro/boot",
     "meta-qcom/qcom-distro/pre-merge",

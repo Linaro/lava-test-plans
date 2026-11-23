@@ -2,7 +2,10 @@
 
 {# Device-specific values exported to testcase templates #}
 {% set TESTCASE_VARIABLES = {
-    "FASTRPC_DOMAINS": ['adsp', 'cdsp']
+    "FASTRPC_DOMAINS": ['adsp', 'cdsp'],
+    "FASTBOOT_KERNEL_URL": "https://qli-prod-artifacts.qualcomm.com/qli-prd-foundri-lava-gh-artifacts/health-check/rb3g2/Image",
+    "FASTBOOT_DTB_URL": "https://qli-prod-artifacts.qualcomm.com/qli-prd-foundri-lava-gh-artifacts/health-check/rb3g2/qcs6490-rb3gen2.dtb",
+    "FASTBOOT_RAMDISK_URL": "https://qli-prod-artifacts.qualcomm.com/qli-prd-foundri-lava-gh-artifacts/health-check/rb3g2/newramdisk.gz"
 } %}
 
 {# Device-specific test exclusions for meta-qcom project #}
